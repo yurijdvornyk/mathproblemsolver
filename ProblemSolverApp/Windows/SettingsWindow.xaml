@@ -1,0 +1,21 @@
+﻿<Window x:Class="ProblemSolverApp.Windows.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProblemSolverApp.Windows"
+        mc:Ignorable="d"
+        Title="Application Settings" Height="360" Width="640">
+    <Grid>
+        <TabControl TabStripPlacement="Left">
+            <TabItem Header="General"></TabItem>
+            <TabItem Header="Appearance"></TabItem>
+            <TabItem Header="Repositories"></TabItem>
+            <TabItem Header="Problem Data"></TabItem>
+            <TabItem Header="Problem Results"></TabItem>
+            <TabItem Header="Export Settings"></TabItem>
+            <TabItem Header="Logging System"></TabItem>
+            <TabItem Header="Spot Tool"></TabItem>
+        </TabControl>
+    </Grid>
+</Window>

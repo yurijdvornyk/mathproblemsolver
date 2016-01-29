@@ -1,0 +1,86 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProblemSolverApp"
+        xmlns:controls="clr-namespace:ProblemSolverApp.Controls"
+        x:Class="ProblemSolverApp.MainWindow"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="Mathematical Problem Solver" Height="720" Width="1280">
+    <Grid>
+        <Menu x:Name="menu" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Edit"/>
+            <MenuItem Header="View"/>
+            <MenuItem Header="Problems">
+                <MenuItem Header="Set Input Data"/>
+                <MenuItem Header="Reset Input Data"/>
+                <Separator/>
+                <MenuItem Header="Calculate" Click="btnCalculate_Click"/>
+                <MenuItem Header="Export Problem">
+                    <MenuItem Header="Export To TeX" Click="btnExportProblemTex_Click"/>
+                    <MenuItem Header="Export To PDF" Click="btnExportProblemPdf_Click"/>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Problem Repository" Click="btnProblemManager_Click"/>
+                <MenuItem Header="External Libraries Manager"/>
+            </MenuItem>
+            <MenuItem Header="Results">
+                <MenuItem Header="Result As Table"/>
+                <MenuItem Header="Result Plot"/>
+                <MenuItem Header="Input Data"/>
+            </MenuItem>
+            <MenuItem Header="Tools">
+                <MenuItem Header="Problem Manager"/>
+                <MenuItem Header="External Libraries Manager"/>
+                <Separator/>
+                <MenuItem Header="Development">
+                    <MenuItem Header="Copy problem dll path"/>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Settings" Click="btnSettings_Click"/>
+            </MenuItem>
+            <MenuItem Header="Window">
+                <MenuItem Header="Problem Window"/>
+                <MenuItem Header="Result Window"/>
+                <MenuItem Header="Terminal"/>
+                <Separator/>
+                <MenuItem Header="Configure"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="Help Guide"/>
+                <MenuItem Header="Project Links">
+                    <MenuItem Header="GitHub"/>
+                </MenuItem>
+                <MenuItem Header="About"/>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray Margin="0,18,0,0" VerticalAlignment="Top">
+            <ToolBar>
+                <Button Content="Tools"/>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid Margin="0,45,0,22">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <GridSplitter HorizontalAlignment="Left" Grid.Column="1" Margin="-1" Width="2" Background="LightGray"/>
+            <GridSplitter Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="2" Margin="0,-1,0,0" Grid.Row="1" VerticalAlignment="Top" Background="LightGray"/>
+            
+            <controls:ProblemDataControl x:Name="problemDataControl" Margin="5"/>
+            <controls:ResultsControl x:Name="problemResults" Grid.Column="1" Margin="5"/>
+            <controls:TerminalControl x:Name="terminal" Grid.Row="1" Grid.ColumnSpan="2" Margin="5"/>
+        </Grid>
+        <StatusBar VerticalAlignment="Bottom">
+            <TextBlock Text="{Binding ElementName=terminal, Path=Logger.CurrentStatus, UpdateSourceTrigger=PropertyChanged}"/>
+        </StatusBar>
+    </Grid>
+</Window>

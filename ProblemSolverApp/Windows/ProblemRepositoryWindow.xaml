@@ -1,0 +1,56 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProblemSolverApp.Windows"
+        xmlns:Controls="clr-namespace:ProblemSolverApp.Controls" x:Class="ProblemSolverApp.Windows.ProblemRepositoryWindow"
+        mc:Ignorable="d"
+        x:Name="problemRepository"
+        Title="Problem Repository" Height="480" Width="840">
+    <DockPanel>
+        <TabControl DockPanel.Dock="Top">
+            <TabItem Header="Problems">
+                <DockPanel>
+                    <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
+                        <MenuItem Header="+" Click="btnAddProblem_Click"/>
+                        <MenuItem Header="-"/>
+                        <MenuItem Header="Manage Externals"/>
+                    </Menu>
+                    <DockPanel DockPanel.Dock="Top" Margin="0,2,0,1">
+                        <TextBlock Text="Search problem:" Margin="5,2,0,0"/>
+                        <TextBox Name="findProblemTextBox" DockPanel.Dock="Left" Margin="2,0,0,0" TextChanged="findProblemTextBox_TextChanged"/>
+                    </DockPanel>
+                    <ListBox SelectionMode="Single" Name="lbProblems" Margin="0,1,0,0"
+                             ItemsSource="{Binding Path=_ProblemManager.ProblemFullInfoList, RelativeSource={RelativeSource AncestorType=Window}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Shared Libraries">
+                <DockPanel>
+                    <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
+                        <MenuItem Header="+" Click="btnAddLibrary_Click"/>
+                        <MenuItem Header="-" Click="btnRemoveLibrary_Click"/>
+                    </Menu>
+                    <DockPanel DockPanel.Dock="Top" Margin="0,2,0,1">
+                        <TextBlock Text="Search library:" Margin="5,2,0,0"/>
+                        <TextBox Name="findLibTextBox" DockPanel.Dock="Left" Margin="2,0,0,0" TextChanged="findLibTextBox_TextChanged"/>
+                    </DockPanel>
+                    <ListBox SelectionMode="Single" Name="lbLibraries"
+                             ItemsSource="{Binding Path=_ProblemManager.SharedLibrariesList, RelativeSource={RelativeSource AncestorType=Window}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding _AssemblyName.FullName}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

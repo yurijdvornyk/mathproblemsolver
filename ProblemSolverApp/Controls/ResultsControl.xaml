@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="ProblemSolverApp.Controls.ResultsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProblemSolverApp.Controls"
+             xmlns:spot="clr-namespace:SpotLibrary;assembly=SpotLibrary"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <DockPanel Background="LightGray">
+        <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Load"/>
+                <MenuItem Header="Save"/>
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Result"/>
+                <MenuItem Header="Result Plot"/>
+                <MenuItem Header="Input Data"/>
+            </MenuItem>
+        </Menu>
+        <TabControl>
+            <TabItem Header="Result">
+                <DockPanel>
+                    <DataGrid Name="dataGrid" IsReadOnly="True" CanUserSortColumns="False" DockPanel.Dock="Top" SelectionUnit="Cell"/>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Result Plot">
+                <DockPanel>
+                    <spot:SpotControl x:Name="spotControl"/>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Input Data">
+                <DockPanel>
+                    <DataGrid x:Name="inputDataGrid" IsReadOnly="True" CanUserSortColumns="False" CanUserReorderColumns="False" CanUserDeleteRows="False"/>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>

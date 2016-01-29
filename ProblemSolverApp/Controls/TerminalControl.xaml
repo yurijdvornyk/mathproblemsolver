@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="ProblemSolverApp.Controls.TerminalControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProblemSolverApp.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="Output">
+                <DockPanel>
+                    <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="File">
+                            <MenuItem Header="Export Logs"/>
+                            <MenuItem Header="Browse Logger Folder"/>
+                        </MenuItem>
+                    </Menu>
+                    <ListBox 
+                        Name="lbOutput"
+                        ItemsSource="{Binding Path=Logger.Messages, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse StrokeThickness="1" Stroke="DarkGray" Margin="0,0,5,0" Width="12" Height="12"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Ellipse.Style>
+                                            <Style TargetType="{x:Type Ellipse}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Type}" Value="Info">
+                                                        <Setter Property="Fill" Value="Blue"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Type}" Value="Success">
+                                                        <Setter Property="Fill" Value="Green"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                                        <Setter Property="Fill" Value="LightYellow"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Type}" Value="Error">
+                                                        <Setter Property="Fill" Value="DarkRed"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Type}" Value="None">
+                                                        <Setter Property="Fill" Value="Gray"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Ellipse.Style>
+                                    </Ellipse>
+                                    <TextBlock Text="{Binding Time}" Margin="5,0,5,0"/>
+                                    <TextBlock Text="{Binding Message}" Margin="5,0,10,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Copy" Click="btnCopyLoggerMessageItem_Click"/>
+                                <MenuItem Header="Copy message" Click="btnCopyLoggerMessage_Click"/>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
+                    </ListBox>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Console">
+                <DockPanel></DockPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>
