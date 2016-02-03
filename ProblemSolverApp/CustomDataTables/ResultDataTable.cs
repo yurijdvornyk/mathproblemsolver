@@ -131,7 +131,7 @@ namespace ProblemSolverApp
         {
             var values = (object[,])Result.Value;
 
-            for (int j = 0; j < values.GetLength(1))
+            for (int j = 0; j < values.GetLength(1); ++j)
             {
                 tableColumn = new DataColumn();
                 tableColumn.ColumnName = (j + 1).ToString();
