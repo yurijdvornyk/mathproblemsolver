@@ -27,6 +27,8 @@ namespace ProblemSolverApp
         public void FillDataTable()
         {
             table.Clear();
+            table.Rows.Clear();
+            table.Columns.Clear();
 
             if (!table.Columns.Contains("Parameter"))
             {
