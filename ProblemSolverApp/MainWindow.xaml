@@ -11,27 +11,65 @@
     <Grid>
         <Menu x:Name="menu" VerticalAlignment="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Exit"/>
+                <MenuItem Header="New"/>
+                <MenuItem Header="Exit">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/exit.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Edit"/>
             <MenuItem Header="View"/>
-            <MenuItem Header="Problems">
-                <MenuItem Header="Set Input Data"/>
-                <MenuItem Header="Reset Input Data"/>
-                <Separator/>
-                <MenuItem Header="Calculate" Click="btnCalculate_Click"/>
-                <MenuItem Header="Export Problem">
-                    <MenuItem Header="Export To TeX" Click="btnExportProblemTex_Click"/>
-                    <MenuItem Header="Export To PDF" Click="btnExportProblemPdf_Click"/>
+            <MenuItem Header="Problem">
+                <MenuItem Header="Set Input Data">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/input_data_apply.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Reset Input Data">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/input_data_reset.png"/>
+                    </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Problem Repository" Click="btnProblemManager_Click"/>
-                <MenuItem Header="External Libraries Manager"/>
+                <MenuItem Header="Solve" Click="btnCalculate_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/solve.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Problem Repository" Click="btnProblemManager_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/repo.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="External Libraries Repository">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/external_libs.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Results">
-                <MenuItem Header="Result As Table"/>
-                <MenuItem Header="Result Plot"/>
-                <MenuItem Header="Input Data"/>
+                <MenuItem Header="Result Table">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/result_table.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Result Plot">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/result_plot.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Input Data">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/result_input_data.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Export">
+                    <MenuItem Header="Save as TeX" Click="btnExportProblemTex_Click"/>
+                    <MenuItem Header="Save as HTML"/>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Tools">
                 <MenuItem Header="Problem Manager"/>
@@ -60,7 +98,9 @@
         </Menu>
         <ToolBarTray Margin="0,18,0,0" VerticalAlignment="Top">
             <ToolBar>
-                <Button Content="Tools"/>
+                <Button>
+                    <Image Source="pack://application:,,,/Drawable/solve.png"/>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <Grid Margin="0,45,0,22">

@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
-        <TabControl>
+        <TabControl TabStripPlacement="Bottom">
             <TabItem Header="Output">
                 <DockPanel>
                     <Menu DockPanel.Dock="Top">
@@ -22,30 +22,27 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Ellipse StrokeThickness="1" Stroke="DarkGray" Margin="0,0,5,0" Width="12" Height="12"
-                                                   HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Ellipse.Style>
-                                            <Style TargetType="{x:Type Ellipse}">
+                                    <Image Margin="0,0,5,0" Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Type}" Value="Info">
-                                                        <Setter Property="Fill" Value="Blue"/>
+                                                        <Setter Property="Source" Value="pack://application:,,,/Drawable/information.png"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Type}" Value="Success">
-                                                        <Setter Property="Fill" Value="Green"/>
+                                                        <Setter Property="Source" Value="pack://application:,,,/Drawable/success.png"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Type}" Value="Warning">
-                                                        <Setter Property="Fill" Value="LightYellow"/>
+                                                        <Setter Property="Source" Value="pack://application:,,,/Drawable/warning.png"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Type}" Value="Error">
-                                                        <Setter Property="Fill" Value="DarkRed"/>
+                                                        <Setter Property="Source" Value="pack://application:,,,/Drawable/error.png"/>
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Type}" Value="None">
-                                                        <Setter Property="Fill" Value="Gray"/>
-                                                    </DataTrigger>
+                                                    
                                                 </Style.Triggers>
                                             </Style>
-                                        </Ellipse.Style>
-                                    </Ellipse>
+                                        </Image.Style>
+                                    </Image>
                                     <TextBlock Text="{Binding Time}" Margin="5,0,5,0"/>
                                     <TextBlock Text="{Binding Message}" Margin="5,0,10,0"/>
                                 </StackPanel>

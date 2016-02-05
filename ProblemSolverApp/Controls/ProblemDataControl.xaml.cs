@@ -359,5 +359,14 @@ namespace ProblemSolverApp.Controls
         #region Events for ui elements
 
         #endregion
+
+        private void btnOpenProblemRepository_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void btnOpenExternalLibsRepo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

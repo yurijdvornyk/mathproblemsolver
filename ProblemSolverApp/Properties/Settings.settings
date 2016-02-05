@@ -1,7 +1,15 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ProblemSolverApp.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ControlBackground" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">229, 229, 229</Value>
+    </Setting>
+    <Setting Name="ControlMenuBackground" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">204, 204, 204</Value>
+    </Setting>
+    <Setting Name="ControlTitleBackground" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">127, 127, 127</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

@@ -125,10 +125,6 @@ namespace ProblemSolverApp
             settingsWin.Show();
         }
 
-        private void btnExportProblemPdf_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
         private void btnExportProblemTex_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new SaveFileDialog();

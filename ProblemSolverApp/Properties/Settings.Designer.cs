@@ -22,5 +22,41 @@ namespace ProblemSolverApp.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("229, 229, 229")]
+        public global::System.Drawing.Color ControlBackground {
+            get {
+                return ((global::System.Drawing.Color)(this["ControlBackground"]));
+            }
+            set {
+                this["ControlBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("204, 204, 204")]
+        public global::System.Drawing.Color ControlMenuBackground {
+            get {
+                return ((global::System.Drawing.Color)(this["ControlMenuBackground"]));
+            }
+            set {
+                this["ControlMenuBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("127, 127, 127")]
+        public global::System.Drawing.Color ControlTitleBackground {
+            get {
+                return ((global::System.Drawing.Color)(this["ControlTitleBackground"]));
+            }
+            set {
+                this["ControlTitleBackground"] = value;
+            }
+        }
     }
 }
