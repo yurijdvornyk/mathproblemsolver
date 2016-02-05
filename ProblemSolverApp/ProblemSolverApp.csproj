@@ -70,6 +70,7 @@
     <Compile Include="Controls\TerminalControl.xaml.cs">
       <DependentUpon>TerminalControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ColorToBrushConverter.cs" />
     <Compile Include="CustomDataTables\InputDataTable.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -232,6 +233,31 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Drawable\result_table.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Drawable\results.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Drawable\export_excel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Drawable\export_plot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Drawable\export_result.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Drawable\export_tex.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

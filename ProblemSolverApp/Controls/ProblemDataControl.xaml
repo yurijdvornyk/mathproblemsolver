@@ -5,15 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProblemSolverApp.Controls"
              xmlns:prop="clr-namespace:ProblemSolverApp.Properties"
+             xmlns:conv="clr-namespace:ProblemSolverApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel Background="{Binding Source={x:Static prop:Settings.Default},
-                               Path=ControlBackground}">
-        <StackPanel DockPanel.Dock="Top" VerticalAlignment="Top" Orientation="Horizontal" Background="#7f7f7f">
+    <UserControl.Resources>
+        <conv:ColorToBrushConverter x:Key="ColorConverter" />
+    </UserControl.Resources>
+    <DockPanel Background="{Binding Source={x:Static prop:Settings.Default}, 
+        Path=ControlBackground, Converter={StaticResource ColorConverter}}">
+        <StackPanel DockPanel.Dock="Top" VerticalAlignment="Top" Orientation="Horizontal" 
+                    Background="{Binding Source={x:Static prop:Settings.Default}, 
+            Path=ControlTitleBackground, Converter={StaticResource ColorConverter}}">
             <Image Source="pack://application:,,,/Drawable/input_data.png" Width="16" Margin="4,1,2,1"/>
             <TextBlock Text="Problem Data" Margin="2,1,0,1" Foreground="White"/>
         </StackPanel>
-        <Menu DockPanel.Dock="Top" VerticalAlignment="Top" Height="18" Background="#cccccc">
+        <Menu DockPanel.Dock="Top" VerticalAlignment="Top" Height="18"
+              Background="{Binding Source={x:Static prop:Settings.Default}, 
+            Path=ControlMenuBackground, Converter={StaticResource ColorConverter}}">
             <MenuItem>
                 <MenuItem.Header>
                     <Image Source="pack://application:,,,/Drawable/load.png"/>

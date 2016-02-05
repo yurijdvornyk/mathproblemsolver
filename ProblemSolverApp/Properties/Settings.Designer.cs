@@ -58,5 +58,29 @@ namespace ProblemSolverApp.Properties {
                 this["ControlTitleBackground"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("224, 224, 224")]
+        public global::System.Drawing.Color MenuBackground {
+            get {
+                return ((global::System.Drawing.Color)(this["MenuBackground"]));
+            }
+            set {
+                this["MenuBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("250, 250, 250")]
+        public global::System.Drawing.Color MainBackground {
+            get {
+                return ((global::System.Drawing.Color)(this["MainBackground"]));
+            }
+            set {
+                this["MainBackground"] = value;
+            }
+        }
     }
 }

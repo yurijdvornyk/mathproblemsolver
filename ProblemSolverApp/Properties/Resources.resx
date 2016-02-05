@@ -124,6 +124,18 @@
   <data name="exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Drawable\exit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="export_excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Drawable\export_excel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="export_plot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Drawable\export_plot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="export_result" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Drawable\export_result.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="export_tex" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Drawable\export_tex.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="external_libs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Drawable\external_libs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -144,6 +156,9 @@
   </data>
   <data name="repo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Drawable\repo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="results" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Drawable\results.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="result_input_data" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Drawable\result_input_data.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -11,5 +11,11 @@
     <Setting Name="ControlTitleBackground" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">127, 127, 127</Value>
     </Setting>
+    <Setting Name="MenuBackground" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">224, 224, 224</Value>
+    </Setting>
+    <Setting Name="MainBackground" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">250, 250, 250</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

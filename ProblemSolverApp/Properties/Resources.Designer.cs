@@ -83,6 +83,46 @@ namespace ProblemSolverApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap export_excel {
+            get {
+                object obj = ResourceManager.GetObject("export_excel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap export_plot {
+            get {
+                object obj = ResourceManager.GetObject("export_plot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap export_result {
+            get {
+                object obj = ResourceManager.GetObject("export_result", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap export_tex {
+            get {
+                object obj = ResourceManager.GetObject("export_tex", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap external_libs {
             get {
                 object obj = ResourceManager.GetObject("external_libs", resourceCulture);
@@ -176,6 +216,16 @@ namespace ProblemSolverApp.Properties {
         internal static System.Drawing.Bitmap result_table {
             get {
                 object obj = ResourceManager.GetObject("result_table", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap results {
+            get {
+                object obj = ResourceManager.GetObject("results", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
