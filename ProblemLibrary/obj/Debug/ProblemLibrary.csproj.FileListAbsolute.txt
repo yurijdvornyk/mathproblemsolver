@@ -2,3 +2,4 @@ D:\ScienceWork\MathProblemSolver\ProblemLibrary\bin\Debug\ProblemLibrary.dll
 D:\ScienceWork\MathProblemSolver\ProblemLibrary\bin\Debug\ProblemLibrary.pdb
 D:\ScienceWork\MathProblemSolver\ProblemLibrary\obj\Debug\ProblemLibrary.dll
 D:\ScienceWork\MathProblemSolver\ProblemLibrary\obj\Debug\ProblemLibrary.pdb
+D:\ScienceWork\MathProblemSolver\ProblemLibrary\obj\Debug\ProblemLibrary.csprojResolveAssemblyReference.cache
