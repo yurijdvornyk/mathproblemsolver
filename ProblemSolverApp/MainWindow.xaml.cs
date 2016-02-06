@@ -36,6 +36,7 @@ namespace ProblemSolverApp
 
             Logger = CustomLogger.GetInstance();
             terminal.Logger = Logger;
+
             try
             {
                 Logger.LogInfo("Session started.");

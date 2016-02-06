@@ -92,7 +92,7 @@ namespace ProblemSolverApp.Controls
                 {
                     spotControl.AddGraph(
                         new List<Point>() { new Point(double.Parse(value.ToString()), 0) },
-                        Brushes.DarkBlue);
+                        Brushes.DarkBlue, 2);
                 }
             }
         }

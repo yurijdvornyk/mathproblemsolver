@@ -4,9 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProblemSolverApp.Controls"
+             xmlns:prop="clr-namespace:ProblemSolverApp.Properties"
+             xmlns:conv="clr-namespace:ProblemSolverApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <conv:ColorToBrushConverter x:Key="ColorConverter" />
+    </UserControl.Resources>
     <DockPanel>
+        <StackPanel DockPanel.Dock="Top" VerticalAlignment="Top" Orientation="Horizontal"
+                    Background="{Binding Source={x:Static prop:Settings.Default}, 
+                    Path=ControlTitleBackground, Converter={StaticResource ColorConverter}}">
+            <Image Source="pack://application:,,,/Drawable/terminal.png" Margin="4,1,2,1" Width="16"/>
+            <TextBlock Text="Terminal" Margin="2,1,0,1" Foreground="White"/>
+        </StackPanel>
         <TabControl TabStripPlacement="Bottom">
             <TabItem Header="Output">
                 <DockPanel>

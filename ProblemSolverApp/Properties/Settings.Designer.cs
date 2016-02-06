@@ -82,5 +82,29 @@ namespace ProblemSolverApp.Properties {
                 this["MainBackground"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("218, 218, 218")]
+        public global::System.Drawing.Color ToolbarBackground {
+            get {
+                return ((global::System.Drawing.Color)(this["ToolbarBackground"]));
+            }
+            set {
+                this["ToolbarBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("180, 180, 180")]
+        public global::System.Drawing.Color ToolbarColor {
+            get {
+                return ((global::System.Drawing.Color)(this["ToolbarColor"]));
+            }
+            set {
+                this["ToolbarColor"] = value;
+            }
+        }
     }
 }

@@ -106,14 +106,15 @@
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
-        <ToolBarTray Margin="0,18,0,0" VerticalAlignment="Top">
-            <ToolBar>
-                <Button>
-                    <Image Source="pack://application:,,,/Drawable/solve.png"/>
-                </Button>
-            </ToolBar>
-        </ToolBarTray>
-        <Grid Margin="0,45,0,22">
+        <Menu Margin="0,18,0,0" VerticalAlignment="Top" Height="24" Background="{Binding Source={x:Static prop:Settings.Default}, 
+            Path=ToolbarBackground, Converter={StaticResource ColorConverter}}">
+            <MenuItem Click="btnCalculate_Click">
+                <MenuItem.Header>
+                    <Image Source="pack://application:,,,/Drawable/solve.png" Height="16" Margin="0,2,0,2"/>
+                </MenuItem.Header>
+            </MenuItem>
+        </Menu>
+        <Grid Margin="0,42,0,22">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
