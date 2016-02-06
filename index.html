@@ -1,25 +1,37 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>MathProblemSolver by yurijdvornyk</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>MathProblemSolver by yurijdvornyk</title>
   </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">MathProblemSolver</h1>
-      <h2 class="project-tagline">Open source solution for solving mathematical problems with user-friendly interface</h2>
-      <a href="https://github.com/yurijdvornyk/mathproblemsolver" class="btn">View on GitHub</a>
-      <a href="https://github.com/yurijdvornyk/mathproblemsolver/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/yurijdvornyk/mathproblemsolver/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
 
-    <section class="main-content">
-      <h2>
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>MathProblemSolver</h1>
+          <h2>Open source solution for solving mathematical problems with user-friendly interface</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/yurijdvornyk/mathproblemsolver/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/yurijdvornyk/mathproblemsolver/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/yurijdvornyk/mathproblemsolver" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h2>
 <a id="open-source-easy-to-use-solution-for-working-with-mathematical-problems" class="anchor" href="#open-source-easy-to-use-solution-for-working-with-mathematical-problems" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Open source, easy to use solution for working with mathematical problems</h2>
 
 <p>MathProblemSolver is the desktop application designed to simplify the process of creating and calculating different mathematical problems. It provides the user with friendly interface and simple API that allows to concentrate on mathematical aspects of the project.</p>
@@ -29,21 +41,21 @@
 
 <ol>
 <li><p><strong>Download MathProblemSolver application and ProblemLibrary.</strong> <img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/other/images/1_download.png" alt=""> You can get sources and binaries by clicking on one of the buttons above.</p></li>
-<li><p><strong>Create your problem.</strong> <img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/other/images/2_code.png" alt=""> Extend <code>Problem</code> class or implement <code>IProblem</code> interface, override the methods, implement problem solving and build the project. MathProblemSolver uses for this purposes Problem API, which was designed specially for you!:) It's realy simple, but also powerful. More about Problem API you can read <a href="https://github.com/yurijdvornyk/mathproblemsolver/wiki/Problem-API-classes">here</a>.</p></li>
+<li><p><strong>Create your problem.</strong> <img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/other/images/2_code.png" alt=""> Extend <code>Problem</code> class or implement <code>IProblem</code> interface, override methods, implement problem solving process and build the project. MathProblemSolver uses for this purposes Problem API, which was designed specially for you!:) It's realy simple, but also powerful. More about Problem API you can read <a href="https://github.com/yurijdvornyk/mathproblemsolver/wiki/Problem-API-classes">here</a>.</p></li>
 <li><p><strong>Load problem in MathProblemSolver.</strong> <img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/other/images/3_load_to_app.png" alt=""> Open "Problem Repository" (<img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/ProblemSolverApp/Drawable/repo.png" alt="">) and add your problem. If it has some external dependencies, add them in "External Libraries Repository" (<img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/ProblemSolverApp/Drawable/external_libs.png" alt="">).</p></li>
 <li><p><strong>Set input data.</strong> <img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/other/images/4_set_data.png" alt=""> Select your problem in Problem Data menu, fill all parameter values that your problem need to be solved.</p></li>
 <li><p><strong>Solve problem.</strong> <img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/other/images/5_solve.png" alt=""> Click on the "Solve" button (<img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/ProblemSolverApp/Drawable/solve.png" alt="">) to start calculating the problem result.</p></li>
 <li><p><strong>Get results.</strong> <img src="https://raw.githubusercontent.com/yurijdvornyk/mathproblemsolver/master/other/images/6_results.png" alt=""> After the problem is solved, check its results and save them to popular file formats or just print them.</p></li>
 </ol>
+        </section>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/yurijdvornyk/mathproblemsolver">MathProblemSolver</a> is maintained by <a href="https://github.com/yurijdvornyk">yurijdvornyk</a>.</span>
+        <footer>
+          MathProblemSolver is maintained by <a href="https://github.com/yurijdvornyk">yurijdvornyk</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
+        
+      </div>
+    </div>
   </body>
 </html>
