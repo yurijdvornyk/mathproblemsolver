@@ -125,14 +125,6 @@ namespace ProblemSolverApp
             settingsWin.Show();
         }
 
-        private void btnExportProblemPdf_Click(object sender, RoutedEventArgs e)
-        {
-            ProblemExporter exp = new ProblemExporter();
-            var problem = problemDataControl.CurrentProblem;
-            var problemItem = _ProblemManager.ProblemFullInfoList.First(x => x.Problem == problem);
-            exp.Write(problemItem, "a.pdf");
-        }
-
         private void btnExportProblemTex_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new SaveFileDialog();

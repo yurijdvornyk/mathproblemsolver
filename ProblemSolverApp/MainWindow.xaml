@@ -22,7 +22,6 @@
                 <MenuItem Header="Calculate" Click="btnCalculate_Click"/>
                 <MenuItem Header="Export Problem">
                     <MenuItem Header="Export To TeX" Click="btnExportProblemTex_Click"/>
-                    <MenuItem Header="Export To PDF" Click="btnExportProblemPdf_Click"/>
                 </MenuItem>
                 <Separator/>
                 <MenuItem Header="Problem Repository" Click="btnProblemManager_Click"/>
