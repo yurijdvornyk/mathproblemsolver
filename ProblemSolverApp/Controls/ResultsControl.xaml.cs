@@ -81,6 +81,7 @@ namespace ProblemSolverApp.Controls
             _InputDataTable.CurrentProblem = CurrentProblem;
             _InputDataTable.FillDataTable();
             inputDataGrid.ItemsSource = _InputDataTable.AsDataView;
+            spotControl.SpotName = CurrentProblem.Name;
         }
 
         private void handleD1(ProblemResult result)

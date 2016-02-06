@@ -32,7 +32,7 @@ namespace ProblemSolverApp
         public MainWindow()
         {
             InitializeComponent();
-            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            //CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
             Logger = CustomLogger.GetInstance();
             terminal.Logger = Logger;
@@ -108,7 +108,7 @@ namespace ProblemSolverApp
             }
             catch (Exception ex)
             {
-                Logger.LogError(name + ": There sers some errors while calculating the problem. Details:\n" + ex.Message);
+                Logger.LogError(name + ": There were some errors while calculating the problem. Details:\n" + ex.Message);
             }
         }
 
