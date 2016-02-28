@@ -49,7 +49,7 @@ namespace ProblemSolverApp.Classes
             return problemManager;
         }
 
-        public void LoadSharedLibraries(List<string> builtInLibs)
+        public void LoadSharedLibraries(List<Assembly> builtInLibs)
         {
             string path = RepositoryPath + pathSeparator + "shared";
             var libFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll");
@@ -65,7 +65,7 @@ namespace ProblemSolverApp.Classes
             foreach (var file in libFiles)
             {
                 var asm = Assembly.LoadFrom(file);
-                if (!builtInLibs.Contains(asm.FullName))
+                if (!builtInLibs.Contains(asm))
                 {
                     var typeObjects = new List<object>();
                     var types = asm.GetTypes();
@@ -139,7 +139,7 @@ namespace ProblemSolverApp.Classes
             }
         }
 
-        public void Load(List<string> builtInLibs, bool replaceLibsIfExist = true)
+        public void Load(List<Assembly> builtInLibs, bool replaceLibsIfExist = true)
         {
             LoadSharedLibraries(builtInLibs);
             CopySharedLibraries(replaceLibsIfExist);
@@ -205,7 +205,7 @@ namespace ProblemSolverApp.Classes
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="originalFile"></param>
+        /// <param name="originalFiles"></param>
         /// <param name="libToFound">Library name to load. Leave null if you don't have it.</param>
         /// <param name="problem">Problem dll-file name without extension (e.g. abc.dll -> abc). If library should be shared, left this 'null'</param>
         /// <param name="rewriteIfExists"></param>

@@ -22,6 +22,22 @@ namespace ProblemSolverApp.Classes
             }
         }
 
+        public bool IsAssemblyReferenced
+        {
+            get
+            {
+                List<Assembly> assemblies = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
+                if (assemblies.Exists(x => x.GetName().Name == _AssemblyName.Name && x.GetName().Version == _AssemblyName.Version))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         public LibraryItem(object instance, Assembly assembly, IEnumerable<object> instances = null)
         {
             LibraryInstance = instance;
@@ -52,21 +68,9 @@ namespace ProblemSolverApp.Classes
             }
         }
 
-        //public override bool Equals(object obj)
-        //{
-        //    LibraryItem library = obj as LibraryItem;
-        //    if (obj == null) { return false; }
-
-        //    if (library._AssemblyName.FullName == this._AssemblyName.FullName)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
         public override string ToString()
         {
-            return _AssemblyName.Name;
+            return _AssemblyName.FullName;
         }
     }
 }

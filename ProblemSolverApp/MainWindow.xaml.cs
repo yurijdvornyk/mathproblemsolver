@@ -47,12 +47,7 @@ namespace ProblemSolverApp
                 Logger.LogInfo("Loading problems...");
 
                 var builtInLibs = AppDomain.CurrentDomain.GetAssemblies().ToList();
-                var builtInLibsNames = new List<string>();
-                foreach (var i in builtInLibs)
-                {
-                    builtInLibsNames.Add(i.FullName);
-                }
-                _ProblemManager.Load(builtInLibsNames);
+                _ProblemManager.Load(builtInLibs);
 
 
                 problemDataControl._ProblemManager = _ProblemManager;

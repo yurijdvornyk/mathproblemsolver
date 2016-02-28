@@ -16,6 +16,32 @@ namespace ProblemSolverApp.Classes
 
         public string AssemblyName { get { return _Assembly.FullName; } }
         public string AssemblyVersion { get { return _Assembly.GetName().Version.Major + "." + _Assembly.GetName().Version.Minor; } }
+        public List<LibraryItem> ReferencedAssemblies
+        {
+            get
+            {
+                List<LibraryItem> result = new List<LibraryItem>();
+                foreach (var i in _Assembly.GetReferencedAssemblies())
+                {
+                    result.Add(new LibraryItem(i));
+                }
+                return result;
+            }
+        }
+        public bool AreDependenciesResolved
+        {
+            get
+            {
+                foreach (var i in ReferencedAssemblies)
+                {
+                    if (!i.IsAssemblyReferenced)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
 
         public ProblemItem(IProblem problem, Assembly assembly)
         {

@@ -180,5 +180,20 @@ namespace ProblemSolverApp.Windows
                 lbProblems.ItemsSource = _ProblemManager.SharedLibrariesList;
             }
         }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            string result = "";
+            foreach (var i in _ProblemManager.ProblemFullInfoList)
+            {
+                var modules = i._Assembly.GetReferencedAssemblies();
+                result += i.Problem.Name + "\n";
+                foreach (var j in modules)
+                {
+                    result += "  " + j.Name + "\n";
+                }
+            }
+            MessageBox.Show(result);
+        }
     }
 }
