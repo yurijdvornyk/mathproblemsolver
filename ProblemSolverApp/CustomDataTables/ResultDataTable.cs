@@ -34,13 +34,13 @@ namespace ProblemSolverApp
 
             switch (Result.Type)
             {
-                case ProblemResultType.D1:
+                case ProblemResultType.NumberOrArray:
                     handleD1();
                     break;
-                case ProblemResultType.D2:
+                case ProblemResultType.FunctionOfOneArgument:
                     handleD2();
                     break;
-                case ProblemResultType.Matrix:
+                case ProblemResultType.NumericMatrix:
                     handleMatrix();
                     break;
                 case ProblemResultType.MatrixCollection:

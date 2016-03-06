@@ -59,11 +59,11 @@ namespace ProblemSolverApp.Controls
             try {
                 switch (result.Type)
                 {
-                    case ProblemResultType.D1:
-                        handleD1(result);
+                    case ProblemResultType.NumberOrArray:
+                        handleNumberOrArray(result);
                         break;
-                    case ProblemResultType.D2:
-                        handleD2(result);
+                    case ProblemResultType.FunctionOfOneArgument:
+                        handleFunctionOfOneArgument(result);
                         break;
                     default:
                         break;
@@ -84,7 +84,7 @@ namespace ProblemSolverApp.Controls
             spotControl.SpotName = CurrentProblem.Name;
         }
 
-        private void handleD1(ProblemResult result)
+        private void handleNumberOrArray(ProblemResult result)
         {
             var values = result.Value as object[];
             if (values != null)
@@ -98,7 +98,7 @@ namespace ProblemSolverApp.Controls
             }
         }
 
-        private void handleD2(ProblemResult result)
+        private void handleFunctionOfOneArgument(ProblemResult result)
         {
             var values = (object[,])result.Value;
             if (values.GetLength(1) == 2)

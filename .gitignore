@@ -236,6 +236,6 @@ _Pvt_Extensions
 .fake/
 
 
-
-**/custom/problems/
-**/custom/shared/
+# Custom problems and libraries
+custom/problems/
+custom/shared/

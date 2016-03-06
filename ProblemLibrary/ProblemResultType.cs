@@ -5,23 +5,30 @@
         /// <summary>
         /// One dimension. Use for one or more scalar values. Save the result as object[].
         /// </summary>
-        D1,
+        NumberOrArray,
 
         /// <summary>
         /// Two dimensions. Good solution to store x, f(x) pairs. 
         /// Save the result as object[,] where the second dimension length equals to 1
         /// </summary>
-        D2,
+        FunctionOfOneArgument,
 
         /// <summary>
-        /// Use when you need to save matrices or data in custom format.
+        /// Use when you need to save arbitrary data.
         /// Save the result as object[,]. You are free to fill this matrix.
+        /// It won't be interpreted in any way.
         /// </summary>
-        Matrix,
+        FreeMatrix,
+
+        /// <summary>
+        /// Use when you need to save numeric matrices.
+        /// Save the result as object[,].
+        /// </summary>
+        NumericMatrix,
 
         /// <summary>
         /// Collection of matrices: Will be interpreted like "IEnumerable<object[,]>".
         /// </summary>
-        MatrixCollection,
+        MatrixCollection
     }
 }

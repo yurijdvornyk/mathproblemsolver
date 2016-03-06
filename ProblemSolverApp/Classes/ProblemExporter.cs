@@ -43,7 +43,16 @@ namespace ProblemSolverApp.Classes
                 "\\begin{tabular}{l l l}\nParameter & Data Type & Value" + @"\\ \hline");
             foreach (var i in problem.Problem.InputData)
             {
-                fileContent.Append("\n$" + i.Name + "$ & \\texttt{" + i.Type + "} & \\texttt{" + i.Value + @"} \\");
+                switch (i.Type)
+                {
+                    case ProblemLibrary.ProblemDataItemType.Function:
+                        fileContent.Append("\n$" + i.Name + "$ & \\texttt{" + i.Type + "} & \\texttt{" + i.Value + @"} \\");
+                        break;
+
+                    default:
+                        fileContent.Append("\n" + i.Name + " & \\texttt{" + i.Type + "} & \\texttt{" + i.Value + @"} \\");
+                        break;
+                }
             }
 
             fileContent.Append("\n\\hline\\end{tabular}\n\n\\vspace{20pt}\n\n");

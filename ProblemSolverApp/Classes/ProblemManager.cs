@@ -10,22 +10,10 @@ namespace ProblemSolverApp.Classes
 {
     public class ProblemManager
     {
-        /// <summary>
-        /// 
-        /// Structure:
-        /// 
-        /// /ProblemPath/problems/problemX.dll
-        ///                      /problemY.dll
-        ///             /shared/libD.dll
-        ///                    /libE.dll
-        /// 
-        /// </summary>
         public string RepositoryPath { get; set; }
         public string ProblemPath { get { return RepositoryPath + pathSeparator + "problems"; } }
         public string SharedLibPath { get { return RepositoryPath + pathSeparator + "shared"; } }
         private string pathSeparator { get { return Path.DirectorySeparatorChar.ToString(); } }
-
-        //public ObservableCollection<IProblem> ProblemList { get; set; }
 
         public ObservableCollection<ProblemItem> ProblemFullInfoList { get; set; }
 
@@ -202,13 +190,6 @@ namespace ProblemSolverApp.Classes
             }
         }
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="originalFiles"></param>
-        /// <param name="libToFound">Library name to load. Leave null if you don't have it.</param>
-        /// <param name="problem">Problem dll-file name without extension (e.g. abc.dll -> abc). If library should be shared, left this 'null'</param>
-        /// <param name="rewriteIfExists"></param>
         public void AddLibrary(params string[] originalFiles)
         {
             List<Exception> exceptions = new List<Exception>();

@@ -36,10 +36,9 @@ namespace ProblemSolverApp
 
             Logger = CustomLogger.GetInstance();
             terminal.Logger = Logger;
-
+            Logger.LogInfo("Session started.");
             try
             {
-                Logger.LogInfo("Session started.");
                 var sep = System.IO.Path.DirectorySeparatorChar.ToString();
                 ProblemPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + sep + "custom";
                 _ProblemManager = ProblemManager.GetInstance();
@@ -48,7 +47,6 @@ namespace ProblemSolverApp
 
                 var builtInLibs = AppDomain.CurrentDomain.GetAssemblies().ToList();
                 _ProblemManager.Load(builtInLibs);
-
 
                 problemDataControl._ProblemManager = _ProblemManager;
 

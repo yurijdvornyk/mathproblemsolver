@@ -33,6 +33,11 @@
         String,
 
         /// <summary>
+        /// Some mathematical entity (some function -- most often)
+        /// </summary>
+        Function,
+
+        /// <summary>
         /// List of values with one possible choice
         /// </summary>
         OneOfMany,

@@ -4,7 +4,7 @@
     /// Stores the information about the result of solved mathematical problem.
     /// 
     /// If the result of your problem is a NUMBER, VECTOR (ARRAY) or MATRIX, you should save it like this:
-    /// Type:   ProblemResultType.Matrix;
+    /// Type:   ProblemResultType.NumericMatrix;
     /// Title:  string[];   e.g.: { column1, column2, column3, ... };
     /// Value:  object[,];  e.g.: { { 1, 2, 3, ... }, { 4, 5, 6, ...}, {7, 8, 9, ...}, ... };
     /// 

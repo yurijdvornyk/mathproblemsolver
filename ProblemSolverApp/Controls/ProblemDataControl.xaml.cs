@@ -107,24 +107,28 @@ namespace ProblemSolverApp.Controls
                     return checkBox;
 
                 case ProblemDataItemType.String:
-                    TextBox textBox = new TextBox();
-                    return textBox;
+                    TextBox textBoxString = new TextBox();
+                    return textBoxString;
+
+                case ProblemDataItemType.Function:
+                    TextBox textBoxFunction = new TextBox();
+                    return textBoxFunction;
 
                 case ProblemDataItemType.Character:
-                    textBox = new TextBox();
-                    return textBox;
+                    TextBox textBoxChar = new TextBox();
+                    return textBoxChar;
 
                 case ProblemDataItemType.Double:
-                    TextBox numericTextBox = new TextBox();
-                    return numericTextBox;
+                    TextBox textBoxDouble = new TextBox();
+                    return textBoxDouble;
 
                 case ProblemDataItemType.Int:
-                    numericTextBox = new TextBox();
-                    return numericTextBox;
+                    TextBox textBoxInt = new TextBox();
+                    return textBoxInt;
 
                 case ProblemDataItemType.UnsignedInt:
-                    numericTextBox = new TextBox();
-                    return numericTextBox;
+                    TextBox textBoxUint = new TextBox();
+                    return textBoxUint;
 
                 case ProblemDataItemType.OneOfMany:
                     ComboBox comboBox = new ComboBox();
@@ -254,6 +258,9 @@ namespace ProblemSolverApp.Controls
                 case ProblemDataItemType.String:
                     return (element as TextBox).Text;
 
+                case ProblemDataItemType.Function:
+                    return (element as TextBox).Text;
+
                 case ProblemDataItemType.Character:
                     return (element as TextBox).Text;
 
@@ -358,15 +365,14 @@ namespace ProblemSolverApp.Controls
 
         #region Events for ui elements
 
-        #endregion
-
         private void btnOpenProblemRepository_Click(object sender, RoutedEventArgs e)
         {
         }
 
         private void btnOpenExternalLibsRepo_Click(object sender, RoutedEventArgs e)
         {
-
         }
+
+        #endregion
     }
 }
