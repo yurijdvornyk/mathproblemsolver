@@ -234,8 +234,3 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-
-
-# Custom problems and libraries
-custom/problems/
-custom/shared/
