@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SpotLibrary;
 using ProblemSolverApp.Classes.CustomLogger;
+using System.Collections.ObjectModel;
 
 namespace ProblemSolverApp.Controls
 {
@@ -26,107 +27,133 @@ namespace ProblemSolverApp.Controls
         public ResultsControl()
         {
             InitializeComponent();
-
+            random = new Random();
             Logger = CustomLogger.GetInstance();
-
-            _ResultDataTable = new ResultDataTable();
-            dataGrid.ItemsSource = _ResultDataTable.AsDataView;
 
             _InputDataTable = new InputDataTable();
             inputDataGrid.ItemsSource = _InputDataTable.AsDataView;
         }
 
+        public ObservableCollection<TabItem> ResultTabs
+        {
+            get { return (ObservableCollection<TabItem>)GetValue(ResultTabsProperty); }
+            set { SetValue(ResultTabsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ResultTabs.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ResultTabsProperty =
+            DependencyProperty.Register("ResultTabs", typeof(ObservableCollection<TabItem>), 
+                typeof(ResultsControl), new PropertyMetadata(new ObservableCollection<TabItem>()));
+
         public IProblem CurrentProblem { get; set; }
-
-        public ResultDataTable _ResultDataTable { get; set; }
         public InputDataTable _InputDataTable { get; set; }
-
         public CustomLogger Logger { get; set; }
+        private Random random;
 
         public void UpdateResults()
         {
-            var result = CurrentProblem.Result;
+            // TODO: try/ctach ???
 
-            // UPDATE TABLE
-            _ResultDataTable.Result = result;
-            _ResultDataTable.FillDataTable();
-            dataGrid.ItemsSource = _ResultDataTable.AsDataView;
+            var result = CurrentProblem.Result;
+            updateTable(result);
+            updateInputData();
             // LOG Table updated
 
             // UPDATE PLOT
-            spotControl.ClearGraphs();
-
-            try {
-                switch (result.Type)
-                {
-                    case ProblemResultType.NumberOrArray:
-                        handleNumberOrArray(result);
-                        break;
-                    case ProblemResultType.FunctionOfOneArgument:
-                        handleFunctionOfOneArgument(result);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex.Message);
-                MessageBox.Show("There was an error while handling problem results.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
+            updatePlot(result);
             // LOG Plot updated
 
-            // UPDATE INPUT DATA
+            if (String.IsNullOrEmpty(result.Comments))
+            {
+                wbCommentsBrowser.NavigateToString("");
+            }
+            else
+            {
+                wbCommentsBrowser.NavigateToString(result.Comments);
+            }
+        }
+
+        private void updateTable(ProblemResult result)
+        {
+            ResultTabs.Clear();
+            for (int i = 0; i < result.TableValues.Count; ++i)
+            {
+                ResultDataTable resultDataTable = new ResultDataTable(result.TableValues[i]);
+                DataGrid dataGrid = new DataGrid();
+                dataGrid.IsReadOnly = true;
+                dataGrid.CanUserSortColumns = false;
+                dataGrid.CanUserAddRows = false;
+                dataGrid.CanUserDeleteRows = false;
+                dataGrid.CanUserResizeRows = false;
+                dataGrid.CanUserResizeColumns = false;
+                dataGrid.SelectionUnit = DataGridSelectionUnit.Cell;
+                dataGrid.ItemsSource = resultDataTable.AsDataView;
+
+                TabItem tabItem = new TabItem();
+                tabItem.Header = string.IsNullOrEmpty(result.TableValues[i].Title) ? (i + 1).ToString() : result.TableValues[i].Title;
+                tabItem.Content = dataGrid;
+                ResultTabs.Add(tabItem);
+            }
+
+            if (ResultTabs.Count > 0)
+            {
+                tcResultsTabs.SelectedIndex = 0;
+                tcResultsTabs.SelectedItem = ResultTabs.First();
+                ResultTabs.First().IsSelected = true;
+            }
+        }
+
+        private void updatePlot(ProblemResult result)
+        {
+            spotControl.ClearGraphs();
+            foreach (var value in result.VisualValues)
+            {
+                List<Point> points = new List<Point>();
+                for (int i = 0; i < value.Keys.Length; ++i)
+                {
+                    points.Add(new Point(value.Keys[i], value.Values[i]));
+                }
+                spotControl.AddGraph(points, getRandomColor(Colors.LightGray), 2, value.Title);
+            }
+            if (result.VisualValues.Count > 1)
+            {
+                spotControl.ShowGraphInfo = true;
+            }
+            else
+            {
+                spotControl.ShowGraphInfo = false;
+            }
+        }
+
+        private void updateInputData()
+        {
             _InputDataTable.CurrentProblem = CurrentProblem;
             _InputDataTable.FillDataTable();
             inputDataGrid.ItemsSource = _InputDataTable.AsDataView;
             spotControl.SpotName = CurrentProblem.Name;
         }
 
-        private void handleNumberOrArray(ProblemResult result)
+        private SolidColorBrush getRandomColor(Color mix)
         {
-            var values = result.Value as object[];
-            if (values != null)
-            {
-                foreach (var value in values)
-                {
-                    spotControl.AddGraph(
-                        new List<Point>() { new Point(double.Parse(value.ToString()), 0) },
-                        Brushes.DarkBlue, 2);
-                }
-            }
-        }
+            int red = random.Next(256);
+            int green = random.Next(256);
+            int blue = random.Next(256);
 
-        private void handleFunctionOfOneArgument(ProblemResult result)
-        {
-            var values = (object[,])result.Value;
-            if (values.GetLength(1) == 2)
-            {
-                List<Point> points = new List<Point>();
-                try {
-                    for (int i = 0; i < values.GetLength(0); ++i)
-                    {
-                        try {
-                            points.Add(new Point(
-                                double.Parse(values[i, 0].ToString()),
-                                double.Parse(values[i, 1].ToString())));
-                        } catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+            // mix the color
+            //if (mix != null)
+            //{
+            //    red = (red + mix.R) / 2;
+            //    green = (green + mix.G) / 2;
+            //    blue = (blue + mix.B) / 2;
+            //}
 
-                var titles = (string[])result.Title;
-                spotControl.HorizontalAxisName = titles[0];
-                spotControl.VerticalAxisName = titles[1];
-                spotControl.AddGraph(points, Brushes.DarkRed, 2);
-            }
+            Color color = new Color();
+            color.R = (byte) red;
+            color.G = (byte) green;
+            color.B = (byte) blue;
+            color.A = 255;
+
+            return new SolidColorBrush(color);
         }
     }
 }

@@ -32,7 +32,6 @@ namespace ProblemSolverApp
         public MainWindow()
         {
             InitializeComponent();
-            //CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
             Logger = CustomLogger.GetInstance();
             terminal.Logger = Logger;

@@ -25,7 +25,7 @@
             Path=ControlMenuBackground, Converter={StaticResource ColorConverter}}">
             <MenuItem>
                 <MenuItem.Header>
-                <Image Source="pack://application:,,,/Drawable/load.png"/>
+                    <Image Source="pack://application:,,,/Drawable/load.png"/>
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem>
@@ -63,7 +63,32 @@
                     </StackPanel>
                 </TabItem.Header>
                 <DockPanel>
-                    <DataGrid Name="dataGrid" IsReadOnly="True" CanUserSortColumns="False" DockPanel.Dock="Top" SelectionUnit="Cell"/>
+                    <TabControl x:Name="tcResultsTabs" ItemsSource="{Binding Path=ResultTabs, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <TabControl.Template>
+                            <ControlTemplate TargetType="TabControl">
+                                <DockPanel
+                                    Background="{Binding Source={x:Static prop:Settings.Default},
+                                    Path=ControlBackground, Converter={StaticResource ColorConverter}}">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+                                                  VerticalScrollBarVisibility="Disabled" 
+                                                  DockPanel.Dock="Bottom">
+                                        <TabPanel x:Name="HeaderPanel"
+                                                  Panel.ZIndex ="1" 
+                                                  Margin="2,2,2,0"
+                                                  Background="{Binding Source={x:Static prop:Settings.Default},
+                                                  Path=ControlBackground, Converter={StaticResource ColorConverter}}"
+                                                  KeyboardNavigation.TabIndex="1"
+                                                  IsItemsHost="true" />
+                                    </ScrollViewer>
+                                    <ContentPresenter x:Name="PART_SelectedContentHost" 
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                      Margin="{TemplateBinding Padding}"
+                                                      ContentSource="SelectedContent" />
+                                </DockPanel>
+                            </ControlTemplate>
+                        </TabControl.Template>
+                    </TabControl>
+
                 </DockPanel>
             </TabItem>
             <TabItem>
@@ -75,6 +100,17 @@
                 </TabItem.Header>
                 <DockPanel>
                     <spot:SpotControl x:Name="spotControl"/>
+                </DockPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/Drawable/comments.png" Margin="0,0,1,0"/>
+                        <TextBlock Text="Comments" Margin="1,0,0,0"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <DockPanel>
+                    <WebBrowser Name="wbCommentsBrowser"/>
                 </DockPanel>
             </TabItem>
             <TabItem>

@@ -1,29 +1,74 @@
-﻿namespace ProblemLibrary
+﻿using System;
+using System.Collections.Generic;
+
+namespace ProblemLibrary
 {
-    /// <summary>
-    /// Stores the information about the result of solved mathematical problem.
-    /// 
-    /// If the result of your problem is a NUMBER, VECTOR (ARRAY) or MATRIX, you should save it like this:
-    /// Type:   ProblemResultType.NumericMatrix;
-    /// Title:  string[];   e.g.: { column1, column2, column3, ... };
-    /// Value:  object[,];  e.g.: { { 1, 2, 3, ... }, { 4, 5, 6, ...}, {7, 8, 9, ...}, ... };
-    /// 
-    /// If the result is MULTIPLE NUMBERS, VECTORS (ARRAYS) or MATRICES, use this way:
-    /// Type:   ProblemResultType.MatrixCollection;
-    /// Title:  IEnumerable<object[]>;
-    /// Value:  IEnumerable<string[,]>;
-    /// </summary>
     public class ProblemResult
     {
-        public ProblemResultType Type { get; set; }
-        public object Title { get; set; }
-        public object Value { get; set; }
+        public string VisualTitleKey { get; private set; }
+        public string VisualTitleValue { get; private set; }
+        public string Comments { get; set; }
+        public List<ProblemResultTableValue> TableValues { get; private set; }
+        public List<ProblemResultVisualValue> VisualValues { get; private set; }
 
-        public ProblemResult(ProblemResultType type, object title, object value)
-        {            
-            Type = type;
+        public ProblemResult() : 
+            this(string.Empty, string.Empty, new List<ProblemResultTableValue>(), new List<ProblemResultVisualValue>())
+        { }
+
+        public ProblemResult(List<ProblemResultTableValue> tableValues, List<ProblemResultVisualValue> visualValues) : 
+            this(string.Empty, string.Empty, tableValues, visualValues)
+        { }
+
+        public ProblemResult(
+            string visualTitleKey, 
+            string visualTitleValue, 
+            List<ProblemResultTableValue> tableValues, 
+            List<ProblemResultVisualValue> visualValues,
+            string comments = "")
+        {
+            TableValues = tableValues;
+            VisualValues = visualValues;
+            VisualTitleKey = visualTitleKey;
+            VisualTitleValue = visualTitleValue;
+            Comments = comments;
+        }
+    }
+
+    public class ProblemResultTableValue
+    {
+        public string Title { get; set; }
+        public string[] Titles { get; private set; }
+        public object[,] Values { get; private set; }
+
+        public ProblemResultTableValue() : this(null, new string[0], new object[0,0]) { }
+
+        public ProblemResultTableValue(string[] titles, object[,] values): this(null, titles, values) { }
+
+        public ProblemResultTableValue(string title, string[] titles, object[,] values)
+        {
             Title = title;
-            Value = value;
+            Titles = titles;
+            Values = values;
+        }
+    }
+
+    public class ProblemResultVisualValue
+    {
+        public string Title { get; set; }
+        public double[] Keys { get; private set; }
+        public double[] Values { get; private set; }
+
+        public ProblemResultVisualValue() : this(string.Empty, new double[0], new double[0]) { }
+
+        public ProblemResultVisualValue(string title, double[] keys, double[] values)
+        {
+            if (keys.Length != values.Length)
+            {
+                throw new ArgumentException("Keys and values must have the same length!");
+            }
+            Title = title;
+            Keys = keys;
+            Values = values;
         }
     }
 }

@@ -209,6 +209,10 @@ namespace ProblemSolverApp.Controls
         {
             switch (type)
             {
+                case ProblemDataItemType.Function:
+                    (element as TextBox).Text = value.ToString();
+                    break;
+
                 case ProblemDataItemType.Boolean:
                     (element as CheckBox).IsChecked = (bool)value;
                     break;
@@ -289,13 +293,16 @@ namespace ProblemSolverApp.Controls
             {
                 var problem = ((ProblemItem)cbProblemSelector.SelectedItem).Problem;
                 Logger.LogInfo("Current problem: " + problem.Name);
-                string url = @"http://chart.apis.google.com/chart?cht=tx&chf=bg,s,AAAAAA00&chs=" + 60 + "&chl=" + problem.Equation.Replace("+", "%2B");
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(url, UriKind.RelativeOrAbsolute);
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.EndInit();
-                imgEquation.Source = bitmap;
+
+                if (!string.IsNullOrEmpty(problem.Equation)){
+                    string url = @"http://chart.apis.google.com/chart?cht=tx&chf=bg,s,AAAAAA00&chs=" + 60 + "&chl=" + problem.Equation.Replace("+", "%2B");
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(url, UriKind.RelativeOrAbsolute);
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    imgEquation.Source = bitmap;
+                }
 
                 UpdateControlLayout();
                 fillLayoutWithValues(problem);
