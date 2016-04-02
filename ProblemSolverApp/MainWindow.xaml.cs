@@ -87,10 +87,16 @@ namespace ProblemSolverApp
 
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
+            var problem = _ProblemManager.GetProblem(problemDataControl.CurrentProblem);
+            if (problem == null)
+            {
+                MessageBox.Show("To calculate problem, select it first", "Problem not selected", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             string name = string.Empty;
             try
             {
-                var problem = _ProblemManager.GetProblem(problemDataControl.CurrentProblem);
                 name = problem.Name;
                 problem.Solve();
                 problemResults.CurrentProblem = problem;

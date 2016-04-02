@@ -65,7 +65,7 @@ namespace ProblemSolverApp.Controls
 
             if (String.IsNullOrEmpty(result.Comments))
             {
-                wbCommentsBrowser.NavigateToString("");
+                wbCommentsBrowser.NavigateToString("<p>No any comments here.");
             }
             else
             {
