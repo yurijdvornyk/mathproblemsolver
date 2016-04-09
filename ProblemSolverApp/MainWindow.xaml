@@ -22,6 +22,14 @@
             Path=MenuBackground, Converter={StaticResource ColorConverter}}">
             <MenuItem Header="File">
                 <MenuItem Header="New"/>
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Close"/>
+                <Separator/>
+                <MenuItem Header="Save"/>
+                <MenuItem Header="Save All"/>
+                <Separator/>
+                <MenuItem Header="Recent Workspaces"/>
+                <Separator/>
                 <MenuItem Header="Exit">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Drawable/exit.png"/>
@@ -30,6 +38,7 @@
             </MenuItem>
             <MenuItem Header="Edit"/>
             <MenuItem Header="View"/>
+            <MenuItem Header="Workspace"/>
             <MenuItem Header="Problem">
                 <MenuItem Header="Set Input Data">
                     <MenuItem.Icon>
