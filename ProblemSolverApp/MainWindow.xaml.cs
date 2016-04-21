@@ -21,6 +21,7 @@ using System.Globalization;
 using ProblemSolverApp.Classes.CustomLogger;
 using Microsoft.Win32;
 using System.Diagnostics;
+using ProblemSolverApp.Classes.Session;
 
 namespace ProblemSolverApp
 {
@@ -32,62 +33,15 @@ namespace ProblemSolverApp
         public MainWindow()
         {
             InitializeComponent();
-
-            Logger = CustomLogger.GetInstance();
-            terminal.Logger = Logger;
-            Logger.LogInfo("Session started.");
-            try
-            {
-                var sep = System.IO.Path.DirectorySeparatorChar.ToString();
-                ProblemPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + sep + "custom";
-                _ProblemManager = ProblemManager.GetInstance();
-                _ProblemManager.RepositoryPath = ProblemPath;
-                Logger.LogInfo("Loading problems...");
-
-                var builtInLibs = AppDomain.CurrentDomain.GetAssemblies().ToList();
-                _ProblemManager.Load(builtInLibs);
-
-                problemDataControl._ProblemManager = _ProblemManager;
-
-                if (_ProblemManager.ProblemFullInfoList.Count == 0)
-                {
-                    Logger.LogSuccess("Problems path is scanned successfully, but there no uploaded problems now.");
-                }
-                else
-                {
-                    Logger.LogSuccess("Problems loaded. There are " + _ProblemManager.ProblemFullInfoList.Count + " problems found.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError("There were some errors while loading problems. Details:\n" + ex.Message);
-            }
+            Session = SessionManager.GetSession();
+            var sep = System.IO.Path.DirectorySeparatorChar.ToString();
         }
 
-        public string ProblemPath { get; set; }
-
-        #region ProblemManager
-
-        public ProblemManager _ProblemManager
-        {
-            get { return (ProblemManager)GetValue(_ProblemManagerProperty); }
-            set { SetValue(_ProblemManagerProperty, value); }
-        }
-
-        public static readonly DependencyProperty _ProblemManagerProperty =
-            DependencyProperty.Register("_ProblemManager", typeof(ProblemManager), typeof(MainWindow), new PropertyMetadata(null));
-
-        #endregion
-
-        #region Terminal
-
-        public CustomLogger Logger { get; set; }
-
-        #endregion
+        public SessionManager Session { get; private set; } 
 
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
-            var problem = _ProblemManager.GetProblem(problemDataControl.CurrentProblem);
+            var problem = problemDataControl.CurrentProblem;
             if (problem == null)
             {
                 MessageBox.Show("To calculate problem, select it first", "Problem not selected", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -101,26 +55,27 @@ namespace ProblemSolverApp
                 problem.Solve();
                 problemResults.CurrentProblem = problem;
                 problemResults.UpdateResults();
-
-                Logger.LogSuccess(problem.Name + ": Problem calculated successfully.");
+                //Logger.LogSuccess(problem.Name + ": Problem calculated successfully.");
             }
             catch (Exception ex)
             {
-                Logger.LogError(name + ": There were some errors while calculating the problem. Details:\n" + ex.Message);
+                // TODO: improve
+                MessageBox.Show(ex.Message);
+                //Logger.LogError(name + ": There were some errors while calculating the problem. Details:\n" + ex.Message);
             }
         }
 
         private void btnProblemManager_Click(object sender, RoutedEventArgs e)
         {
-            ProblemRepositoryWindow pmWin = new ProblemRepositoryWindow(Logger, ProblemPath);
-            Logger.LogInfo("Open problem repository.");
+            ProblemRepositoryWindow pmWin = new ProblemRepositoryWindow();
+            //Logger.LogInfo("Open problem repository.");
             pmWin.Show();
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow settingsWin = new SettingsWindow();
-            Logger.LogInfo("Open application settings.");
+            //Logger.LogInfo("Open application settings.");
             settingsWin.Show();
         }
 
@@ -135,16 +90,36 @@ namespace ProblemSolverApp
             if (result == true)
             {
                 ProblemExporter exporter = new ProblemExporter();
-                var problemItem = _ProblemManager.ProblemFullInfoList.First(x => x.Problem == problem);
+                var problemItem = Session.CurrentWorkspace.GetProblem(problem);
                 try
                 {
-                    exporter.SaveToTex(problemItem, dlg.FileName);
+                    // TODO: add
+                    //exporter.SaveToTex(problemItem, dlg.FileName);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
                 Process.Start(dlg.FileName);
+            }
+        }
+
+        private void btnOpenWorkspace_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.DefaultExt = ".workspace";
+            dialog.Filter = "MathProblemSolver workspace (.workspace)|*.workspace";
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    Session.OpenWorkspace(dialog.FileName);
+                    problemDataControl.ReloadWorkspace();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }

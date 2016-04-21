@@ -1,6 +1,8 @@
 ﻿using ProblemLibrary;
 using ProblemSolverApp.Classes;
 using ProblemSolverApp.Classes.CustomLogger;
+using ProblemSolverApp.Classes.Session;
+using ProblemSolverApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,7 +34,21 @@ namespace ProblemSolverApp.Controls
 
         public CustomLogger Logger { get; set; }
 
-        public ProblemManager _ProblemManager { get; set; }
+        public SessionManager Session { get; private set; }
+
+        //public Workspace CurrentWorkspace { get { return Session.CurrentWorkspace; } }
+
+        public Workspace CurrentWorkspace
+        {
+            get { return (Workspace)GetValue(CurrentWorkspaceProperty); }
+            set { SetValue(CurrentWorkspaceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentWorkspace.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentWorkspaceProperty =
+            DependencyProperty.Register("CurrentWorkspace", typeof(Workspace), typeof(ProblemDataControl), new PropertyMetadata(null));
+
+
 
         public IProblem CurrentProblem
         {
@@ -40,7 +56,7 @@ namespace ProblemSolverApp.Controls
             {
                 try
                 {
-                    return _ProblemManager.ProblemFullInfoList.First(x => x.Equals(cbProblemSelector.SelectedItem)).Problem;
+                    return CurrentWorkspace.GetProblem(cbProblemSelector.SelectedItem as ProblemItem);
                 }
                 catch
                 {
@@ -53,7 +69,7 @@ namespace ProblemSolverApp.Controls
 
         public void UpdateControlLayout()
         {
-            var currentProblem = _ProblemManager.ProblemFullInfoList[cbProblemSelector.SelectedIndex].Problem;
+            var currentProblem = CurrentWorkspace.Problems[cbProblemSelector.SelectedIndex].Problem;
             if (currentProblem == null)
             {
                 return;
@@ -285,6 +301,12 @@ namespace ProblemSolverApp.Controls
             }
         }
 
+        public void ReloadWorkspace()
+        {
+            CurrentWorkspace = SessionManager.GetSession().CurrentWorkspace;
+            MessageBox.Show(CurrentWorkspace.Problems.Count.ToString());
+        }
+
         #region Events
 
         private void cbProblemSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -338,8 +360,7 @@ namespace ProblemSolverApp.Controls
 
             try
             {
-                int index = _ProblemManager.ProblemFullInfoList.IndexOf(_ProblemManager.ProblemFullInfoList.First(x => x.Problem == CurrentProblem));
-                _ProblemManager.ProblemFullInfoList[index].Problem.SetInputData(values);
+                CurrentProblem.SetInputData(values);
                 Logger.LogSuccess("Problem input data is set successfully.");
             }
             catch (Exception ex)
@@ -354,10 +375,9 @@ namespace ProblemSolverApp.Controls
         {
             try
             {
-                var currentProblem = _ProblemManager.ProblemFullInfoList.First(x => x.Equals(CurrentProblem)).Problem;
-                currentProblem.ResetInputData();
+                CurrentProblem.ResetInputData();
                 UpdateControlLayout();
-                fillLayoutWithValues(currentProblem);
+                fillLayoutWithValues(CurrentProblem);
                 MessageBox.Show("Success");
                 // LOG success
             }
@@ -371,6 +391,12 @@ namespace ProblemSolverApp.Controls
         #endregion
 
         #region Events for ui elements
+
+        private void btnOpenWorkspaceDescription_Click(object sender, RoutedEventArgs e)
+        {
+            WorkspaceDescriptionWindow window = new WorkspaceDescriptionWindow();
+            window.Show();
+        }
 
         private void btnOpenProblemRepository_Click(object sender, RoutedEventArgs e)
         {

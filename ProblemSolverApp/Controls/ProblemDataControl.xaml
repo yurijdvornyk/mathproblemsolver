@@ -53,11 +53,18 @@
                 </MenuItem.Header>
             </MenuItem>
         </Menu>
+        <DockPanel DockPanel.Dock="Top">
+            <TextBlock Margin="5" Text="Workspace:" />
+            <TextBlock Margin="5" TextTrimming="CharacterEllipsis" 
+                       Text="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                       ToolTip="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        </DockPanel>
+        <Button DockPanel.Dock="Top" Content="Workspace description" Margin="5" Click="btnOpenWorkspaceDescription_Click"/>
         <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,2,0,1">
             <TextBlock Text="Current problem:" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0"/>
             <ComboBox DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,0,5,0" Name="cbProblemSelector" 
                       SelectionChanged="cbProblemSelector_SelectionChanged" ToolTip="{Binding ElementName=cbProblemSelector, Path=SelectedItem}"
-                      ItemsSource="{Binding Path=_ProblemManager.ProblemFullInfoList, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                      ItemsSource="{Binding Path=CurrentWorkspace.Problems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         </DockPanel>
         <Image Name="imgEquation" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,1,0,1" MaxHeight="48"/>
         <Separator DockPanel.Dock="Top" VerticalAlignment="Top"/>

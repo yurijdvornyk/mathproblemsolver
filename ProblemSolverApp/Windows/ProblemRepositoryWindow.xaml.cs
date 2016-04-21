@@ -33,14 +33,11 @@ namespace ProblemSolverApp.Windows
         {
             InitializeComponent();
             Logger = logger;
-
-            _ProblemManager = ProblemManager.GetInstance();
-            _ProblemManager.RepositoryPath = path;
         }
 
-        public ProblemManager _ProblemManager
+        public SharedLibrariesManager SharedLibraries
         {
-            get { return (ProblemManager)GetValue(_ProblemManagerProperty); }
+            get { return (SharedLibrariesManager)GetValue(_ProblemManagerProperty); }
             set { SetValue(_ProblemManagerProperty, value); }
         }
 
@@ -49,56 +46,7 @@ namespace ProblemSolverApp.Windows
         public CustomLogger Logger { get; private set; }
 
         public static readonly DependencyProperty _ProblemManagerProperty =
-            DependencyProperty.Register("_ProblemManager", typeof(ProblemManager), typeof(Window), new PropertyMetadata(null));
-
-        private void btnAddProblem_Click(object sender, RoutedEventArgs e)
-        {
-            var dlg = new OpenFileDialog();
-            dlg.Multiselect = true;
-            dlg.DefaultExt = ".dll";
-            dlg.Filter = "Problem library (.dll)|*.dll";
-            Nullable<bool> result = dlg.ShowDialog();
-            if (result == true)
-            {
-                var filenames = dlg.FileNames;
-                try
-                {
-                    _ProblemManager.AddProblem(filenames);
-
-                    string message = "Problem(s) loaded successfully.";
-                    Logger.LogSuccess(message);
-                }
-                catch (Exception ex)
-                {
-                    string message = "Cannot load problem(s). Check if file(s) for errors. Details:\n" + ex.Message;
-                    Logger.LogError(message);
-                }
-                MessageBox.Show("Loading process finished. Check logs for more details.", "Loading process finished.", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
-
-        private void btnLoadProblemsLib_Click(object sender, RoutedEventArgs e)
-        {
-            var dlg = new OpenFileDialog();
-            dlg.DefaultExt = ".dll";
-            dlg.Filter = "Dynamic-link library (.dll)|*.dll";
-            Nullable<bool> result = dlg.ShowDialog();
-            if (result == true)
-            {
-                string filename = dlg.FileName;
-                try
-                {
-                    _ProblemManager.AddLibrary(filename);
-                    Logger.LogSuccess("Library from file " + filename + " loaded successfully.");
-                    MessageBox.Show("Success");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    Logger.LogError("Cannot load library: " + filename + ". Check if the file is valid. Details:\n" + ex.Message);
-                }
-            }
-        }
+            DependencyProperty.Register("_ProblemManager", typeof(SharedLibrariesManager), typeof(Window), new PropertyMetadata(null));
 
         private void btnAddLibrary_Click(object sender, RoutedEventArgs e)
         {
@@ -112,7 +60,7 @@ namespace ProblemSolverApp.Windows
                 string filename = dlg.FileName;
                 try
                 {
-                    _ProblemManager.AddLibrary(filename);
+                    //SharedLibraries.AddLibrary(filename);
 
                     string message = "Library from file " + filename + " loaded successfully.";
                     Logger.LogSuccess(message);
@@ -136,64 +84,43 @@ namespace ProblemSolverApp.Windows
         {
         }
 
-        private void findProblemTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ObservableCollection<ProblemItem> problems = new ObservableCollection<ProblemItem>();
-            var text = findProblemTextBox.Text.ToLower();
-            if (!string.IsNullOrEmpty(text))
-            {
-                foreach (var p in _ProblemManager.ProblemFullInfoList)
-                {
-                    if (p.Problem.Name.ToLower().Contains(text))
-                    {
-                        problems.Add(p);
-                    }
-                }
-                lbProblems.ItemsSource = problems;
-            }
-            else
-            {
-                lbProblems.ItemsSource = _ProblemManager.ProblemFullInfoList;
-            }
-        }
-
         private void findLibTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ObservableCollection<LibraryItem> libraries = new ObservableCollection<LibraryItem>();
-            var text = findLibTextBox.Text.ToLower();
-            if (!string.IsNullOrEmpty(text))
-            {
-                foreach (var p in _ProblemManager.SharedLibrariesList)
-                {
-                    if (p._AssemblyName != null)
-                    {
-                        if (p._AssemblyName.FullName.ToLower().Contains(text))
-                        {
-                            libraries.Add(p);
-                        }
-                    }
-                }
-                lbLibraries.ItemsSource = libraries;
-            }
-            else
-            {
-                lbProblems.ItemsSource = _ProblemManager.SharedLibrariesList;
-            }
+            //ObservableCollection<LibraryItem> libraries = new ObservableCollection<LibraryItem>();
+            //var text = findLibTextBox.Text.ToLower();
+            //if (!string.IsNullOrEmpty(text))
+            //{
+            //    foreach (var p in SharedLibraries.SharedLibrariesList)
+            //    {
+            //        if (p._AssemblyName != null)
+            //        {
+            //            if (p._AssemblyName.FullName.ToLower().Contains(text))
+            //            {
+            //                libraries.Add(p);
+            //            }
+            //        }
+            //    }
+            //    lbLibraries.ItemsSource = libraries;
+            //}
+            //else
+            //{
+            //    lbProblems.ItemsSource = SharedLibraries.SharedLibrariesList;
+            //}
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            string result = "";
-            foreach (var i in _ProblemManager.ProblemFullInfoList)
-            {
-                var modules = i._Assembly.GetReferencedAssemblies();
-                result += i.Problem.Name + "\n";
-                foreach (var j in modules)
-                {
-                    result += "  " + j.Name + "\n";
-                }
-            }
-            MessageBox.Show(result);
+            //string result = "";
+            //foreach (var i in SharedLibraries.ProblemFullInfoList)
+            //{
+            //    var modules = i._Assembly.GetReferencedAssemblies();
+            //    result += i.Problem.Name + "\n";
+            //    foreach (var j in modules)
+            //    {
+            //        result += "  " + j.Name + "\n";
+            //    }
+            //}
+            //MessageBox.Show(result);
         }
     }
 }

@@ -90,6 +90,8 @@ namespace ProblemSolverApp.Classes
                 Workspace workspace = (Workspace)xmlSerializer.Deserialize(reader);
                 reader.Close();
                 workspace.WorkspacePath = filename;
+                workspace.LoadAllLibraries();
+                workspace.LoadAllProblems();
                 return workspace;
             }
             catch (Exception ex)
@@ -106,15 +108,15 @@ namespace ProblemSolverApp.Classes
             writer.Close();
         }
 
-        public static void Close(Workspace workspace, AppDomain domain)
+        public static void Close(Workspace workspace)
         {
             workspace = null;
-            AppDomain.Unload(domain);
         }
 
-        public List<ProblemItem> LoadProblemsFromFile(string problemPath)
+        public List<ProblemItem> LoadProblemsFromFile(string problemFileName)
         {
-            var asm = Assembly.LoadFrom(problemPath);
+            string problemsPath = Path.GetDirectoryName(WorkspacePath) + Constants.PATH_SEPARATOR + "problems" + Constants.PATH_SEPARATOR + problemFileName;
+            var asm = Assembly.LoadFrom(problemsPath);
             var result = new List<ProblemItem>();
             foreach (var type in asm.GetTypes())
             {
@@ -123,7 +125,6 @@ namespace ProblemSolverApp.Classes
                     result.Add(new ProblemItem((IProblem)Activator.CreateInstance(type), asm));
                 }
             }
-            Problems = new ObservableCollection<ProblemItem>(result);
             return result;
         }
 
@@ -140,11 +141,11 @@ namespace ProblemSolverApp.Classes
             return Problems;
         }
 
-        public List<LibraryItem> LoadLibrariesFromFile(string libraryPath)
+        public List<LibraryItem> LoadLibrariesFromFile(string libraryFilename)
         {
-            string filename = Path.GetFileName(libraryPath);
+            string libraryPath = Path.GetDirectoryName(WorkspacePath) + Constants.PATH_SEPARATOR + "libraries" + Constants.PATH_SEPARATOR + libraryFilename;
             string workingDir = Directory.GetCurrentDirectory();
-            string newFile = workingDir + Constants.PATH_SEPARATOR + filename;
+            string newFile = workingDir + Constants.PATH_SEPARATOR + libraryFilename;
             var result = new List<LibraryItem>();
             List<Exception> exceptions = new List<Exception>();
             try
@@ -176,6 +177,104 @@ namespace ProblemSolverApp.Classes
                 }
             }
             return Libraries;
+        }
+
+        public void Calculate(int index)
+        {
+            var problem = Problems[index].Problem;
+            try
+            {
+                if (problem.IsInputDataSet)
+                {
+                    problem.Solve();
+                    //_Terminal.LogSuccess("Problem '" + problem.Name + "' calculated successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                //_Terminal.LogError("There were some errors while calculating the problem '" + problem.Name + "'. Details:\n" + ex.Message);
+            }
+        }
+
+        public void Calculate(IProblem problem)
+        {
+            int index = Problems.IndexOf(Problems.First(x => x.Problem == problem));
+            Calculate(index);
+        }
+
+        public IProblem GetProblem(IProblem problem)
+        {
+            int index = Problems.IndexOf(Problems.First(x => x.Problem == problem));
+            return GetProblem(index);
+        }
+
+        public IProblem GetProblem(ProblemItem problemItem)
+        {
+            return GetProblem(Problems.IndexOf(problemItem));
+        }
+
+        public IProblem GetProblem(int index)
+        {
+            try
+            {
+                return Problems[index].Problem;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Can't find problem. Details:\n" + ex.Message);
+            }
+        }
+
+        // TODO: Improve
+        public void AddProblem(params string[] fileFullNames)
+        {
+            List<Exception> exceptions = new List<Exception>();
+            foreach (var fileFullName in fileFullNames)
+            {
+                try
+                {
+                    var asm = Assembly.LoadFrom(fileFullName);
+                    var x = from type in asm.GetTypes()
+                            where typeof(IProblem).IsAssignableFrom(type)
+                            select type;
+                    if (x.Count() == 0)
+                    {
+                        exceptions.Add(new ArgumentException("Problem you try to load is not valid. It should implement IProblem interface."));
+                        continue;
+                    }
+
+                    string filename = Path.GetFileNameWithoutExtension(fileFullName);
+                    string newFileFullName = WorkspacePath + Constants.PATH_SEPARATOR + "problems" + Constants.PATH_SEPARATOR + Path.GetFileName(fileFullName);
+
+
+                    // We should update assembly file
+                    asm = Assembly.LoadFrom(newFileFullName);
+                    var problemInfoItem = new ProblemItem(
+                        (IProblem)Activator.CreateInstance(x.First(y => typeof(IProblem).IsAssignableFrom(y))),
+                        asm);
+                    Problems.Add(problemInfoItem);
+                    //ProblemList.Add(problemInfoItem.Problem);
+                }
+                catch (Exception ex)
+                {
+                    exceptions.Add(ex);
+                    continue;
+                }
+            }
+
+            string message = string.Empty;
+            if (exceptions.Count > 0)
+            {
+                foreach (var ex in exceptions)
+                {
+                    message += ex.Message + "\n";
+                }
+                throw new Exception(message);
+            }
+        }
+
+        public void RemoveProblem(string name)
+        {
         }
     }
 }
