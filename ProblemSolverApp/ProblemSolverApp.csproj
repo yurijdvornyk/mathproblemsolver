@@ -89,6 +89,9 @@
     <Compile Include="Windows\WorkspaceDescriptionWindow.xaml.cs">
       <DependentUpon>WorkspaceDescriptionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\WorkspaceEditorWindow.xaml.cs">
+      <DependentUpon>WorkspaceEditorWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\ProblemDataControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\WorkspaceDescriptionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WorkspaceEditorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

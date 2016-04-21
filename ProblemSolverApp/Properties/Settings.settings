@@ -15,7 +15,7 @@
       <Value Profile="(Default)">224, 224, 224</Value>
     </Setting>
     <Setting Name="MainBackground" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">250, 250, 250</Value>
+      <Value Profile="(Default)">240, 240, 240</Value>
     </Setting>
     <Setting Name="ToolbarBackground" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">218, 218, 218</Value>

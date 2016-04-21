@@ -122,5 +122,11 @@ namespace ProblemSolverApp
                 }
             }
         }
+
+        private void btnNewWorkspace_Click(object sender, RoutedEventArgs e)
+        {
+            WorkspaceEditorWindow window = new WorkspaceEditorWindow();
+            window.Show();
+        }
     }
 }
