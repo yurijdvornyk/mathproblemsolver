@@ -40,7 +40,7 @@ namespace ProblemSolverApp.Classes
         public ObservableCollection<LibraryItem> Libraries { get; set; }
 
         [XmlIgnore]
-        public string WorkspacePath { get; private set; }
+        public string WorkspacePath { get; set; }
 
         public Workspace() : this("", "", null, null) { }
 
@@ -141,6 +141,11 @@ namespace ProblemSolverApp.Classes
             return Problems;
         }
 
+        internal void AddLibraries(string[] fileNames)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<LibraryItem> LoadLibrariesFromFile(string libraryFilename)
         {
             string libraryPath = Path.GetDirectoryName(WorkspacePath) + Constants.PATH_SEPARATOR + "libraries" + Constants.PATH_SEPARATOR + libraryFilename;
@@ -226,55 +231,68 @@ namespace ProblemSolverApp.Classes
         }
 
         // TODO: Improve
-        public void AddProblem(params string[] fileFullNames)
+        public void AddProblems(params string[] fileFullNames)
         {
-            List<Exception> exceptions = new List<Exception>();
-            foreach (var fileFullName in fileFullNames)
+            foreach (var f in fileFullNames)
             {
-                try
-                {
-                    var asm = Assembly.LoadFrom(fileFullName);
-                    var x = from type in asm.GetTypes()
-                            where typeof(IProblem).IsAssignableFrom(type)
-                            select type;
-                    if (x.Count() == 0)
-                    {
-                        exceptions.Add(new ArgumentException("Problem you try to load is not valid. It should implement IProblem interface."));
-                        continue;
-                    }
-
-                    string filename = Path.GetFileNameWithoutExtension(fileFullName);
-                    string newFileFullName = WorkspacePath + Constants.PATH_SEPARATOR + "problems" + Constants.PATH_SEPARATOR + Path.GetFileName(fileFullName);
-
-
-                    // We should update assembly file
-                    asm = Assembly.LoadFrom(newFileFullName);
-                    var problemInfoItem = new ProblemItem(
-                        (IProblem)Activator.CreateInstance(x.First(y => typeof(IProblem).IsAssignableFrom(y))),
-                        asm);
-                    Problems.Add(problemInfoItem);
-                    //ProblemList.Add(problemInfoItem.Problem);
-                }
-                catch (Exception ex)
-                {
-                    exceptions.Add(ex);
-                    continue;
-                }
+                ProblemFiles.Add(f);
             }
+            //List<Exception> exceptions = new List<Exception>();
+            //foreach (var fileFullName in fileFullNames)
+            //{
+            //    try
+            //    {
+            //        var asm = Assembly.LoadFrom(fileFullName);
+            //        var x = from type in asm.GetTypes()
+            //                where typeof(IProblem).IsAssignableFrom(type)
+            //                select type;
+            //        if (x.Count() == 0)
+            //        {
+            //            exceptions.Add(new ArgumentException("Problem you try to load is not valid. It should implement IProblem interface."));
+            //            continue;
+            //        }
 
-            string message = string.Empty;
-            if (exceptions.Count > 0)
-            {
-                foreach (var ex in exceptions)
-                {
-                    message += ex.Message + "\n";
-                }
-                throw new Exception(message);
-            }
+            //        string filename = Path.GetFileNameWithoutExtension(fileFullName);
+            //        string newFileFullName = WorkspacePath + Constants.PATH_SEPARATOR + "problems" + Constants.PATH_SEPARATOR + Path.GetFileName(fileFullName);
+
+
+            //        // We should update assembly file
+            //        asm = Assembly.LoadFrom(newFileFullName);
+            //        var problemInfoItem = new ProblemItem(
+            //            (IProblem)Activator.CreateInstance(x.First(y => typeof(IProblem).IsAssignableFrom(y))),
+            //            asm);
+            //        Problems.Add(problemInfoItem);
+            //        //ProblemList.Add(problemInfoItem.Problem);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        exceptions.Add(ex);
+            //        continue;
+            //    }
+            //}
+
+            //string message = string.Empty;
+            //if (exceptions.Count > 0)
+            //{
+            //    foreach (var ex in exceptions)
+            //    {
+            //        message += ex.Message + "\n";
+            //    }
+            //    throw new Exception(message);
+            //}
         }
 
-        public void RemoveProblem(string name)
+        public void RemoveProblem(string filename)
         {
+            int index = ProblemFiles.IndexOf(filename);
+            Problems.Remove(Problems[index]);
+        }
+
+        // TODO: Improve
+        public void RemoveLibrary(string filename)
+        {
+            int index = LibraryFiles.IndexOf(filename);
+            Libraries.Remove(Libraries[index]);
         }
     }
 }

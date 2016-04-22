@@ -42,7 +42,7 @@
                     <Image Source="pack://application:,,,/Drawable/input_data_reset.png"/>
                 </MenuItem.Header>
             </MenuItem>
-            <MenuItem Click="btnOpenProblemRepository_Click">
+            <MenuItem Click="btnOpenWorkspaceEditor_Click">
                 <MenuItem.Header>
                     <Image Source="pack://application:,,,/Drawable/repo.png"/>
                 </MenuItem.Header>

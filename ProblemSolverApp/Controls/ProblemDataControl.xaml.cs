@@ -398,8 +398,10 @@ namespace ProblemSolverApp.Controls
             window.Show();
         }
 
-        private void btnOpenProblemRepository_Click(object sender, RoutedEventArgs e)
+        private void btnOpenWorkspaceEditor_Click(object sender, RoutedEventArgs e)
         {
+            WorkspaceEditorWindow window = new WorkspaceEditorWindow();
+            window.Show();
         }
 
         private void btnOpenExternalLibsRepo_Click(object sender, RoutedEventArgs e)
