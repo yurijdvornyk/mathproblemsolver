@@ -35,8 +35,6 @@ namespace ProblemSolverApp.Controls
 
         public CustomLogger Logger { get; set; }
 
-        public SessionManager Session { get; private set; }
-
         public Workspace CurrentWorkspace
         {
             get { return (Workspace)GetValue(CurrentWorkspaceProperty); }
@@ -402,9 +400,24 @@ namespace ProblemSolverApp.Controls
 
         void IEventListener.HandleEvent(EventType eventType, params object[] args)
         {
+            switch (eventType)
+            {
+                case EventType.UpdateWorkspace:
+                    ReloadWorkspace();
+                    break;
+                case EventType.OpenWorkspace:
+                    if (args != null && args.Length > 0)
+                    {
+                        SessionManager.GetSession().OpenWorkspace(args[0].ToString());
+                        ReloadWorkspace();
+                    }
+                    break;
+                default:
+                    break;
+            }
             if (eventType == EventType.UpdateWorkspace)
             {
-                ReloadWorkspace();
+                
             }
         }
 

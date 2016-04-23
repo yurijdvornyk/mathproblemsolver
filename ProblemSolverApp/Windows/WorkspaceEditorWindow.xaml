@@ -47,7 +47,7 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
                     <TextBlock DockPanel.Dock="Top" Text="Description:" Margin="5,5,5,0"/>
-                    <TextBox Name="tbDescription" Text="Type description" Margin="5,0,5,0" TextWrapping="WrapWithOverflow" VerticalScrollBarVisibility="Auto"/>
+                    <TextBox Name="tbDescription" TextWrapping="Wrap" AcceptsReturn="True" Margin="5,0,5,0" VerticalScrollBarVisibility="Auto"/>
                 </DockPanel>
                 <Separator Margin="5,5,5,0" Grid.Row="1" Grid.ColumnSpan="2"/>
                 <Grid Grid.Row="2" Grid.ColumnSpan="2">

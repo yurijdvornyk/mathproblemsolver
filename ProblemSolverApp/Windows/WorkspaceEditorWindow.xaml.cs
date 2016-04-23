@@ -213,11 +213,13 @@ namespace ProblemSolverApp.Windows
                 CurrentWorkspace.LibraryFiles.Add(item.ToString());
             }
 
+            bool isNewWorkspace = false;
             if (!File.Exists(CurrentWorkspace.WorkspacePath))
             {
                 try
                 {
                     Workspace.Save(CurrentWorkspace.WorkspacePath, CurrentWorkspace);
+                    isNewWorkspace = true;
                 }
                 catch (Exception ex)
                 {
@@ -232,6 +234,10 @@ namespace ProblemSolverApp.Windows
             }
 
             AppEventManager.NotifyListeners(EventType.UpdateWorkspace);
+            if (isNewWorkspace)
+            {
+                AppEventManager.NotifyListeners(EventType.OpenWorkspace, CurrentWorkspace.WorkspacePath);
+            }
             return true;
         }
     }
