@@ -11,5 +11,6 @@ namespace ProblemSolverApp.Classes
     {
         public static readonly string PATH_SEPARATOR = Path.DirectorySeparatorChar.ToString();
         public static readonly string CURRENT_DIRECTORY = Directory.GetCurrentDirectory();
+        public static readonly string DLL_EXTENSION = "dll";
     }
 }

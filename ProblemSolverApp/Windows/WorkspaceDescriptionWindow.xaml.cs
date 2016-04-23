@@ -1,5 +1,5 @@
 ﻿using ProblemSolverApp.Classes;
-using ProblemSolverApp.Classes.Session;
+using ProblemSolverApp.Classes.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;

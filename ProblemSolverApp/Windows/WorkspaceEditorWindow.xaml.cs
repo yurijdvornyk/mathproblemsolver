@@ -1,13 +1,15 @@
 ﻿using Microsoft.Win32;
 using ProblemSolverApp.Classes;
-using ProblemSolverApp.Classes.Session;
-using ProblemSolverApp.Classes.Utils;
+using ProblemSolverApp.Classes.Manager;
+using ProblemSolverApp.Classes.Manager.EventManager;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -25,11 +27,13 @@ namespace ProblemSolverApp.Windows
     public partial class WorkspaceEditorWindow : Window
     {
         public Workspace CurrentWorkspace { get; set; }
+        private bool needsRestart;
 
         public WorkspaceEditorWindow()
         {
             InitializeComponent();
             CurrentWorkspace = SessionManager.GetSession().CurrentWorkspace;
+            needsRestart = false;
 
             if (CurrentWorkspace == null)
             {
@@ -42,8 +46,8 @@ namespace ProblemSolverApp.Windows
         private void displayWorkspaceValues()
         {
             tbWorkspacePath.Text = CurrentWorkspace.WorkspacePath;
-            tbName.Text = CurrentWorkspace.Name;
-            tbDescription.Text = StringUtils.HtmlToString(CurrentWorkspace.Description);
+            tbName.Text = HttpUtility.HtmlDecode(CurrentWorkspace.Name);
+            tbDescription.Text = HttpUtility.HtmlDecode(CurrentWorkspace.Description);
 
             updateProblemsList();
             updateSharedLibrariesList();
@@ -87,22 +91,6 @@ namespace ProblemSolverApp.Windows
             }
         }
 
-        private void tbName_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (e.Text.Contains("&") || e.Text.Contains("<") || e.Text.Contains(">") || e.Text.Contains(@"\") || e.Text.Contains("'"))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void tbName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!StringUtils.IsTextValidName(tbName.Text))
-            {
-                tbName.Text = tbName.Text.Replace("&", "").Replace("<", "").Replace(">", "").Replace(@"\", "").Replace("'", "");
-            }
-        }
-
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -130,14 +118,15 @@ namespace ProblemSolverApp.Windows
 
         private void btnRemoveProblem_Click(object sender, RoutedEventArgs e)
         {
-            var problem = lbProblems.SelectedItem;
-            if (problem != null)
+            if (lbProblems.SelectedItems.Count > 0)
             {
-                string filename = problem.ToString();
-                lbProblems.Items.Remove(problem);
-
-                var problemFile = CurrentWorkspace.ProblemFiles.First(x => System.IO.Path.GetFileName(x) == filename);
-                CurrentWorkspace.RemoveProblem(problemFile);
+                foreach (var problem in lbProblems.SelectedItems)
+                {
+                    string filename = problem.ToString();
+                    var problemFile = CurrentWorkspace.ProblemFiles.First(x => System.IO.Path.GetFileName(x) == filename);
+                    CurrentWorkspace.RemoveProblem(problemFile);
+                }
+                updateProblemsList();
             }
         }
 
@@ -153,6 +142,7 @@ namespace ProblemSolverApp.Windows
                 {
                     CurrentWorkspace.AddLibraries(dialog.FileNames);
                     updateProblemsList();
+                    needsRestart = true;
                 }
                 catch (Exception ex)
                 {
@@ -163,15 +153,86 @@ namespace ProblemSolverApp.Windows
 
         private void btnRemoveSharedLibrary_Click(object sender, RoutedEventArgs e)
         {
-            var library = lbSharedLibraries.SelectedItem;
-            if (library != null)
+            foreach (var library in lbSharedLibraries.SelectedItems)
             {
                 string filename = library.ToString();
                 lbSharedLibraries.Items.Remove(library);
 
                 var libraryFile = CurrentWorkspace.LibraryFiles.First(x => System.IO.Path.GetFileName(x) == filename);
-                CurrentWorkspace.RemoveLibrary(libraryFile);
+                CurrentWorkspace.RemoveLibrary(libraryFile);                
             }
+            needsRestart = true;
+        }
+
+        private void btnApply_Click(object sender, RoutedEventArgs e)
+        {
+            saveChanges();
+        }
+
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            if (saveChanges())
+            {
+                if (needsRestart)
+                {
+                    // Restart app
+                }
+
+                Close();
+            }
+        }
+
+        private bool saveChanges()
+        {
+            if (string.IsNullOrEmpty(tbWorkspacePath.Text))
+            {
+                MessageBox.Show("Workspace path must be set!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(tbName.Text))
+            {
+                MessageBox.Show("Workspace name must be set!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            CurrentWorkspace.WorkspacePath = tbWorkspacePath.Text;
+            CurrentWorkspace.Name = HttpUtility.HtmlEncode(tbName.Text);
+            CurrentWorkspace.Description = HttpUtility.HtmlEncode(tbDescription.Text);
+
+            CurrentWorkspace.ProblemFiles.Clear();
+            foreach (var item in lbProblems.Items)
+            {
+                CurrentWorkspace.ProblemFiles.Add(item.ToString());
+            }
+            CurrentWorkspace.LoadAllProblems();
+
+            CurrentWorkspace.LibraryFiles.Clear();
+            foreach (var item in lbSharedLibraries.Items)
+            {
+                CurrentWorkspace.LibraryFiles.Add(item.ToString());
+            }
+
+            if (!File.Exists(CurrentWorkspace.WorkspacePath))
+            {
+                try
+                {
+                    Workspace.Save(CurrentWorkspace.WorkspacePath, CurrentWorkspace);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
+            if (needsRestart)
+            {
+                MessageBox.Show("The application will be restarted to have problems and shared libraries lists updated.",
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            AppEventManager.NotifyListeners(EventType.UpdateWorkspace);
+            return true;
         }
     }
 }

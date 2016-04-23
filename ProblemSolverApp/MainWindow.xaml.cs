@@ -21,7 +21,8 @@ using System.Globalization;
 using ProblemSolverApp.Classes.CustomLogger;
 using Microsoft.Win32;
 using System.Diagnostics;
-using ProblemSolverApp.Classes.Session;
+using ProblemSolverApp.Classes.Manager;
+using ProblemSolverApp.Classes.Manager.EventManager;
 
 namespace ProblemSolverApp
 {
@@ -34,7 +35,7 @@ namespace ProblemSolverApp
         {
             InitializeComponent();
             Session = SessionManager.GetSession();
-            var sep = System.IO.Path.DirectorySeparatorChar.ToString();
+            AppEventManager.AddListener(problemDataControl);
         }
 
         public SessionManager Session { get; private set; } 
@@ -127,6 +128,11 @@ namespace ProblemSolverApp
         {
             WorkspaceEditorWindow window = new WorkspaceEditorWindow();
             window.Show();
+        }
+
+        private void btnCloseWorkspace_Click(object sender, RoutedEventArgs e)
+        {
+            Session.CloseWorkspace();
         }
     }
 }

@@ -7,15 +7,13 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProblemSolverApp.Classes.Session
+namespace ProblemSolverApp.Classes.Manager
 {
     public class SessionManager
     {
-        private static SessionManager Session;
+        private static SessionManager session;
 
         public Workspace CurrentWorkspace { get; private set; }
-
-        public string SessionPath { get; set; }
 
         public ObservableCollection<LibraryItem> SharedLibraries { get; private set; }
 
@@ -27,11 +25,11 @@ namespace ProblemSolverApp.Classes.Session
 
         public static SessionManager GetSession()
         {
-            if (Session == null)
+            if (session == null)
             {
-                Session = new SessionManager();
+                session = new SessionManager();
             }
-            return Session;
+            return session;
         }
 
         #region Work with Workspace
@@ -62,12 +60,17 @@ namespace ProblemSolverApp.Classes.Session
 
         public void CopySharedLibraries()
         {
-            string path = SessionPath + Constants.PATH_SEPARATOR + "libraries" + Constants.PATH_SEPARATOR;
-            var libFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll");
-            foreach (var file in libFiles)
+            string specificFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MathProblemSolver");
+            if (!Directory.Exists(specificFolder))
             {
-                var newFile = path + Path.GetFileName(file);
-                File.Copy(file, newFile, false);
+                Directory.CreateDirectory(specificFolder);
+            }
+            foreach (var file in Directory.GetFiles(specificFolder))
+            {
+                if (Path.GetExtension(file).ToLower() == "." + Constants.DLL_EXTENSION)
+                {
+                    File.Copy(file, Path.Combine(Constants.CURRENT_DIRECTORY, Path.GetFileName(file)), false);
+                }
             }
         }
 
@@ -94,6 +97,17 @@ namespace ProblemSolverApp.Classes.Session
                 loadedContent.Add(new LibraryItem(null, asm, typeObjects));
             }
             SharedLibraries = new ObservableCollection<LibraryItem>(loadedContent);
+        }
+
+        public void RemoveSharedLibraries()
+        {
+            foreach (var file in Directory.GetFiles(Constants.CURRENT_DIRECTORY))
+            {
+                if (Path.GetExtension(file).ToLower() == "." + Constants.DLL_EXTENSION)
+                {
+                    File.Delete(file);
+                }
+            }
         }
 
         #endregion

@@ -6,7 +6,7 @@
         xmlns:prop="clr-namespace:ProblemSolverApp.Properties"
         xmlns:conv="clr-namespace:ProblemSolverApp.Converters"
         xmlns:local="clr-namespace:ProblemSolverApp.Windows"
-        mc:Ignorable="d" MinWidth="320" MinHeight="240"
+        mc:Ignorable="d" MinWidth="480" MinHeight="320"
         WindowStartupLocation="CenterScreen"
         Title="Workspace editor" Height="480" Width="800">
     <Window.Resources>
@@ -17,30 +17,40 @@
             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                 <TextBlock Text="Workspace path:" Margin="5,5,0,5"/>
                 <Button Content="..." DockPanel.Dock="Right" Margin="0,5,5,5" Width="24" Click="btnSetWorkspacePath_Click"/>
-                <TextBox Name="tbWorkspacePath" Text="{Binding Path=CurrentWorkspace.WorkspacePath, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="5" IsReadOnly="True"/>
+                <TextBox Name="tbWorkspacePath" Margin="5" IsReadOnly="True"/>
             </DockPanel>
             <Separator DockPanel.Dock="Top" Margin="5,0,5,0"/>
+            <!--<DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                <TextBlock Text="Workspace Id:" Margin="5,5,0,5"/>
+                <TextBox Name="tbWorkspaceId" Margin="5" IsReadOnly="True"/>
+            </DockPanel>
+            <Separator DockPanel.Dock="Top" Margin="5,0,5,0"/>-->
             <DockPanel DockPanel.Dock="Top">
                 <TextBlock DockPanel.Dock="Top" Text="Name:" Margin="5,0,5,0"/>
-                <TextBox Name="tbName"  Text="Type name" Margin="5,0,5,0" PreviewTextInput="tbName_PreviewTextInput" TextChanged="tbName_TextChanged"/>
+                <TextBox Name="tbName"  Text="Type name" Margin="5,0,5,0"/>
             </DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
-                <Button Content="OK" Margin="5" Width="70"/>
+                <Button Content="Apply" Margin="5" Width="70" Click="btnApply_Click"/>
+                <Button Content="OK" Margin="5" Width="70" Click="btnOK_Click"/>
                 <Button Content="Cancel" Margin="5" Width="70" Click="btnClose_Click"/>
             </StackPanel>
             <Separator DockPanel.Dock="Bottom" Margin="5,0,5,0"/>
             <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="81*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <DockPanel Grid.Row="0">
+                <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
                     <TextBlock DockPanel.Dock="Top" Text="Description:" Margin="5,5,5,0"/>
                     <TextBox Name="tbDescription" Text="Type description" Margin="5,0,5,0" TextWrapping="WrapWithOverflow" VerticalScrollBarVisibility="Auto"/>
                 </DockPanel>
-                <Separator DockPanel.Dock="Top" Margin="5,5,5,0" Grid.Row="1"/>
-                <Grid Grid.Row="2">
+                <Separator Margin="5,5,5,0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                <Grid Grid.Row="2" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -51,7 +61,7 @@
                             <Button Content="Add" Margin="5" Width="60" Click="btnAddProblem_Click"/>
                             <Button Content="Remove" Margin="0,5,5,5" Width="60" Click="btnRemoveProblem_Click"/>
                         </StackPanel>
-                        <ListBox Name="lbProblems" Margin="5,0,5,0"/>
+                        <ListBox Name="lbProblems" Margin="5,0,5,0" SelectionMode="Multiple"/>
                     </DockPanel>
                     <DockPanel Grid.Column="1" LastChildFill="True">
                         <TextBlock DockPanel.Dock="Top" Text="Shared Libraries:" Margin="5,0,5,0"/>
@@ -59,7 +69,7 @@
                             <Button Content="Add" Margin="5" Width="60"/>
                             <Button Content="Remove" Margin="0,5,5,5" Width="60"/>
                         </StackPanel>
-                        <ListBox Name="lbSharedLibraries" Margin="5,0,5,0"/>
+                        <ListBox Name="lbSharedLibraries" Margin="5,0,5,0" SelectionMode="Multiple"/>
                     </DockPanel>
                 </Grid>
             </Grid>

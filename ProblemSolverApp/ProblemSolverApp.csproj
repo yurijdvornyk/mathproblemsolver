@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,10 +67,12 @@
     <Compile Include="Classes\CustomLogger\CustomLoggerMessage.cs" />
     <Compile Include="Classes\CustomLogger\CustomLoggerMessageType.cs" />
     <Compile Include="Classes\LibraryItem.cs" />
+    <Compile Include="Classes\Manager\EventManager\AppEventManager.cs" />
+    <Compile Include="Classes\Manager\EventManager\EventType.cs" />
+    <Compile Include="Classes\Manager\EventManager\IEventListener.cs" />
     <Compile Include="Classes\ProblemExporter.cs" />
     <Compile Include="Classes\ProblemItem.cs" />
-    <Compile Include="Classes\Session\SessionManager.cs" />
-    <Compile Include="Classes\Utils\StringUtils.cs" />
+    <Compile Include="Classes\Manager\SessionManager.cs" />
     <Compile Include="Classes\Workspace.cs" />
     <Compile Include="Controls\TerminalControl.xaml.cs">
       <DependentUpon>TerminalControl.xaml</DependentUpon>
@@ -298,6 +301,9 @@
     <Resource Include="Drawable\comments.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

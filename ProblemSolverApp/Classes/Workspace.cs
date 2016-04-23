@@ -141,11 +141,6 @@ namespace ProblemSolverApp.Classes
             return Problems;
         }
 
-        internal void AddLibraries(string[] fileNames)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<LibraryItem> LoadLibrariesFromFile(string libraryFilename)
         {
             string libraryPath = Path.GetDirectoryName(WorkspacePath) + Constants.PATH_SEPARATOR + "libraries" + Constants.PATH_SEPARATOR + libraryFilename;
@@ -231,11 +226,14 @@ namespace ProblemSolverApp.Classes
         }
 
         // TODO: Improve
-        public void AddProblems(params string[] fileFullNames)
+        public void AddProblems(string[] fileNames)
         {
-            foreach (var f in fileFullNames)
+            foreach (var f in fileNames)
             {
-                ProblemFiles.Add(f);
+                if (!ProblemFiles.Contains(f))
+                {
+                    ProblemFiles.Add(f);
+                }
             }
             //List<Exception> exceptions = new List<Exception>();
             //foreach (var fileFullName in fileFullNames)
@@ -282,10 +280,28 @@ namespace ProblemSolverApp.Classes
             //}
         }
 
+        public void AddLibraries(string[] fileNames)
+        {
+            foreach (var f in fileNames)
+            {
+                if (!LibraryFiles.Contains(f))
+                {
+                    LibraryFiles.Add(f);
+                }
+            }
+        }
+
         public void RemoveProblem(string filename)
         {
-            int index = ProblemFiles.IndexOf(filename);
-            Problems.Remove(Problems[index]);
+            if (ProblemFiles.Contains(filename))
+            {
+                int index = ProblemFiles.IndexOf(filename);
+                ProblemFiles.RemoveAt(index);
+                if (Problems != null && Problems.Count >= index - 1)
+                {
+                    Problems.Remove(Problems[index]);
+                }
+            }
         }
 
         // TODO: Improve
@@ -293,6 +309,11 @@ namespace ProblemSolverApp.Classes
         {
             int index = LibraryFiles.IndexOf(filename);
             Libraries.Remove(Libraries[index]);
+        }
+
+        public void CopyLibraries()
+        {
+            // TODO: Copy libs from custom path to AppData/...
         }
     }
 }

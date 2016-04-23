@@ -1,4 +1,5 @@
 ﻿using ProblemSolverApp.Classes;
+using ProblemSolverApp.Classes.Manager;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,8 +18,7 @@ namespace ProblemSolverApp
     {
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            string file = Constants.CURRENT_DIRECTORY + @"\HomericLibrary.dll";
-            File.Delete(file);
+            SessionManager.GetSession().RemoveSharedLibraries();
         }
     }
 }

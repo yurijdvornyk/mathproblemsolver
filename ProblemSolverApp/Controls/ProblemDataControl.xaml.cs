@@ -1,7 +1,8 @@
 ﻿using ProblemLibrary;
 using ProblemSolverApp.Classes;
 using ProblemSolverApp.Classes.CustomLogger;
-using ProblemSolverApp.Classes.Session;
+using ProblemSolverApp.Classes.Manager;
+using ProblemSolverApp.Classes.Manager.EventManager;
 using ProblemSolverApp.Windows;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace ProblemSolverApp.Controls
     /// <summary>
     /// Interaction logic for ProblemDataControl.xaml
     /// </summary>
-    public partial class ProblemDataControl : UserControl
+    public partial class ProblemDataControl : UserControl, IEventListener
     {
         public ProblemDataControl()
         {
@@ -36,8 +37,6 @@ namespace ProblemSolverApp.Controls
 
         public SessionManager Session { get; private set; }
 
-        //public Workspace CurrentWorkspace { get { return Session.CurrentWorkspace; } }
-
         public Workspace CurrentWorkspace
         {
             get { return (Workspace)GetValue(CurrentWorkspaceProperty); }
@@ -47,8 +46,6 @@ namespace ProblemSolverApp.Controls
         // Using a DependencyProperty as the backing store for CurrentWorkspace.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentWorkspaceProperty =
             DependencyProperty.Register("CurrentWorkspace", typeof(Workspace), typeof(ProblemDataControl), new PropertyMetadata(null));
-
-
 
         public IProblem CurrentProblem
         {
@@ -304,7 +301,6 @@ namespace ProblemSolverApp.Controls
         public void ReloadWorkspace()
         {
             CurrentWorkspace = SessionManager.GetSession().CurrentWorkspace;
-            MessageBox.Show(CurrentWorkspace.Problems.Count.ToString());
         }
 
         #region Events
@@ -388,10 +384,6 @@ namespace ProblemSolverApp.Controls
             }
         }
 
-        #endregion
-
-        #region Events for ui elements
-
         private void btnOpenWorkspaceDescription_Click(object sender, RoutedEventArgs e)
         {
             WorkspaceDescriptionWindow window = new WorkspaceDescriptionWindow();
@@ -406,6 +398,14 @@ namespace ProblemSolverApp.Controls
 
         private void btnOpenExternalLibsRepo_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        void IEventListener.HandleEvent(EventType eventType, params object[] args)
+        {
+            if (eventType == EventType.UpdateWorkspace)
+            {
+                ReloadWorkspace();
+            }
         }
 
         #endregion
