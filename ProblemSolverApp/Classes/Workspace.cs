@@ -151,7 +151,7 @@ namespace ProblemSolverApp.Classes
             try
             {
                 File.Copy(libraryPath, newFile);
-                var assembly = Assembly.LoadFrom(newFile);
+                var assembly = Assembly.Load(newFile);
                 var library = new LibraryItem(assembly.GetName());
                 if (!result.Contains(library))
                 {

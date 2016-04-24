@@ -66,7 +66,7 @@ namespace ProblemSolverApp.Classes.Manager
             }
             foreach (var file in Directory.GetFiles(Constants.APP_DATA_FOLDER_LIBS))
             {
-                if (Path.GetExtension(file).ToLower() == "." + Constants.DLL_EXTENSION)
+                if (Path.GetExtension(file).ToLower() == "." + Constants.DLL_EXTENSION_WITH_DOT)
                 {
                     File.Copy(file, Path.Combine(Constants.CURRENT_DIRECTORY, Path.GetFileName(file)), allowReplaceFiles);
                 }
@@ -79,7 +79,7 @@ namespace ProblemSolverApp.Classes.Manager
             List<LibraryItem> loadedContent = new List<LibraryItem>();
             foreach (var file in libFiles)
             {
-                var asm = Assembly.LoadFrom(file);
+                var asm = Assembly.Load(AssemblyName.GetAssemblyName(file));
                 var typeObjects = new List<object>();
                 var types = asm.GetTypes();
                 foreach (var type in types)
@@ -100,11 +100,23 @@ namespace ProblemSolverApp.Classes.Manager
 
         public void RemoveSharedLibraries()
         {
+            foreach (var library in SharedLibraries)
+            {
+                library._Assembly = null;
+            }
+
             foreach (var file in Directory.GetFiles(Constants.CURRENT_DIRECTORY))
             {
-                if (Path.GetExtension(file).ToLower() == "." + Constants.DLL_EXTENSION)
+                if (Path.GetExtension(file).ToLower() == "." + Constants.DLL_EXTENSION_WITH_DOT)
                 {
-                    File.Delete(file);
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (Exception ex)
+                    {
+                        // TODO: Handle (Log)
+                    }
                 }
             }
         }
