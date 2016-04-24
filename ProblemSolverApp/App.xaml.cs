@@ -20,5 +20,10 @@ namespace ProblemSolverApp
         {
             SessionManager.GetSession().RemoveSharedLibraries();
         }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            SessionManager.GetSession().CopySharedLibraries(true);
+        }
     }
 }

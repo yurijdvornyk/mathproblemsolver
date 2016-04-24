@@ -58,18 +58,17 @@ namespace ProblemSolverApp.Classes.Manager
 
         #region Work with shared libraries
 
-        public void CopySharedLibraries()
+        public void CopySharedLibraries(bool allowReplaceFiles = false)
         {
-            string specificFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MathProblemSolver");
-            if (!Directory.Exists(specificFolder))
+            if (!Directory.Exists(Constants.APP_DATA_FOLDER_LIBS))
             {
-                Directory.CreateDirectory(specificFolder);
+                Directory.CreateDirectory(Constants.APP_DATA_FOLDER_LIBS);
             }
-            foreach (var file in Directory.GetFiles(specificFolder))
+            foreach (var file in Directory.GetFiles(Constants.APP_DATA_FOLDER_LIBS))
             {
                 if (Path.GetExtension(file).ToLower() == "." + Constants.DLL_EXTENSION)
                 {
-                    File.Copy(file, Path.Combine(Constants.CURRENT_DIRECTORY, Path.GetFileName(file)), false);
+                    File.Copy(file, Path.Combine(Constants.CURRENT_DIRECTORY, Path.GetFileName(file)), allowReplaceFiles);
                 }
             }
         }

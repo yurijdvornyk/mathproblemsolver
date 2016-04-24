@@ -415,10 +415,6 @@ namespace ProblemSolverApp.Controls
                 default:
                     break;
             }
-            if (eventType == EventType.UpdateWorkspace)
-            {
-                
-            }
         }
 
         #endregion

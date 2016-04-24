@@ -35,6 +35,8 @@ namespace ProblemSolverApp
         {
             InitializeComponent();
             Session = SessionManager.GetSession();
+            Session.LoadSharedLibraries();
+            MessageBox.Show(Session.SharedLibraries.Count.ToString());
             AppEventManager.AddListener(problemDataControl);
         }
 
