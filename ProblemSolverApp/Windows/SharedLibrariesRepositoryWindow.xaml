@@ -1,0 +1,53 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProblemSolverApp.Windows"
+        xmlns:Controls="clr-namespace:ProblemSolverApp.Controls" x:Class="ProblemSolverApp.Windows.SharedLibrariesRepositoryWindow"
+        xmlns:classes="clr-namespace:ProblemSolverApp.Classes"
+        mc:Ignorable="d"
+        x:Name="problemRepository"
+        Title="Problem Repository" Height="480" Width="840">
+    <DockPanel>
+        <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
+            <MenuItem Click="btnAddLibrary_Click">
+                <MenuItem.Header>
+                    Add libraries
+                    <!--<Image Width="14" Height="14" Source="pack://application:,,,/Drawable/add.png"/>-->
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Name="btnRemoveLibrary" Click="btnRemoveLibrary_Click">
+                <MenuItem.Header>
+                    Remove libraries
+                    <!--<Image Width="14" Height="14" Source="pack://application:,,,/Drawable/delete.png"/>-->
+                </MenuItem.Header>
+            </MenuItem>
+        </Menu>
+        <DockPanel DockPanel.Dock="Top" Margin="0,2,0,1">
+            <TextBlock Text="Search library:" Margin="5,2,0,0"/>
+            <TextBox Name="findLibTextBox" DockPanel.Dock="Left" Margin="2,0,0,0" TextChanged="findLibTextBox_TextChanged"/>
+        </DockPanel>
+        <ListView Name="lvLibraries">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding AssemblyName.Name}"/>
+                        <GridViewColumn Header="Version" DisplayMemberBinding="{Binding AssemblyName.Version}"/>
+                        <GridViewColumn Header="File" DisplayMemberBinding="{Binding AssemblyFileName}"/>
+                    </GridView.Columns>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="TextElement.Foreground" Value="Black"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</Window>

@@ -85,8 +85,8 @@
     <Compile Include="CustomDataTables\ResultDataTable.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\ProblemRepositoryWindow.xaml.cs">
-      <DependentUpon>ProblemRepositoryWindow.xaml</DependentUpon>
+    <Compile Include="Windows\SharedLibrariesRepositoryWindow.xaml.cs">
+      <DependentUpon>SharedLibrariesRepositoryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -127,7 +127,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\ProblemRepositoryWindow.xaml">
+    <Page Include="Windows\SharedLibrariesRepositoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,7 +145,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ProblemManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

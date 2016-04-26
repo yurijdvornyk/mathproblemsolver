@@ -80,29 +80,26 @@ namespace ProblemSolverApp.Classes.Manager
             foreach (var file in libFiles)
             {
                 var asm = Assembly.Load(AssemblyName.GetAssemblyName(file));
-                var typeObjects = new List<object>();
-                var types = asm.GetTypes();
-                foreach (var type in types)
-                {
-                    try
-                    {
-                        typeObjects.Add(Activator.CreateInstance(type));
-                    }
-                    catch
-                    {
-                        typeObjects.Add(null);
-                    }
-                }
-                loadedContent.Add(new LibraryItem(null, asm, typeObjects));
+                loadedContent.Add(new LibraryItem(null, asm, Path.GetFileName(file)));
             }
             SharedLibraries = new ObservableCollection<LibraryItem>(loadedContent);
+        }
+
+        public void AddSharedLibraries(string[] files)
+        {
+            foreach (var file in files)
+            {
+                // TODO: Notify if file with the same name already exists
+                string newFilePath = Path.Combine(Constants.APP_DATA_FOLDER_LIBS, "libs", Path.GetFileName(file));
+                File.Copy(file, newFilePath);
+            }
         }
 
         public void RemoveSharedLibraries()
         {
             foreach (var library in SharedLibraries)
             {
-                library._Assembly = null;
+                library.Assembly = null;
             }
 
             foreach (var file in Directory.GetFiles(Constants.CURRENT_DIRECTORY))

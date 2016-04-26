@@ -113,7 +113,7 @@ namespace ProblemSolverApp.Classes
             workspace = null;
         }
 
-        public List<ProblemItem> LoadProblemsFromFile(string problemFileName)
+        public List<ProblemItem> LoadProblemFromFile(string problemFileName)
         {
             string problemsPath = Path.GetDirectoryName(WorkspacePath) + Constants.PATH_SEPARATOR + "problems" + Constants.PATH_SEPARATOR + problemFileName;
             var asm = Assembly.LoadFrom(problemsPath);
@@ -133,7 +133,7 @@ namespace ProblemSolverApp.Classes
             Problems = new ObservableCollection<ProblemItem>();
             foreach (var problemFile in ProblemFiles)
             {
-                foreach (var problem in LoadProblemsFromFile(problemFile))
+                foreach (var problem in LoadProblemFromFile(problemFile))
                 {
                     Problems.Add(problem);
                 }
@@ -141,7 +141,7 @@ namespace ProblemSolverApp.Classes
             return Problems;
         }
 
-        public List<LibraryItem> LoadLibrariesFromFile(string libraryFilename)
+        public List<LibraryItem> LoadLibraryFromFile(string libraryFilename)
         {
             string libraryPath = Path.GetDirectoryName(WorkspacePath) + Constants.PATH_SEPARATOR + "libraries" + Constants.PATH_SEPARATOR + libraryFilename;
             string workingDir = Directory.GetCurrentDirectory();
@@ -152,7 +152,7 @@ namespace ProblemSolverApp.Classes
             {
                 File.Copy(libraryPath, newFile);
                 var assembly = Assembly.Load(newFile);
-                var library = new LibraryItem(assembly.GetName());
+                var library = new LibraryItem(assembly.GetName(), libraryFilename);
                 if (!result.Contains(library))
                 {
                     result.Add(library);
@@ -171,7 +171,7 @@ namespace ProblemSolverApp.Classes
             Libraries = new ObservableCollection<LibraryItem>();
             foreach (var libraryFile in LibraryFiles)
             {
-                foreach (var library in LoadLibrariesFromFile(libraryFile))
+                foreach (var library in LoadLibraryFromFile(libraryFile))
                 {
                     Libraries.Add(library);
                 }

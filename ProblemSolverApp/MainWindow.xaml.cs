@@ -69,7 +69,7 @@ namespace ProblemSolverApp
 
         private void btnProblemManager_Click(object sender, RoutedEventArgs e)
         {
-            ProblemRepositoryWindow pmWin = new ProblemRepositoryWindow();
+            SharedLibrariesRepositoryWindow pmWin = new SharedLibrariesRepositoryWindow();
             //Logger.LogInfo("Open problem repository.");
             pmWin.Show();
         }

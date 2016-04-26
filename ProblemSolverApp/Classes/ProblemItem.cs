@@ -23,7 +23,7 @@ namespace ProblemSolverApp.Classes
                 List<LibraryItem> result = new List<LibraryItem>();
                 foreach (var i in _Assembly.GetReferencedAssemblies())
                 {
-                    result.Add(new LibraryItem(i));
+                    result.Add(new LibraryItem(i, ""));
                 }
                 return result;
             }
