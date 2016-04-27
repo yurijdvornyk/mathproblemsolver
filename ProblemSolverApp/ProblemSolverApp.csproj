@@ -91,13 +91,10 @@
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\WorkspaceDescriptionWindow.xaml.cs">
-      <DependentUpon>WorkspaceDescriptionWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\WorkspaceEditorWindow.xaml.cs">
       <DependentUpon>WorkspaceEditorWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\ProblemDataControl.xaml">
+    <Page Include="Controls\WorkspaceControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,8 +114,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\ProblemDataControl.xaml.cs">
-      <DependentUpon>ProblemDataControl.xaml</DependentUpon>
+    <Compile Include="Controls\WorkspaceControl.xaml.cs">
+      <DependentUpon>WorkspaceControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ResultsControl.xaml.cs">
       <DependentUpon>ResultsControl.xaml</DependentUpon>
@@ -132,10 +129,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SettingsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\WorkspaceDescriptionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

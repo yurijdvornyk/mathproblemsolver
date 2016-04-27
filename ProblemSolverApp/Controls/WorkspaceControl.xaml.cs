@@ -23,11 +23,11 @@ using System.Windows.Shapes;
 namespace ProblemSolverApp.Controls
 {
     /// <summary>
-    /// Interaction logic for ProblemDataControl.xaml
+    /// Interaction logic for WorkspaceControl.xaml
     /// </summary>
-    public partial class ProblemDataControl : UserControl, IEventListener
+    public partial class WorkspaceControl : UserControl, IEventListener
     {
-        public ProblemDataControl()
+        public WorkspaceControl()
         {
             InitializeComponent();
             Logger = CustomLogger.GetInstance();
@@ -43,7 +43,7 @@ namespace ProblemSolverApp.Controls
 
         // Using a DependencyProperty as the backing store for CurrentWorkspace.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentWorkspaceProperty =
-            DependencyProperty.Register("CurrentWorkspace", typeof(Workspace), typeof(ProblemDataControl), new PropertyMetadata(null));
+            DependencyProperty.Register("CurrentWorkspace", typeof(Workspace), typeof(WorkspaceControl), new PropertyMetadata(null));
 
         public IProblem CurrentProblem
         {
@@ -299,6 +299,19 @@ namespace ProblemSolverApp.Controls
         public void ReloadWorkspace()
         {
             CurrentWorkspace = SessionManager.GetSession().CurrentWorkspace;
+            updateWorkspaceDescription();
+        }
+
+        private void updateWorkspaceDescription()
+        {
+            if (string.IsNullOrEmpty(CurrentWorkspace.Description))
+            {
+                webBrowser.NavigateToString("No description for this workspace");
+            }
+            else
+            {
+                webBrowser.NavigateToString(CurrentWorkspace.Description);
+            }
         }
 
         #region Events
@@ -380,12 +393,6 @@ namespace ProblemSolverApp.Controls
                 MessageBox.Show(ex.Message);
                 // LOG error
             }
-        }
-
-        private void btnOpenWorkspaceDescription_Click(object sender, RoutedEventArgs e)
-        {
-            WorkspaceDescriptionWindow window = new WorkspaceDescriptionWindow();
-            window.Show();
         }
 
         private void btnOpenWorkspaceEditor_Click(object sender, RoutedEventArgs e)

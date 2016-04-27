@@ -141,7 +141,7 @@
             <GridSplitter HorizontalAlignment="Left" Grid.Column="1" Margin="-1" Width="2" Background="LightGray"/>
             <GridSplitter Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="2" Margin="0,-1,0,0" Grid.Row="1" VerticalAlignment="Top" Background="LightGray"/>
 
-            <controls:ProblemDataControl x:Name="problemDataControl" Margin="5"/>
+            <controls:WorkspaceControl x:Name="problemDataControl" Margin="5"/>
             <controls:ResultsControl x:Name="problemResults" Grid.Column="1" Margin="5"/>
             <controls:TerminalControl x:Name="terminal" Grid.Row="1" Grid.ColumnSpan="2" Margin="5"/>
         </Grid>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ProblemSolverApp.Controls.ProblemDataControl"
+﻿<UserControl x:Class="ProblemSolverApp.Controls.WorkspaceControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,7 +17,7 @@
                     Background="{Binding Source={x:Static prop:Settings.Default}, 
             Path=ControlTitleBackground, Converter={StaticResource ColorConverter}}">
             <Image Source="pack://application:,,,/Drawable/input_data.png" Width="16" Margin="4,1,2,1"/>
-            <TextBlock Text="Problem Data" Margin="2,1,0,1" Foreground="White"/>
+            <TextBlock Text="Workspace" Margin="2,1,0,1" Foreground="White"/>
         </StackPanel>
         <Menu DockPanel.Dock="Top" VerticalAlignment="Top" Height="18"
               Background="{Binding Source={x:Static prop:Settings.Default}, 
@@ -53,30 +53,46 @@
                 </MenuItem.Header>
             </MenuItem>
         </Menu>
-        <DockPanel DockPanel.Dock="Top">
-            <TextBlock Margin="5" Text="Workspace:" />
-            <TextBlock Margin="5" TextTrimming="CharacterEllipsis" 
+        <TabControl DockPanel.Dock="Top">
+            <TabItem Header="Problem Data">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <TextBlock Margin="5" Text="Workspace:" />
+                        <TextBlock Margin="5" TextTrimming="CharacterEllipsis" 
                        Text="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}" 
                        ToolTip="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-        </DockPanel>
-        <Button DockPanel.Dock="Top" Content="Workspace description" Margin="5" Click="btnOpenWorkspaceDescription_Click"/>
-        <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,2,0,1">
-            <TextBlock Text="Current problem:" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0"/>
-            <ComboBox DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,0,5,0" Name="cbProblemSelector" 
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,2,0,1">
+                        <TextBlock Text="Current problem:" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                        <ComboBox DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,0,5,0" Name="cbProblemSelector" 
                       SelectionChanged="cbProblemSelector_SelectionChanged" ToolTip="{Binding ElementName=cbProblemSelector, Path=SelectedItem}"
                       ItemsSource="{Binding Path=CurrentWorkspace.Problems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-        </DockPanel>
-        <Image Name="imgEquation" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,1,0,1" MaxHeight="48"/>
-        <Separator DockPanel.Dock="Top" VerticalAlignment="Top"/>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top">
-            <Grid Name="grid" Height="Auto" VerticalAlignment="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Name="spKeys" Grid.Column="0"/>
-                <StackPanel Name="spValues" Grid.Column="1"/>
-            </Grid>
-        </ScrollViewer>
+                    </DockPanel>
+                    <Image Name="imgEquation" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,1,0,1" MaxHeight="48"/>
+                    <Separator DockPanel.Dock="Top" VerticalAlignment="Top"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                        <Grid Name="grid" Height="Auto" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Name="spKeys" Grid.Column="0"/>
+                            <StackPanel Name="spValues" Grid.Column="1"/>
+                        </Grid>
+                    </ScrollViewer>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Workspace description">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <TextBlock Margin="5" Text="Workspace:" />
+                        <TextBlock Margin="5" TextTrimming="CharacterEllipsis" 
+                       Text="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                       ToolTip="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    </DockPanel>
+                    <WebBrowser x:Name="webBrowser"/>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </UserControl>
