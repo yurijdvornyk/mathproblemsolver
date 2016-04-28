@@ -16,6 +16,9 @@ namespace ProblemSolverApp.Classes
     [XmlRoot(ElementName = "workspace")]
     public class Workspace
     {
+        public static readonly string PROBLEMS_PATH = "problems";
+        public static readonly string LIBRARIES_PATH = "libs";
+
         [XmlElement(ElementName = "id")]
         public Guid Id { get; set; }
 
@@ -143,15 +146,18 @@ namespace ProblemSolverApp.Classes
 
         public List<LibraryItem> LoadLibraryFromFile(string libraryFilename)
         {
-            string libraryPath = Path.GetDirectoryName(WorkspacePath) + Constants.PATH_SEPARATOR + "libraries" + Constants.PATH_SEPARATOR + libraryFilename;
+            string libraryPath = Path.Combine(Path.GetDirectoryName(WorkspacePath), LIBRARIES_PATH, libraryFilename);
             string workingDir = Directory.GetCurrentDirectory();
             string newFile = workingDir + Constants.PATH_SEPARATOR + libraryFilename;
             var result = new List<LibraryItem>();
             List<Exception> exceptions = new List<Exception>();
             try
             {
-                File.Copy(libraryPath, newFile);
-                var assembly = Assembly.Load(newFile);
+                if (!File.Exists(newFile))
+                {
+                    File.Copy(libraryPath, newFile, false);
+                }
+                var assembly = Assembly.LoadFrom(newFile);
                 var library = new LibraryItem(assembly.GetName(), libraryFilename);
                 if (!result.Contains(library))
                 {

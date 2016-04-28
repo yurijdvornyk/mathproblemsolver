@@ -53,15 +53,16 @@
                 </MenuItem.Header>
             </MenuItem>
         </Menu>
-        <TabControl DockPanel.Dock="Top">
-            <TabItem Header="Problem Data">
-                <DockPanel>
-                    <DockPanel DockPanel.Dock="Top">
-                        <TextBlock Margin="5" Text="Workspace:" />
-                        <TextBlock Margin="5" TextTrimming="CharacterEllipsis" 
+        <DockPanel DockPanel.Dock="Top">
+            <TextBlock Margin="5" Text="Workspace:" />
+            <TextBlock Margin="5" TextTrimming="CharacterEllipsis" 
                        Text="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}" 
                        ToolTip="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                    </DockPanel>
+        </DockPanel>
+        <TabControl DockPanel.Dock="Top">
+            <TabItem Header="Problem">
+                <DockPanel Background="{Binding Source={x:Static prop:Settings.Default},
+                    Path=ControlBackground, Converter={StaticResource ColorConverter}}">
                     <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,2,0,1">
                         <TextBlock Text="Current problem:" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0"/>
                         <ComboBox DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,0,5,0" Name="cbProblemSelector" 
@@ -82,17 +83,15 @@
                     </ScrollViewer>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Workspace description">
-                <DockPanel>
-                    <DockPanel DockPanel.Dock="Top">
-                        <TextBlock Margin="5" Text="Workspace:" />
-                        <TextBlock Margin="5" TextTrimming="CharacterEllipsis" 
-                       Text="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                       ToolTip="{Binding Path=CurrentWorkspace.Name, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                    </DockPanel>
+            <TabItem Header="Workspace">
+                <DockPanel Background="{Binding Source={x:Static prop:Settings.Default}, 
+                    Path=ControlBackground, Converter={StaticResource ColorConverter}}">
                     <WebBrowser x:Name="webBrowser"/>
                 </DockPanel>
             </TabItem>
+            <TabItem Header="Data"></TabItem>
+            <TabItem Header="Results"></TabItem>
+            <TabItem Header="Exported"></TabItem>
         </TabControl>
     </DockPanel>
 </UserControl>
