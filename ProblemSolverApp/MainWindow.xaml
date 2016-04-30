@@ -9,6 +9,7 @@
     xmlns:conv="clr-namespace:ProblemSolverApp.Converters"
     x:Class="ProblemSolverApp.MainWindow"
     mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
     Title="Mathematical Problem Solver" Height="720" Width="1280">
     <Window.Resources>
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
@@ -21,7 +22,15 @@
               Background="{Binding Source={x:Static prop:Settings.Default}, 
             Path=MenuBackground, Converter={StaticResource ColorConverter}}">
             <MenuItem Header="File">
-                <MenuItem Header="New"/>
+                <MenuItem Header="New" Click="btnNewWorkspace_Click"/>
+                <MenuItem Header="Open" Click="btnOpenWorkspace_Click"/>
+                <MenuItem Header="Close" Click="btnCloseWorkspace_Click"/>
+                <Separator/>
+                <MenuItem Header="Save"/>
+                <MenuItem Header="Save All"/>
+                <Separator/>
+                <MenuItem Header="Recent Workspaces"/>
+                <Separator/>
                 <MenuItem Header="Exit">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Drawable/exit.png"/>
@@ -30,6 +39,7 @@
             </MenuItem>
             <MenuItem Header="Edit"/>
             <MenuItem Header="View"/>
+            <MenuItem Header="Workspace"/>
             <MenuItem Header="Problem">
                 <MenuItem Header="Set Input Data">
                     <MenuItem.Icon>
@@ -48,12 +58,12 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Problem Repository" Click="btnProblemManager_Click">
+                <!--<MenuItem Header="Problem Repository" Click="btnProblemManager_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Drawable/repo.png"/>
                     </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="External Libraries Repository">
+                </MenuItem>-->
+                <MenuItem Header="Shared Libraries Repository" Click="btnProblemManager_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Drawable/external_libs.png"/>
                     </MenuItem.Icon>
@@ -113,6 +123,11 @@
                     <Image Source="pack://application:,,,/Drawable/solve.png" Height="16" Margin="0,2,0,2"/>
                 </MenuItem.Header>
             </MenuItem>
+            <MenuItem Click="btnProblemManager_Click">
+                <MenuItem.Header>
+                    <Image Source="pack://application:,,,/Drawable/external_libs.png" Height="16" Margin="0,2,0,2"/>
+                </MenuItem.Header>
+            </MenuItem>
         </Menu>
         <Grid Margin="0,42,0,22">
             <Grid.ColumnDefinitions>
@@ -126,7 +141,7 @@
             <GridSplitter HorizontalAlignment="Left" Grid.Column="1" Margin="-1" Width="2" Background="LightGray"/>
             <GridSplitter Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="2" Margin="0,-1,0,0" Grid.Row="1" VerticalAlignment="Top" Background="LightGray"/>
 
-            <controls:ProblemDataControl x:Name="problemDataControl" Margin="5"/>
+            <controls:WorkspaceControl x:Name="problemDataControl" Margin="5"/>
             <controls:ResultsControl x:Name="problemResults" Grid.Column="1" Margin="5"/>
             <controls:TerminalControl x:Name="terminal" Grid.Row="1" Grid.ColumnSpan="2" Margin="5"/>
         </Grid>

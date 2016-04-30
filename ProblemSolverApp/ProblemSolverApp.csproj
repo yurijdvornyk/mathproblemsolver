@@ -2,6 +2,7 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <GenerateResourceNeverLockTypeAssemblies>true</GenerateResourceNeverLockTypeAssemblies>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{856AACDA-FC8B-4305-9155-01F27431B16E}</ProjectGuid>
@@ -43,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,12 +63,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\CustomLogger\CustomLogger.cs" />
     <Compile Include="Classes\CustomLogger\CustomLoggerMessage.cs" />
     <Compile Include="Classes\CustomLogger\CustomLoggerMessageType.cs" />
     <Compile Include="Classes\LibraryItem.cs" />
+    <Compile Include="Classes\Manager\EventManager\AppEventManager.cs" />
+    <Compile Include="Classes\Manager\EventManager\EventType.cs" />
+    <Compile Include="Classes\Manager\EventManager\IEventListener.cs" />
     <Compile Include="Classes\ProblemExporter.cs" />
     <Compile Include="Classes\ProblemItem.cs" />
+    <Compile Include="Classes\Manager\SessionManager.cs" />
+    <Compile Include="Classes\Workspace.cs" />
     <Compile Include="Controls\TerminalControl.xaml.cs">
       <DependentUpon>TerminalControl.xaml</DependentUpon>
     </Compile>
@@ -77,13 +85,16 @@
     <Compile Include="CustomDataTables\ResultDataTable.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\ProblemRepositoryWindow.xaml.cs">
-      <DependentUpon>ProblemRepositoryWindow.xaml</DependentUpon>
+    <Compile Include="Windows\SharedLibrariesRepositoryWindow.xaml.cs">
+      <DependentUpon>SharedLibrariesRepositoryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\ProblemDataControl.xaml">
+    <Compile Include="Windows\WorkspaceEditorWindow.xaml.cs">
+      <DependentUpon>WorkspaceEditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\WorkspaceControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -103,8 +114,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\ProblemDataControl.xaml.cs">
-      <DependentUpon>ProblemDataControl.xaml</DependentUpon>
+    <Compile Include="Controls\WorkspaceControl.xaml.cs">
+      <DependentUpon>WorkspaceControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ResultsControl.xaml.cs">
       <DependentUpon>ResultsControl.xaml</DependentUpon>
@@ -113,7 +124,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\ProblemRepositoryWindow.xaml">
+    <Page Include="Windows\SharedLibrariesRepositoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -121,9 +132,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\WorkspaceEditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ProblemManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -280,6 +294,9 @@
     <Resource Include="Drawable\comments.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

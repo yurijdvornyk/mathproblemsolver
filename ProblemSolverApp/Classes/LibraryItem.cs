@@ -9,15 +9,15 @@ namespace ProblemSolverApp.Classes
     public class LibraryItem
     {
         public object LibraryInstance { get; set; } 
-        public AssemblyName _AssemblyName { get; set; }
-        public Assembly _Assembly { get; set; }
-        public List<object> Instances { get; set; }
+        public AssemblyName AssemblyName { get; set; }
+        public Assembly Assembly { get; set; }
+        public string AssemblyFileName { get; private set; }
 
         public bool IsAssemblyLoaded
         {
             get
             {
-                if (_Assembly == null && LibraryInstance == null) { return false; }
+                if (Assembly == null && LibraryInstance == null) { return false; }
                 return true;
             }
         }
@@ -27,7 +27,7 @@ namespace ProblemSolverApp.Classes
             get
             {
                 List<Assembly> assemblies = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
-                if (assemblies.Exists(x => x.GetName().Name == _AssemblyName.Name && x.GetName().Version == _AssemblyName.Version))
+                if (assemblies.Exists(x => x.GetName().Name == AssemblyName.Name && x.GetName().Version == AssemblyName.Version))
                 {
                     return true;
                 }
@@ -38,39 +38,23 @@ namespace ProblemSolverApp.Classes
             }
         }
 
-        public LibraryItem(object instance, Assembly assembly, IEnumerable<object> instances = null)
+        public LibraryItem(object instance, Assembly assembly, string filename)
         {
             LibraryInstance = instance;
-            _Assembly = assembly;
-            _AssemblyName = assembly.GetName();
-            Instances = new List<object>();
-            
-            if (instances != null)
-            {
-                foreach (var i in instances)
-                {
-                    Instances.Add(i);
-                }
-            }
+            Assembly = assembly;
+            AssemblyName = assembly.GetName();
+            AssemblyFileName = filename;
         }
 
-        public LibraryItem(AssemblyName assemblyName, IEnumerable<object> instances = null)
+        public LibraryItem(AssemblyName assemblyName, string filename)
         {
-            _AssemblyName = assemblyName;
-            Instances = new List<object>();
-
-            if (instances != null)
-            {
-                foreach (var i in instances)
-                {
-                    Instances.Add(i);
-                }
-            }
+            AssemblyName = assemblyName;
+            AssemblyFileName = filename;
         }
 
         public override string ToString()
         {
-            return _AssemblyName.FullName;
+            return AssemblyName.FullName;
         }
     }
 }

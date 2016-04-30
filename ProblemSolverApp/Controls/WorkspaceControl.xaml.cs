@@ -1,6 +1,10 @@
-﻿using ProblemLibrary;
+﻿using Microsoft.Win32;
+using ProblemLibrary;
 using ProblemSolverApp.Classes;
 using ProblemSolverApp.Classes.CustomLogger;
+using ProblemSolverApp.Classes.Manager;
+using ProblemSolverApp.Classes.Manager.EventManager;
+using ProblemSolverApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,19 +24,24 @@ using System.Windows.Shapes;
 namespace ProblemSolverApp.Controls
 {
     /// <summary>
-    /// Interaction logic for ProblemDataControl.xaml
+    /// Interaction logic for WorkspaceControl.xaml
     /// </summary>
-    public partial class ProblemDataControl : UserControl
+    public partial class WorkspaceControl : UserControl, IEventListener
     {
-        public ProblemDataControl()
+        public WorkspaceControl()
         {
             InitializeComponent();
-            Logger = CustomLogger.GetInstance();
         }
 
-        public CustomLogger Logger { get; set; }
+        public Workspace CurrentWorkspace
+        {
+            get { return (Workspace)GetValue(CurrentWorkspaceProperty); }
+            set { SetValue(CurrentWorkspaceProperty, value); }
+        }
 
-        public ProblemManager _ProblemManager { get; set; }
+        // Using a DependencyProperty as the backing store for CurrentWorkspace.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentWorkspaceProperty =
+            DependencyProperty.Register("CurrentWorkspace", typeof(Workspace), typeof(WorkspaceControl), new PropertyMetadata(null));
 
         public IProblem CurrentProblem
         {
@@ -40,7 +49,7 @@ namespace ProblemSolverApp.Controls
             {
                 try
                 {
-                    return _ProblemManager.ProblemFullInfoList.First(x => x.Equals(cbProblemSelector.SelectedItem)).Problem;
+                    return CurrentWorkspace.GetProblem(cbProblemSelector.SelectedItem as ProblemItem);
                 }
                 catch
                 {
@@ -53,7 +62,7 @@ namespace ProblemSolverApp.Controls
 
         public void UpdateControlLayout()
         {
-            var currentProblem = _ProblemManager.ProblemFullInfoList[cbProblemSelector.SelectedIndex].Problem;
+            var currentProblem = CurrentWorkspace.Problems[cbProblemSelector.SelectedIndex].Problem;
             if (currentProblem == null)
             {
                 return;
@@ -285,6 +294,27 @@ namespace ProblemSolverApp.Controls
             }
         }
 
+        public void ReloadWorkspace()
+        {
+            CurrentWorkspace = SessionManager.GetSession().CurrentWorkspace;
+            updateWorkspaceDescription();
+        }
+
+        private void updateWorkspaceDescription()
+        {
+            if (CurrentWorkspace != null)
+            {
+                if (string.IsNullOrEmpty(CurrentWorkspace.Description))
+                {
+                    webBrowser.NavigateToString("No description for this workspace");
+                }
+                else
+                {
+                    webBrowser.NavigateToString(CurrentWorkspace.Description);
+                }
+            }
+        }
+
         #region Events
 
         private void cbProblemSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -292,7 +322,6 @@ namespace ProblemSolverApp.Controls
             if (cbProblemSelector.SelectedItem != null)
             {
                 var problem = ((ProblemItem)cbProblemSelector.SelectedItem).Problem;
-                Logger.LogInfo("Current problem: " + problem.Name);
 
                 if (!string.IsNullOrEmpty(problem.Equation)){
                     string url = @"http://chart.apis.google.com/chart?cht=tx&chf=bg,s,AAAAAA00&chs=" + 60 + "&chl=" + problem.Equation.Replace("+", "%2B");
@@ -313,7 +342,6 @@ namespace ProblemSolverApp.Controls
         {
             if (CurrentProblem == null)
             {
-                Logger.LogError("Can't apply inpud data: problem is not set.");
                 MessageBox.Show("Can't apply inpud data: problem is not set.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
@@ -338,14 +366,11 @@ namespace ProblemSolverApp.Controls
 
             try
             {
-                int index = _ProblemManager.ProblemFullInfoList.IndexOf(_ProblemManager.ProblemFullInfoList.First(x => x.Problem == CurrentProblem));
-                _ProblemManager.ProblemFullInfoList[index].Problem.SetInputData(values);
-                Logger.LogSuccess("Problem input data is set successfully.");
+                CurrentProblem.SetInputData(values);
             }
             catch (Exception ex)
             {
                 string message = "There was an error while setting input data. Details:\n" + ex.Message;
-                Logger.LogError(message);
                 MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -354,10 +379,9 @@ namespace ProblemSolverApp.Controls
         {
             try
             {
-                var currentProblem = _ProblemManager.ProblemFullInfoList.First(x => x.Equals(CurrentProblem)).Problem;
-                currentProblem.ResetInputData();
+                CurrentProblem.ResetInputData();
                 UpdateControlLayout();
-                fillLayoutWithValues(currentProblem);
+                fillLayoutWithValues(CurrentProblem);
                 MessageBox.Show("Success");
                 // LOG success
             }
@@ -368,18 +392,127 @@ namespace ProblemSolverApp.Controls
             }
         }
 
-        #endregion
-
-        #region Events for ui elements
-
-        private void btnOpenProblemRepository_Click(object sender, RoutedEventArgs e)
+        private void btnOpenWorkspaceEditor_Click(object sender, RoutedEventArgs e)
         {
+            WorkspaceEditorWindow window = new WorkspaceEditorWindow();
+            window.Show();
         }
 
-        private void btnOpenExternalLibsRepo_Click(object sender, RoutedEventArgs e)
+        void IEventListener.HandleEvent(EventType eventType, params object[] args)
         {
+            switch (eventType)
+            {
+                case EventType.UpdateWorkspace:
+                    ReloadWorkspace();
+                    break;
+                case EventType.OpenWorkspace:
+                    if (args != null && args.Length > 0)
+                    {
+                        SessionManager.GetSession().OpenWorkspace(args[0].ToString());
+                        ReloadWorkspace();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         #endregion
+
+        private void btnAddProblemFile_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.DefaultExt = ".dll";
+            dialog.Filter = "Dynamic-link library (.dll)|*.dll|All files (*.*)|*.*";
+            dialog.Multiselect = true;
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    CurrentWorkspace.CopyToDirectory(Workspace.PROBLEMS_PATH, dialog.FileNames);
+                    List<string> filenames = new List<string>();
+                    foreach (var file in dialog.FileNames)
+                    {
+                        filenames.Add(System.IO.Path.GetFileName(file));
+                    }
+                    CurrentWorkspace.AddProblems(filenames.ToArray());
+                    string path = CurrentWorkspace.WorkspacePath;
+                    SessionManager.GetSession().CloseWorkspace();
+                    SessionManager.GetSession().OpenWorkspace(path);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void btnRemoveProblemFile_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<string> problems = new List<string>();
+                foreach (var problem in lbProblems.SelectedItems)
+                {
+                    problems.Add(problem.ToString());
+                }
+                CurrentWorkspace.RemoveProblems(problems.ToArray());
+                string path = CurrentWorkspace.WorkspacePath;
+                SessionManager.GetSession().CloseWorkspace();
+                SessionManager.GetSession().OpenWorkspace(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnAddLibraryFile_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.DefaultExt = ".dll";
+            dialog.Filter = "Dynamic-link library (.dll)|*.dll|All files (*.*)|*.*";
+            dialog.Multiselect = true;
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    CurrentWorkspace.CopyToDirectory(Workspace.LIBRARIES_PATH, dialog.FileNames);
+                    List<string> filenames = new List<string>();
+                    foreach (var file in dialog.FileNames)
+                    {
+                        filenames.Add(System.IO.Path.GetFileName(file));
+                    }
+                    CurrentWorkspace.AddLibraries(filenames.ToArray());
+                    string path = CurrentWorkspace.WorkspacePath;
+                    SessionManager.GetSession().CloseWorkspace();
+                    SessionManager.GetSession().OpenWorkspace(path);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void btnRemoveLibraryFile_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<string> libraries = new List<string>();
+                foreach (var library in lbLibraries.SelectedItems)
+                {
+                    libraries.Add(library.ToString());
+                }
+                CurrentWorkspace.RemoveLibraries(libraries.ToArray());
+                string path = CurrentWorkspace.WorkspacePath;
+                SessionManager.GetSession().CloseWorkspace();
+                SessionManager.GetSession().OpenWorkspace(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

@@ -73,7 +73,7 @@ namespace ProblemSolverApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("250, 250, 250")]
+        [global::System.Configuration.DefaultSettingValueAttribute("240, 240, 240")]
         public global::System.Drawing.Color MainBackground {
             get {
                 return ((global::System.Drawing.Color)(this["MainBackground"]));
