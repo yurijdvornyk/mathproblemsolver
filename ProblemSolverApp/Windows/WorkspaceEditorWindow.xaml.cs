@@ -49,29 +49,29 @@ namespace ProblemSolverApp.Windows
             tbName.Text = HttpUtility.HtmlDecode(CurrentWorkspace.Name);
             tbDescription.Text = HttpUtility.HtmlDecode(CurrentWorkspace.Description);
 
-            updateProblemsList();
-            updateSharedLibrariesList();
+            //updateProblemsList();
+            //updateSharedLibrariesList();
         }
 
-        private void updateProblemsList()
-        {
-            lbProblems.Items.Clear();
-            var sortedList = new SortedSet<string>(CurrentWorkspace.ProblemFiles);
-            foreach (var i in sortedList)
-            {
-                lbProblems.Items.Add(System.IO.Path.GetFileName(i));
-            }
-        }
+        //private void updateProblemsList()
+        //{
+        //    lbProblems.Items.Clear();
+        //    var sortedList = new SortedSet<string>(CurrentWorkspace.ProblemFiles);
+        //    foreach (var i in sortedList)
+        //    {
+        //        lbProblems.Items.Add(System.IO.Path.GetFileName(i));
+        //    }
+        //}
 
-        private void updateSharedLibrariesList()
-        {
-            lbSharedLibraries.Items.Clear();
-            var sortedList = new SortedSet<string>(CurrentWorkspace.LibraryFiles);
-            foreach (var i in sortedList)
-            {
-                lbSharedLibraries.Items.Add(System.IO.Path.GetFileName(i));
-            }
-        }
+        //private void updateSharedLibrariesList()
+        //{
+        //    lbSharedLibraries.Items.Clear();
+        //    var sortedList = new SortedSet<string>(CurrentWorkspace.LibraryFiles);
+        //    foreach (var i in sortedList)
+        //    {
+        //        lbSharedLibraries.Items.Add(System.IO.Path.GetFileName(i));
+        //    }
+        //}
 
         private void btnSetWorkspacePath_Click(object sender, RoutedEventArgs e)
         {
@@ -96,73 +96,85 @@ namespace ProblemSolverApp.Windows
             Close();
         }
 
-        private void btnAddProblem_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new OpenFileDialog();
-            dialog.DefaultExt = ".dll";
-            dialog.Filter = "Dynamic-link library (.dll)|*.dll|All files (*.*)|*.*";
-            dialog.Multiselect = true;
-            if (dialog.ShowDialog() == true)
-            {
-                try
-                {
-                    CurrentWorkspace.AddProblems(dialog.FileNames);
-                    updateProblemsList();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
+        //private void btnAddProblem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var dialog = new OpenFileDialog();
+        //    dialog.DefaultExt = ".dll";
+        //    dialog.Filter = "Dynamic-link library (.dll)|*.dll|All files (*.*)|*.*";
+        //    dialog.Multiselect = true;
+        //    if (dialog.ShowDialog() == true)
+        //    {
+        //        try
+        //        {
+        //            CurrentWorkspace.CopyToDirectory(Workspace.PROBLEMS_PATH, dialog.FileNames);
+        //            List<string> filenames = new List<string>();
+        //            foreach (var file in dialog.FileNames)
+        //            {
+        //                filenames.Add(System.IO.Path.GetFileName(file));
+        //            }
+        //            CurrentWorkspace.AddProblems(filenames.ToArray());
+        //            updateProblemsList();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show(ex.Message);
+        //        }
+        //    }
+        //}
 
-        private void btnRemoveProblem_Click(object sender, RoutedEventArgs e)
-        {
-            if (lbProblems.SelectedItems.Count > 0)
-            {
-                foreach (var problem in lbProblems.SelectedItems)
-                {
-                    string filename = problem.ToString();
-                    var problemFile = CurrentWorkspace.ProblemFiles.First(x => System.IO.Path.GetFileName(x) == filename);
-                    CurrentWorkspace.RemoveProblem(problemFile);
-                }
-                updateProblemsList();
-            }
-        }
+        //private void btnRemoveProblem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (lbProblems.SelectedItems.Count > 0)
+        //    {
+        //        foreach (var problem in lbProblems.SelectedItems)
+        //        {
+        //            string filename = problem.ToString();
+        //            var problemFile = CurrentWorkspace.ProblemFiles.First(x => System.IO.Path.GetFileName(x) == filename);
+        //            CurrentWorkspace.RemoveProblem(problemFile);
+        //        }
+        //        updateProblemsList();
+        //    }
+        //}
 
-        private void btnAddSharedLibrary_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new OpenFileDialog();
-            dialog.DefaultExt = ".dll";
-            dialog.Filter = "Dynamic-link library (.dll)|*.dll|All files (*.*)|*.*";
-            dialog.Multiselect = true;
-            if (dialog.ShowDialog() == true)
-            {
-                try
-                {
-                    CurrentWorkspace.AddLibraries(dialog.FileNames);
-                    updateProblemsList();
-                    needsRestart = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
+        //private void btnAddSharedLibrary_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var dialog = new OpenFileDialog();
+        //    dialog.DefaultExt = ".dll";
+        //    dialog.Filter = "Dynamic-link library (.dll)|*.dll|All files (*.*)|*.*";
+        //    dialog.Multiselect = true;
+        //    if (dialog.ShowDialog() == true)
+        //    {
+        //        try
+        //        {
+        //            CurrentWorkspace.CopyToDirectory(Workspace.LIBRARIES_PATH, dialog.FileNames);
+        //            List<string> filenames = new List<string>();
+        //            foreach (var file in dialog.FileNames)
+        //            {
+        //                filenames.Add(System.IO.Path.GetFileName(file));
+        //            }
+        //            CurrentWorkspace.AddLibraries(filenames.ToArray());
+        //            updateProblemsList();
+        //            needsRestart = true;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show(ex.Message);
+        //        }
+        //    }
+        //}
 
-        private void btnRemoveSharedLibrary_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var library in lbSharedLibraries.SelectedItems)
-            {
-                string filename = library.ToString();
-                lbSharedLibraries.Items.Remove(library);
+        //private void btnRemoveSharedLibrary_Click(object sender, RoutedEventArgs e)
+        //{
+        //    foreach (var library in lbSharedLibraries.SelectedItems)
+        //    {
+        //        string filename = library.ToString();
+        //        lbSharedLibraries.Items.Remove(library);
 
-                var libraryFile = CurrentWorkspace.LibraryFiles.First(x => System.IO.Path.GetFileName(x) == filename);
-                CurrentWorkspace.RemoveLibrary(libraryFile);                
-            }
-            needsRestart = true;
-        }
+        //        var libraryFile = CurrentWorkspace.LibraryFiles.First(x => System.IO.Path.GetFileName(x) == filename);
+        //        CurrentWorkspace.RemoveLibrary(libraryFile);                
+        //    }
+        //    needsRestart = true;
+        //}
 
         private void btnApply_Click(object sender, RoutedEventArgs e)
         {
@@ -175,9 +187,8 @@ namespace ProblemSolverApp.Windows
             {
                 if (needsRestart)
                 {
-                    // Restart app
+                    MessageBox.Show("Changes will be applied after application restart.");
                 }
-
                 Close();
             }
         }
@@ -199,19 +210,6 @@ namespace ProblemSolverApp.Windows
             CurrentWorkspace.WorkspacePath = tbWorkspacePath.Text;
             CurrentWorkspace.Name = HttpUtility.HtmlEncode(tbName.Text);
             CurrentWorkspace.Description = HttpUtility.HtmlEncode(tbDescription.Text);
-
-            CurrentWorkspace.ProblemFiles.Clear();
-            foreach (var item in lbProblems.Items)
-            {
-                CurrentWorkspace.ProblemFiles.Add(item.ToString());
-            }
-            CurrentWorkspace.LoadAllProblems();
-
-            CurrentWorkspace.LibraryFiles.Clear();
-            foreach (var item in lbSharedLibraries.Items)
-            {
-                CurrentWorkspace.LibraryFiles.Add(item.ToString());
-            }
 
             bool isNewWorkspace = false;
             if (!File.Exists(CurrentWorkspace.WorkspacePath))

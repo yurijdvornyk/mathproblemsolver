@@ -231,7 +231,6 @@ namespace ProblemSolverApp.Classes
             }
         }
 
-        // TODO: Improve
         public void AddProblems(string[] fileNames)
         {
             foreach (var f in fileNames)
@@ -241,49 +240,6 @@ namespace ProblemSolverApp.Classes
                     ProblemFiles.Add(f);
                 }
             }
-            //List<Exception> exceptions = new List<Exception>();
-            //foreach (var fileFullName in fileFullNames)
-            //{
-            //    try
-            //    {
-            //        var asm = Assembly.LoadFrom(fileFullName);
-            //        var x = from type in asm.GetTypes()
-            //                where typeof(IProblem).IsAssignableFrom(type)
-            //                select type;
-            //        if (x.Count() == 0)
-            //        {
-            //            exceptions.Add(new ArgumentException("Problem you try to load is not valid. It should implement IProblem interface."));
-            //            continue;
-            //        }
-
-            //        string filename = Path.GetFileNameWithoutExtension(fileFullName);
-            //        string newFileFullName = WorkspacePath + Constants.PATH_SEPARATOR + "problems" + Constants.PATH_SEPARATOR + Path.GetFileName(fileFullName);
-
-
-            //        // We should update assembly file
-            //        asm = Assembly.LoadFrom(newFileFullName);
-            //        var problemInfoItem = new ProblemItem(
-            //            (IProblem)Activator.CreateInstance(x.First(y => typeof(IProblem).IsAssignableFrom(y))),
-            //            asm);
-            //        Problems.Add(problemInfoItem);
-            //        //ProblemList.Add(problemInfoItem.Problem);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        exceptions.Add(ex);
-            //        continue;
-            //    }
-            //}
-
-            //string message = string.Empty;
-            //if (exceptions.Count > 0)
-            //{
-            //    foreach (var ex in exceptions)
-            //    {
-            //        message += ex.Message + "\n";
-            //    }
-            //    throw new Exception(message);
-            //}
         }
 
         public void AddLibraries(string[] fileNames)
@@ -295,6 +251,7 @@ namespace ProblemSolverApp.Classes
                     LibraryFiles.Add(f);
                 }
             }
+            Workspace.Save(WorkspacePath, this);
         }
 
         public void RemoveProblem(string filename)
@@ -310,16 +267,104 @@ namespace ProblemSolverApp.Classes
             }
         }
 
+        public void RemoveProblems(string[] problems)
+        {
+            foreach (var library in problems)
+            {
+                var libraryFile = LibraryFiles.First(x => System.IO.Path.GetFileName(x) == library);
+                RemoveLibrary(libraryFile);
+                LibraryFiles.Remove(libraryFile);
+            }
+            Workspace.Save(WorkspacePath, this);
+        }
+
         // TODO: Improve
         public void RemoveLibrary(string filename)
         {
-            int index = LibraryFiles.IndexOf(filename);
-            Libraries.Remove(Libraries[index]);
+            string directoryPath = Path.Combine(Path.GetDirectoryName(WorkspacePath), LIBRARIES_PATH);
+            if (!Directory.Exists(directoryPath))
+            {
+                return;
+            }
+            string name = Path.GetFileName(filename);
+            File.Delete(Path.Combine(directoryPath, filename));
+            LibraryFiles.Remove(name);
         }
 
-        public void CopyLibraries()
+        public void RemoveLibraries(string[] libraries)
+        {
+            foreach (var library in libraries)
+            {
+                var libraryFile = LibraryFiles.First(x => System.IO.Path.GetFileName(x) == library);
+                RemoveLibrary(libraryFile);
+                LibraryFiles.Remove(libraryFile);
+            }
+            Workspace.Save(WorkspacePath, this);
+        }
+
+        public void CopyLibraries(string[] files)
         {
             // TODO: Copy libs from custom path to AppData/...
+            List<Exception> exceptions = new List<Exception>();
+            foreach (var file in files)
+            {
+                try
+                {
+                    CopyLibrary(file);
+                }
+                catch (Exception ex)
+                {
+                    exceptions.Add(ex);
+                }
+            }
+
+            if (exceptions.Count > 0)
+            {
+                string message = "";
+                foreach (var exception in exceptions)
+                {
+                    message += exception.Message + "\n";
+                }
+                throw new Exception(message);
+            }
+        }
+
+        public void CopyLibrary(string file)
+        {
+            string filename = Path.GetFileName(file);
+            string newFile = Path.Combine(WorkspacePath, PROBLEMS_PATH, filename);
+            if (!File.Exists(newFile))
+            {
+                try
+                {
+                    File.Copy(file, newFile);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            else
+            {
+                throw new ArgumentException("File " + filename + " already exists.");
+            }
+        }
+
+        public void CopyToDirectory(string directory, params string[] files)
+        {
+            string directoryPath = Path.Combine(Path.GetDirectoryName(WorkspacePath), directory);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+            foreach (var file in files)
+            {
+                var newFile = Path.Combine(directoryPath, Path.GetFileName(file));
+                if (!File.Exists(newFile))
+                {
+                    File.Copy(file, newFile);
+                }
+            }
         }
     }
 }
