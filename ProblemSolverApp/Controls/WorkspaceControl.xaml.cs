@@ -451,12 +451,12 @@ namespace ProblemSolverApp.Controls
         {
             try
             {
-                List<string> libraries = new List<string>();
-                foreach (var library in lbProblems.SelectedItems)
+                List<string> problems = new List<string>();
+                foreach (var problem in lbProblems.SelectedItems)
                 {
-                    libraries.Add(library.ToString()); // TODO: Fix if we bind list element to ProblemItem object
+                    problems.Add(problem.ToString());
                 }
-                CurrentWorkspace.RemoveProblems(libraries.ToArray());
+                CurrentWorkspace.RemoveProblems(problems.ToArray());
                 string path = CurrentWorkspace.WorkspacePath;
                 SessionManager.GetSession().CloseWorkspace();
                 SessionManager.GetSession().OpenWorkspace(path);
@@ -502,7 +502,7 @@ namespace ProblemSolverApp.Controls
                 List<string> libraries = new List<string>();
                 foreach (var library in lbLibraries.SelectedItems)
                 {
-                    libraries.Add(library.ToString()); // TODO: Fix if we bind list element to LibraryItem object
+                    libraries.Add(library.ToString());
                 }
                 CurrentWorkspace.RemoveLibraries(libraries.ToArray());
                 string path = CurrentWorkspace.WorkspacePath;

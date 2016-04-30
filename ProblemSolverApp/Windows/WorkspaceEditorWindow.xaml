@@ -25,6 +25,8 @@
                 <TextBox Name="tbName"  Text="Type name" Margin="5,0,5,0"/>
             </DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+                <CheckBox Content="Save as new workspace" VerticalAlignment="Center" IsChecked="{Binding Path=isSaveCopy, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}"
+                          ToolTip="If checked, all data will be copied to the new destination when editing path for existing workspace."/>
                 <Button Content="Apply" Margin="5" Width="70" Click="btnApply_Click"/>
                 <Button Content="OK" Margin="5" Width="70" Click="btnOK_Click"/>
                 <Button Content="Cancel" Margin="5" Width="70" Click="btnClose_Click"/>

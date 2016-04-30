@@ -18,6 +18,7 @@ namespace ProblemSolverApp.Classes
     {
         public static readonly string PROBLEMS_PATH = "problems";
         public static readonly string LIBRARIES_PATH = "libs";
+        public static readonly string[] SUBFOLDERS = { PROBLEMS_PATH, LIBRARIES_PATH };
 
         [XmlElement(ElementName = "id")]
         public Guid Id { get; set; }
@@ -118,7 +119,7 @@ namespace ProblemSolverApp.Classes
 
         public List<ProblemItem> LoadProblemFromFile(string problemFileName)
         {
-            string problemsPath = Path.GetDirectoryName(WorkspacePath) + Constants.PATH_SEPARATOR + "problems" + Constants.PATH_SEPARATOR + problemFileName;
+            string problemsPath = Path.Combine(Path.GetDirectoryName(WorkspacePath), PROBLEMS_PATH, problemFileName);
             var asm = Assembly.LoadFrom(problemsPath);
             var result = new List<ProblemItem>();
             foreach (var type in asm.GetTypes())
@@ -148,7 +149,7 @@ namespace ProblemSolverApp.Classes
         {
             string libraryPath = Path.Combine(Path.GetDirectoryName(WorkspacePath), LIBRARIES_PATH, libraryFilename);
             string workingDir = Directory.GetCurrentDirectory();
-            string newFile = workingDir + Constants.PATH_SEPARATOR + libraryFilename;
+            string newFile = Path.Combine(workingDir, libraryFilename);
             var result = new List<LibraryItem>();
             List<Exception> exceptions = new List<Exception>();
             try
@@ -188,17 +189,9 @@ namespace ProblemSolverApp.Classes
         public void Calculate(int index)
         {
             var problem = Problems[index].Problem;
-            try
+            if (problem.IsInputDataSet)
             {
-                if (problem.IsInputDataSet)
-                {
-                    problem.Solve();
-                    //_Terminal.LogSuccess("Problem '" + problem.Name + "' calculated successfully.");
-                }
-            }
-            catch (Exception ex)
-            {
-                //_Terminal.LogError("There were some errors while calculating the problem '" + problem.Name + "'. Details:\n" + ex.Message);
+                problem.Solve();
             }
         }
 
@@ -278,7 +271,6 @@ namespace ProblemSolverApp.Classes
             Workspace.Save(WorkspacePath, this);
         }
 
-        // TODO: Improve
         public void RemoveLibrary(string filename)
         {
             string directoryPath = Path.Combine(Path.GetDirectoryName(WorkspacePath), LIBRARIES_PATH);
@@ -304,7 +296,6 @@ namespace ProblemSolverApp.Classes
 
         public void CopyLibraries(string[] files)
         {
-            // TODO: Copy libs from custom path to AppData/...
             List<Exception> exceptions = new List<Exception>();
             foreach (var file in files)
             {
