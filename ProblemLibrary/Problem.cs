@@ -13,6 +13,8 @@ namespace ProblemLibrary
 
         public virtual string Equation { get; }
 
+        public virtual string Comments { get; }
+
         public List<ProblemDataItem> InputData { get; set; }
 
         public ProblemResult Result { get; protected set; }

@@ -15,6 +15,11 @@ namespace ProblemLibrary
         string Equation { get; }
 
         /// <summary>
+        /// Some comments to current problem. HTML tags can be used for text formatting.
+        /// </summary>
+        string Comments { get; }
+
+        /// <summary>
         /// List of input parameters.
         /// </summary>
         List<ProblemDataItem> InputData { get; }

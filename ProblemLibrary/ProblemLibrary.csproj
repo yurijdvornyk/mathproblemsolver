@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IProblem.cs" />
+    <Compile Include="Logger\IProblemLogListener.cs" />
+    <Compile Include="Logger\ProblemLogger.cs" />
     <Compile Include="ProblemResultType.cs" />
     <Compile Include="Problem.cs" />
     <Compile Include="ProblemDataItem.cs" />
@@ -49,6 +51,7 @@
     <Compile Include="ProblemResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
