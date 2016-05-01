@@ -115,7 +115,7 @@ namespace ProblemSolverApp.Windows
 
             Workspace.Save(CurrentWorkspace.WorkspacePath, CurrentWorkspace);
             string newDirectory = System.IO.Path.GetDirectoryName(CurrentWorkspace.WorkspacePath);
-            if (oldDirectory != newDirectory)
+            if (!string.IsNullOrEmpty(oldDirectory) && oldDirectory != newDirectory)
             {
                 if (doCopyFilesWhenPathChanged)
                 {

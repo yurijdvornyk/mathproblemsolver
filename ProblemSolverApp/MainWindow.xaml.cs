@@ -6,25 +6,35 @@ using Microsoft.Win32;
 using System.Diagnostics;
 using ProblemSolverApp.Classes.Manager;
 using ProblemSolverApp.Classes.Manager.EventManager;
+using System.Threading.Tasks;
+using ProblemDevelopmentKit.Logger;
+using ProblemDevelopmentKit.Progress;
 
 namespace ProblemSolverApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IProblemLogListener, ISolvingProgressListener
     {
         public MainWindow()
         {
             InitializeComponent();
             Session = SessionManager.GetSession();
             Session.LoadSharedLibraries();
-            AppEventManager.AddListener(problemDataControl);
+            setUpListeners();
         }
 
-        public SessionManager Session { get; private set; } 
+        public SessionManager Session { get; private set; }
 
-        private void btnCalculate_Click(object sender, RoutedEventArgs e)
+        private void setUpListeners()
+        {
+            AppEventManager.AddListener(problemDataControl);
+            ProblemLogger.RegisterListener(this);
+            ProblemProgressNotifier.RegisterListener(this);
+        }
+
+        private async void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
             var problem = problemDataControl.CurrentProblem;
             if (problem == null)
@@ -36,10 +46,12 @@ namespace ProblemSolverApp
             string name = string.Empty;
             try
             {
-                name = problem.Name;
-                problem.Solve();
+                progressBar.IsIndeterminate = true;
+                await Task.Run(() => Session.CurrentWorkspace.SolveProblem(problem));
+                progressBar.IsIndeterminate = true;
                 problemResults.CurrentProblem = problem;
                 problemResults.UpdateResults();
+                progressBar.IsIndeterminate = false;
             }
             catch (Exception ex)
             {
@@ -66,7 +78,7 @@ namespace ProblemSolverApp
             var problem = problemDataControl.CurrentProblem;
             dlg.FileName = "[" + DateTime.Now.ToString("yyyy-MM-d_hh-mm-ss") + "] " + problem.Name + ".tex";
             dlg.DefaultExt = ".tex";
-            dlg.Filter = "LaTeX files (.tex)|*.tex";  
+            dlg.Filter = "LaTeX files (.tex)|*.tex";
             Nullable<bool> result = dlg.ShowDialog();
             if (result == true)
             {
@@ -114,5 +126,40 @@ namespace ProblemSolverApp
         {
             Session.CloseWorkspace();
         }
+
+        #region IProblemLogListener implementation
+
+        public int Filter { get; set; }
+
+        public void HandleMessage(MessageType type, string message)
+        {
+            // TODO: Add message to terminal
+        }
+
+        #endregion
+
+        #region ISolvingProgressListener imeplementation
+
+        public void SetProgressModeEnabled(bool isEnabled)
+        {
+            if (isEnabled)
+            {
+                progressBar.IsIndeterminate = false;
+            }
+            else
+            {
+                progressBar.IsIndeterminate = true;
+            }
+        }
+
+        public void SetProgress(double percent)
+        {
+            if (!progressBar.IsIndeterminate)
+            {
+                progressBar.Value = percent;
+            }
+        }
+
+        #endregion
     }
 }

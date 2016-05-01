@@ -1,4 +1,6 @@
 ﻿using ProblemDevelopmentKit;
+using ProblemDevelopmentKit.Logger;
+using ProblemDevelopmentKit.Progress;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -186,7 +188,7 @@ namespace ProblemSolverApp.Classes
             return Libraries;
         }
 
-        public void Calculate(int index)
+        public void SolveProblem(int index)
         {
             var problem = Problems[index].Problem;
             if (problem.IsInputDataSet)
@@ -195,10 +197,10 @@ namespace ProblemSolverApp.Classes
             }
         }
 
-        public void Calculate(IProblem problem)
+        public void SolveProblem(IProblem problem)
         {
             int index = Problems.IndexOf(Problems.First(x => x.Problem == problem));
-            Calculate(index);
+            SolveProblem(index);
         }
 
         public IProblem GetProblem(IProblem problem)
