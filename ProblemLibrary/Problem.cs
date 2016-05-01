@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace ProblemLibrary
 {
     /// <summary>
-    /// Partial implementation of IProblem interface for easier usages.
+    /// Partial implementation of IProblem interface for easier usage.
     /// </summary>
     public abstract class Problem : IProblem
     {

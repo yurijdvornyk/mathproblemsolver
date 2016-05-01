@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProblemLibrary.Listener;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,18 +10,13 @@ namespace ProblemLibrary.Logger
     /// <summary>
     /// Implement this interface to listen to problem logs.
     /// </summary>
-    public interface IProblemLogListener
+    public interface IProblemLogListener: IListener
     {
         /// <summary>
-        /// Handle info message here
+        /// Handle log messages
         /// </summary>
-        /// <param name="message">message</param>
-        void HandleInfoMessage(string message);
-
-        /// <summary>
-        /// Handle error message here
-        /// </summary>
-        /// <param name="message">error message</param>
-        void HandleErrorMessage(string message);
+        /// <param name="type">Message type</param>
+        /// <param name="message">Message content</param>
+        void HandleMessage(MessageType type, string message);
     }
 }

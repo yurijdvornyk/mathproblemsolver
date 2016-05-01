@@ -42,13 +42,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IProblem.cs" />
+    <Compile Include="Listener\IListener.cs" />
+    <Compile Include="Listener\Notifier.cs" />
     <Compile Include="Logger\IProblemLogListener.cs" />
+    <Compile Include="Logger\MessageType.cs" />
     <Compile Include="Logger\ProblemLogger.cs" />
     <Compile Include="ProblemResultType.cs" />
     <Compile Include="Problem.cs" />
     <Compile Include="ProblemDataItem.cs" />
     <Compile Include="ProblemDataItemType.cs" />
     <Compile Include="ProblemResult.cs" />
+    <Compile Include="Progress\ISolvingProgressListener.cs" />
+    <Compile Include="Progress\ProblemProgressNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

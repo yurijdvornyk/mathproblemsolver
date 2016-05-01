@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProblemLibrary.Listener;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,57 +8,20 @@ using System.Threading.Tasks;
 namespace ProblemLibrary.Logger
 {
     /// <summary>
-    /// Use this class to log information while executing problem
+    /// Use this class to log information while executing problem.
     /// </summary>
-    public class ProblemLogger
+    public class ProblemLogger: Notifier<IProblemLogListener>
     {
-        private static List<IProblemLogListener> listeners;
-
         /// <summary>
-        /// Make you listener listen new logs appears
+        /// Log message.
         /// </summary>
-        /// <param name="listener">listener</param>
-        public static void RegisterListener(IProblemLogListener listener)
+        /// <param name="type">Message type.</param>
+        /// <param name="message">Message content.</param>
+        public static void Log(MessageType type, string message)
         {
-            if (!listeners.Contains(listener))
+            foreach (var listener in GetListeners())
             {
-                listeners.Add(listener);
-            }
-        }
-
-        /// <summary>
-        /// Make you listener not to listen new logs appears
-        /// </summary>
-        /// <param name="listener">listener</param>
-        public static void UnregisterListener(IProblemLogListener listener)
-        {
-            if (listeners.Contains(listener))
-            {
-                listeners.Remove(listener);
-            }
-        }
-
-        /// <summary>
-        /// Log info message
-        /// </summary>
-        /// <param name="message">message</param>
-        public static void LogInfo(string message)
-        {
-            foreach (var listener in listeners)
-            {
-                listener.HandleInfoMessage(message);
-            }
-        }
-
-        /// <summary>
-        /// Log error message. Use this for handling exceptions, writing details for some errors and so on.
-        /// </summary>
-        /// <param name="message"></param>
-        public static void LogError(string message)
-        {
-            foreach (var listener in listeners)
-            {
-                listener.HandleErrorMessage(message);
+                listener.HandleMessage(type, message);
             }
         }
     }

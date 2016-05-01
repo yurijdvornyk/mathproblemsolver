@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProblemLibrary
 {
@@ -40,29 +41,29 @@ namespace ProblemLibrary
         bool IsExecuted { get; }
 
         /// <summary>
-        /// Sets input argument to the InputData field and parses it using ParseData method.
-        /// Then sets IsInputDataSet property to True
+        /// Set input argument to the InputData field and parses it using ParseData method.
+        /// Then set IsInputDataSet property to True.
         /// </summary>
         /// <param name="inputData">Data to be set to InputData</param>
         void SetInputData(List<object> inputData);
 
         /// <summary>
-        /// Parses InputData to problem parameters.
+        /// Parse InputData to problem parameters.
         /// </summary>
         void ParseData();
 
         /// <summary>
-        /// Resets InputData: all parameters become null. Sets IsInputDataSet to False.
+        /// Reset InputData: all parameters become null. Sets IsInputDataSet to False.
         /// </summary>
         void ResetInputData();
 
         /// <summary>
-        /// Performs solving the problem.
+        /// Perform solving the problem.
         /// </summary>
         ProblemResult Execute();
 
         /// <summary>
-        /// Sets Calculate() result to Result property and sets IsExecuted to True.
+        /// Wrap Calculate() method and set IsExecuted to True.
         /// </summary>
         ProblemResult Solve();
     }
