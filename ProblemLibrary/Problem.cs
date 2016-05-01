@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace ProblemLibrary
 {
     /// <summary>
-    /// Partial implementation of IProblem interface for easier usages.
+    /// Partial implementation of IProblem interface for easier usage.
     /// </summary>
     public abstract class Problem : IProblem
     {
         public abstract string Name { get; }
 
         public virtual string Equation { get; }
+
+        public virtual string Comments { get; }
 
         public List<ProblemDataItem> InputData { get; set; }
 
