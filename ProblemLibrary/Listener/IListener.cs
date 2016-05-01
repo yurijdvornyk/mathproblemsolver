@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProblemLibrary.Listener
+﻿namespace ProblemLibrary.Listener
 {
     /// <summary>
     /// Base interface for listeners.
