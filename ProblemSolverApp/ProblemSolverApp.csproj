@@ -165,9 +165,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProblemLibrary\ProblemLibrary.csproj">
+    <ProjectReference Include="..\ProblemLibrary\ProblemDevelopmentKit.csproj">
       <Project>{28a23cc9-a695-4802-b51d-0d858c138346}</Project>
-      <Name>ProblemLibrary</Name>
+      <Name>ProblemDevelopmentKit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
