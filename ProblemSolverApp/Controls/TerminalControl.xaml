@@ -27,45 +27,7 @@
                             <MenuItem Header="Browse Logger Folder"/>
                         </MenuItem>
                     </Menu>
-                    <ListBox 
-                        Name="lbOutput"
-                        ItemsSource="{Binding Path=Logger.Messages, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Margin="0,0,5,0" Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Image.Style>
-                                            <Style TargetType="{x:Type Image}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Type}" Value="Info">
-                                                        <Setter Property="Source" Value="pack://application:,,,/Drawable/information.png"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Type}" Value="Success">
-                                                        <Setter Property="Source" Value="pack://application:,,,/Drawable/success.png"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Type}" Value="Warning">
-                                                        <Setter Property="Source" Value="pack://application:,,,/Drawable/warning.png"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Type}" Value="Error">
-                                                        <Setter Property="Source" Value="pack://application:,,,/Drawable/error.png"/>
-                                                    </DataTrigger>
-                                                    
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Image.Style>
-                                    </Image>
-                                    <TextBlock Text="{Binding Time}" Margin="5,0,5,0"/>
-                                    <TextBlock Text="{Binding Message}" Margin="5,0,10,0"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <ListBox.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Copy" Click="btnCopyLoggerMessageItem_Click"/>
-                                <MenuItem Header="Copy message" Click="btnCopyLoggerMessage_Click"/>
-                            </ContextMenu>
-                        </ListBox.ContextMenu>
-                    </ListBox>
+                    <ListBox/>
                 </DockPanel>
             </TabItem>
             <TabItem Header="Console">

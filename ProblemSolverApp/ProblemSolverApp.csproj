@@ -64,9 +64,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Constants.cs" />
-    <Compile Include="Classes\CustomLogger\CustomLogger.cs" />
-    <Compile Include="Classes\CustomLogger\CustomLoggerMessage.cs" />
-    <Compile Include="Classes\CustomLogger\CustomLoggerMessageType.cs" />
     <Compile Include="Classes\LibraryItem.cs" />
     <Compile Include="Classes\Manager\EventManager\AppEventManager.cs" />
     <Compile Include="Classes\Manager\EventManager\EventType.cs" />

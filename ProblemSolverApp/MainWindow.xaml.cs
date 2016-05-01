@@ -1,24 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ProblemDevelopmentKit;
 using ProblemSolverApp.Windows;
 using ProblemSolverApp.Classes;
-using System.Reflection;
-using System.Globalization;
-using ProblemSolverApp.Classes.CustomLogger;
 using Microsoft.Win32;
 using System.Diagnostics;
 using ProblemSolverApp.Classes.Manager;
@@ -57,27 +40,23 @@ namespace ProblemSolverApp
                 problem.Solve();
                 problemResults.CurrentProblem = problem;
                 problemResults.UpdateResults();
-                //Logger.LogSuccess(problem.Name + ": Problem calculated successfully.");
             }
             catch (Exception ex)
             {
                 // TODO: improve
                 MessageBox.Show(ex.Message);
-                //Logger.LogError(name + ": There were some errors while calculating the problem. Details:\n" + ex.Message);
             }
         }
 
         private void btnProblemManager_Click(object sender, RoutedEventArgs e)
         {
             SharedLibrariesRepositoryWindow pmWin = new SharedLibrariesRepositoryWindow();
-            //Logger.LogInfo("Open problem repository.");
             pmWin.Show();
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow settingsWin = new SettingsWindow();
-            //Logger.LogInfo("Open application settings.");
             settingsWin.Show();
         }
 

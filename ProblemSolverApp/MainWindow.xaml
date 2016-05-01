@@ -14,10 +14,7 @@
     <Window.Resources>
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
     </Window.Resources>
-    <!--<Window.Background>
-        <SolidColorBrush Color="{Binding Source={x:Static prop:Settings.Default}, Path=MainBackground, Converter={StaticResource ColorConverter}}"/>
-    </Window.Background>-->
-    <Grid>
+    <Grid Background="{Binding Source={x:Static prop:Settings.Default}, Path=MainBackground, Converter={StaticResource ColorConverter}}">
         <Menu x:Name="menu" VerticalAlignment="Top"
               Background="{Binding Source={x:Static prop:Settings.Default}, 
             Path=MenuBackground, Converter={StaticResource ColorConverter}}">
@@ -146,7 +143,8 @@
             <controls:TerminalControl x:Name="terminal" Grid.Row="1" Grid.ColumnSpan="2" Margin="5"/>
         </Grid>
         <DockPanel VerticalAlignment="Bottom">
-            <Grid VerticalAlignment="Center">
+            <Grid VerticalAlignment="Center" 
+                  Background="{Binding Source={x:Static prop:Settings.Default}, Path=ToolbarColor, Converter={StaticResource ColorConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="2*"/>
