@@ -145,8 +145,17 @@
             <controls:ResultsControl x:Name="problemResults" Grid.Column="1" Margin="5"/>
             <controls:TerminalControl x:Name="terminal" Grid.Row="1" Grid.ColumnSpan="2" Margin="5"/>
         </Grid>
-        <StatusBar VerticalAlignment="Bottom">
-            <TextBlock Text="{Binding ElementName=terminal, Path=Logger.CurrentStatus, UpdateSourceTrigger=PropertyChanged}"/>
-        </StatusBar>
+        <DockPanel VerticalAlignment="Bottom">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Status bar" Margin="2" VerticalAlignment="Center"/>
+                <ProgressBar Name="progressBar" Grid.Column="1" Height="20" Margin="2" VerticalAlignment="Center"/>
+                <TextBlock Text="Some extra data" Grid.Column="2" VerticalAlignment="Center" Margin="2"/>
+            </Grid>
+        </DockPanel>
     </Grid>
 </Window>

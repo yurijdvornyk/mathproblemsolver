@@ -1,6 +1,6 @@
-﻿using ProblemLibrary.Listener;
+﻿using ProblemDevelopmentKit.Listener;
 
-namespace ProblemLibrary.Logger
+namespace ProblemDevelopmentKit.Logger
 {
     /// <summary>
     /// Implement this interface to listen to problem logs.

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using ProblemLibrary;
+using ProblemDevelopmentKit;
 using ProblemSolverApp.Classes;
 using ProblemSolverApp.Classes.CustomLogger;
 using ProblemSolverApp.Classes.Manager;

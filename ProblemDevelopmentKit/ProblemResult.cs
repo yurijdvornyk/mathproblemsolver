@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProblemLibrary
+namespace ProblemDevelopmentKit
 {
     /// <summary>
     /// Stores the result of problem solution,.

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProblemLibrary
+namespace ProblemDevelopmentKit
 {
     public interface IProblem
     {

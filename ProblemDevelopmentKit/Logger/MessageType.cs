@@ -1,4 +1,4 @@
-﻿namespace ProblemLibrary.Logger
+﻿namespace ProblemDevelopmentKit.Logger
 {
     /// <summary>
     /// Enumeration of different log message types.

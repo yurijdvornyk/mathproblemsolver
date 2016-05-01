@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProblemLibrary;
+using ProblemDevelopmentKit;
 using System.Windows;
 
 namespace ProblemSolverApp

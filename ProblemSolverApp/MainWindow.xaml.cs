@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ProblemLibrary;
+using ProblemDevelopmentKit;
 using ProblemSolverApp.Windows;
 using ProblemSolverApp.Classes;
 using System.Reflection;
