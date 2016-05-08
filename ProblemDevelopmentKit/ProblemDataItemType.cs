@@ -1,4 +1,4 @@
-﻿namespace ProblemLibrary
+﻿namespace ProblemDevelopmentKit
 {
     /// <summary>
     /// Use this enumeration to simplify ProblemDataItem parsing.

@@ -13,23 +13,43 @@
     Title="Mathematical Problem Solver" Height="720" Width="1280">
     <Window.Resources>
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
+        <Style x:Key="VerticalSeparatorStyle" TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Type Separator}}">
+            <Setter Property="Margin" Value="6,0,6,0"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <TransformCollection>
+                                <RotateTransform Angle="90"/>
+                            </TransformCollection>
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
-    <!--<Window.Background>
-        <SolidColorBrush Color="{Binding Source={x:Static prop:Settings.Default}, Path=MainBackground, Converter={StaticResource ColorConverter}}"/>
-    </Window.Background>-->
-    <Grid>
+    <Grid Background="{Binding Source={x:Static prop:Settings.Default}, Path=MainBackground, Converter={StaticResource ColorConverter}}">
         <Menu x:Name="menu" VerticalAlignment="Top"
               Background="{Binding Source={x:Static prop:Settings.Default}, 
             Path=MenuBackground, Converter={StaticResource ColorConverter}}">
             <MenuItem Header="File">
-                <MenuItem Header="New" Click="btnNewWorkspace_Click"/>
-                <MenuItem Header="Open" Click="btnOpenWorkspace_Click"/>
-                <MenuItem Header="Close" Click="btnCloseWorkspace_Click"/>
+                <MenuItem Header="New" Click="btnNewWorkspace_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/workspace_new.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Open" Click="btnOpenWorkspace_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/workspace_open.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Close" Click="btnCloseWorkspace_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/workspace_close.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="Save"/>
-                <MenuItem Header="Save All"/>
-                <Separator/>
-                <MenuItem Header="Recent Workspaces"/>
+                <MenuItem Header="Recent"/>
                 <Separator/>
                 <MenuItem Header="Exit">
                     <MenuItem.Icon>
@@ -37,9 +57,27 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Edit"/>
-            <MenuItem Header="View"/>
-            <MenuItem Header="Workspace"/>
+            <MenuItem Header="Workspace">
+                <MenuItem Header="Editor">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/repo.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Problems"></MenuItem>
+                <MenuItem Header="Libraries"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Problem Files">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/workspace_files.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Library Files">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Drawable/workspace_files.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="Problem">
                 <MenuItem Header="Set Input Data">
                     <MenuItem.Icon>
@@ -57,75 +95,81 @@
                         <Image Source="pack://application:,,,/Drawable/solve.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <Separator/>
-                <!--<MenuItem Header="Problem Repository" Click="btnProblemManager_Click">
+                <MenuItem Header="Stop Solving">
                     <MenuItem.Icon>
-                        <Image Source="pack://application:,,,/Drawable/repo.png"/>
+                        <Image Source="pack://application:,,,/Drawable/stop_solving.png"/>
                     </MenuItem.Icon>
-                </MenuItem>-->
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Results">
+                    <MenuItem Header="Export">
+                        <MenuItem Header="TeX"></MenuItem>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Tools">
                 <MenuItem Header="Shared Libraries Repository" Click="btnProblemManager_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Drawable/external_libs.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-            </MenuItem>
-            <MenuItem Header="Results">
-                <MenuItem Header="Result Table">
+                <Separator/>
+                <MenuItem Header="Settings" Click="btnSettings_Click">
                     <MenuItem.Icon>
-                        <Image Source="pack://application:,,,/Drawable/result_table.png"/>
+                        <Image Source="pack://application:,,,/Drawable/settings.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Result Plot">
-                    <MenuItem.Icon>
-                        <Image Source="pack://application:,,,/Drawable/result_plot.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Input Data">
-                    <MenuItem.Icon>
-                        <Image Source="pack://application:,,,/Drawable/result_input_data.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <Separator/>
-                <MenuItem Header="Export">
-                    <MenuItem Header="Save as TeX" Click="btnExportProblemTex_Click"/>
-                    <MenuItem Header="Save as HTML"/>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="Tools">
-                <MenuItem Header="Problem Manager"/>
-                <MenuItem Header="External Libraries Manager"/>
-                <Separator/>
-                <MenuItem Header="Development">
-                    <MenuItem Header="Copy problem dll path"/>
-                </MenuItem>
-                <Separator/>
-                <MenuItem Header="Settings" Click="btnSettings_Click"/>
             </MenuItem>
             <MenuItem Header="Window">
-                <MenuItem Header="Problem Window"/>
-                <MenuItem Header="Result Window"/>
-                <MenuItem Header="Terminal"/>
-                <Separator/>
-                <MenuItem Header="Configure"/>
+                <MenuItem Header="Workspace"/>
+                <MenuItem Header="Results"/>
+                <MenuItem Header="Logger"/>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="Help Guide"/>
-                <MenuItem Header="Project Links">
-                    <MenuItem Header="GitHub"/>
-                </MenuItem>
+                <MenuItem Header="Getting Started"/>
+                <MenuItem Header="User's Guide"/>
+                <MenuItem Header="PDK Documentation"/>
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
         <Menu Margin="0,18,0,0" VerticalAlignment="Top" Height="24" Background="{Binding Source={x:Static prop:Settings.Default}, 
             Path=ToolbarBackground, Converter={StaticResource ColorConverter}}">
+            <MenuItem Click="btnNewWorkspace_Click">
+                <MenuItem.Header>
+                    <Image Source="pack://application:,,,/Drawable/workspace_new.png" Height="16" Margin="0,2,0,2"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Click="btnOpenWorkspace_Click">
+                <MenuItem.Header>
+                    <Image Source="pack://application:,,,/Drawable/workspace_open.png" Height="16" Margin="0,2,0,2"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Click="btnCloseWorkspace_Click">
+                <MenuItem.Header>
+                    <Image Source="pack://application:,,,/Drawable/workspace_close.png" Height="16" Margin="0,2,0,2"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <Separator Style="{DynamicResource VerticalSeparatorStyle}"/>
             <MenuItem Click="btnCalculate_Click">
                 <MenuItem.Header>
                     <Image Source="pack://application:,,,/Drawable/solve.png" Height="16" Margin="0,2,0,2"/>
                 </MenuItem.Header>
             </MenuItem>
+            <MenuItem>
+                <MenuItem.Header>
+                    <Image Source="pack://application:,,,/Drawable/stop_solving.png" Height="16" Margin="0,2,0,2"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <Separator Style="{DynamicResource VerticalSeparatorStyle}"/>
             <MenuItem Click="btnProblemManager_Click">
                 <MenuItem.Header>
                     <Image Source="pack://application:,,,/Drawable/external_libs.png" Height="16" Margin="0,2,0,2"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <Separator Style="{DynamicResource VerticalSeparatorStyle}"/>
+            <MenuItem Click="btnSettings_Click">
+                <MenuItem.Header>
+                    <Image Source="pack://application:,,,/Drawable/settings.png" Height="16" Margin="0,2,0,2"/>
                 </MenuItem.Header>
             </MenuItem>
         </Menu>
@@ -145,8 +189,18 @@
             <controls:ResultsControl x:Name="problemResults" Grid.Column="1" Margin="5"/>
             <controls:TerminalControl x:Name="terminal" Grid.Row="1" Grid.ColumnSpan="2" Margin="5"/>
         </Grid>
-        <StatusBar VerticalAlignment="Bottom">
-            <TextBlock Text="{Binding ElementName=terminal, Path=Logger.CurrentStatus, UpdateSourceTrigger=PropertyChanged}"/>
-        </StatusBar>
+        <DockPanel VerticalAlignment="Bottom">
+            <Grid VerticalAlignment="Center" 
+                  Background="{Binding Source={x:Static prop:Settings.Default}, Path=ToolbarColor, Converter={StaticResource ColorConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Status bar" Margin="2" VerticalAlignment="Center"/>
+                <ProgressBar Name="progressBar" Grid.Column="1" Height="20" Margin="2" VerticalAlignment="Center"/>
+                <TextBlock Text="Some extra data" Grid.Column="2" VerticalAlignment="Center" Margin="2"/>
+            </Grid>
+        </DockPanel>
     </Grid>
 </Window>

@@ -45,7 +45,7 @@ namespace ProblemSolverApp.Classes
             //{
             //    switch (i.Type)
             //    {
-            //        case ProblemLibrary.ProblemDataItemType.Function:
+            //        case ProblemDevelopmentKit.ProblemDataItemType.Function:
             //            fileContent.Append("\n$" + i.Name + "$ & \\texttt{" + i.Type + "} & \\texttt{" + i.Value + @"} \\");
             //            break;
 

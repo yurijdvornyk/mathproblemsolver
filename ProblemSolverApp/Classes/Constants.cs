@@ -17,6 +17,6 @@ namespace ProblemSolverApp.Classes
         public static readonly string APP_DATA_FOLDER_LIBS = Path.Combine(APP_DATA_FOLDER, "libs");
 
         // Write all libraries that must not be removed on app stsrtup here!
-        public static string[] APP_BUILT_IN_DLLS = { "ProblemLibrary.dll", "SpotLibrary.dll" };
+        public static string[] APP_BUILT_IN_DLLS = { "ProblemDevelopmentKit.dll", "SpotLibrary.dll" };
     }
 }

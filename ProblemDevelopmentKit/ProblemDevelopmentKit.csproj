@@ -7,8 +7,8 @@
     <ProjectGuid>{28A23CC9-A695-4802-B51D-0D858C138346}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ProblemLibrary</RootNamespace>
-    <AssemblyName>ProblemLibrary</AssemblyName>
+    <RootNamespace>ProblemDevelopmentKit</RootNamespace>
+    <AssemblyName>ProblemDevelopmentKit</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -47,12 +47,11 @@
     <Compile Include="Logger\IProblemLogListener.cs" />
     <Compile Include="Logger\MessageType.cs" />
     <Compile Include="Logger\ProblemLogger.cs" />
-    <Compile Include="ProblemResultType.cs" />
     <Compile Include="Problem.cs" />
     <Compile Include="ProblemDataItem.cs" />
     <Compile Include="ProblemDataItemType.cs" />
     <Compile Include="ProblemResult.cs" />
-    <Compile Include="Progress\ISolvingProgressListener.cs" />
+    <Compile Include="Progress\ISolutionProgressListener.cs" />
     <Compile Include="Progress\ProblemProgressNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

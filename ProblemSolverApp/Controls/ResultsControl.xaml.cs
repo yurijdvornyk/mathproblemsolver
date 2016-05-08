@@ -1,21 +1,13 @@
-﻿using ProblemLibrary;
+﻿using ProblemDevelopmentKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using SpotLibrary;
-using ProblemSolverApp.Classes.CustomLogger;
 using System.Collections.ObjectModel;
+using ProblemSolverApp.Classes.Utils;
+using Microsoft.Win32;
 
 namespace ProblemSolverApp.Controls
 {
@@ -28,7 +20,6 @@ namespace ProblemSolverApp.Controls
         {
             InitializeComponent();
             random = new Random();
-            Logger = CustomLogger.GetInstance();
 
             _InputDataTable = new InputDataTable();
             inputDataGrid.ItemsSource = _InputDataTable.AsDataView;
@@ -47,7 +38,6 @@ namespace ProblemSolverApp.Controls
 
         public IProblem CurrentProblem { get; set; }
         public InputDataTable _InputDataTable { get; set; }
-        public CustomLogger Logger { get; set; }
         private Random random;
 
         public void UpdateResults()
@@ -138,22 +128,34 @@ namespace ProblemSolverApp.Controls
             int red = random.Next(256);
             int green = random.Next(256);
             int blue = random.Next(256);
-
-            // mix the color
-            //if (mix != null)
-            //{
-            //    red = (red + mix.R) / 2;
-            //    green = (green + mix.G) / 2;
-            //    blue = (blue + mix.B) / 2;
-            //}
-
             Color color = new Color();
             color.R = (byte) red;
             color.G = (byte) green;
             color.B = (byte) blue;
             color.A = 255;
-
             return new SolidColorBrush(color);
+        }
+
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SaveFileDialog();
+            dlg.FileName = "" + DateTime.Now.ToString("yyyy-MM-d_hh-mm-ss") + " " + CurrentProblem.Name + ".xlsx";
+            dlg.DefaultExt = ".xlsx";
+            dlg.Filter = "Microsoft Excel files (.xlsx)|*.xlsx";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                try
+                {
+                    MessageBox.Show("This feature will be added later.");
+                    // TODO: Add
+                    //FileUtils.SaveProblemToXls(CurrentProblem, dlg.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

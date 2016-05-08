@@ -1,11 +1,11 @@
-﻿using ProblemLibrary.Listener;
+﻿using ProblemDevelopmentKit.Listener;
 
-namespace ProblemLibrary.Progress
+namespace ProblemDevelopmentKit.Progress
 {
     /// <summary>
-    /// Implement this interface to listen to problem solveing progress.
+    /// Manages the behavior of ISolutionProgressListener listeners.
     /// </summary>
-    public class ProblemProgressNotifier: Notifier<ISolvingProgressListener>
+    public class ProblemProgressNotifier: Notifier<ISolutionProgressListener>
     {
         /// <summary>
         /// Set progress mode.

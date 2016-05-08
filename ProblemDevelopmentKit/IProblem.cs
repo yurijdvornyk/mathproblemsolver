@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProblemLibrary
+namespace ProblemDevelopmentKit
 {
     public interface IProblem
     {
@@ -10,12 +10,12 @@ namespace ProblemLibrary
         string Name { get; }
 
         /// <summary>
-        /// Problem equation written in LATEX form.
+        /// Problem equation.
         /// </summary>
         string Equation { get; }
 
         /// <summary>
-        /// Some comments to current problem. HTML tags can be used for text formatting.
+        /// Some comments to the problem. HTML tags can be used for text formatting.
         /// </summary>
         string Comments { get; }
 
@@ -25,7 +25,7 @@ namespace ProblemLibrary
         List<ProblemDataItem> InputData { get; }
 
         /// <summary>
-        /// Result of calculating the problem.
+        /// Stores information about problem solution.
         /// </summary>
         ProblemResult Result { get; }
 

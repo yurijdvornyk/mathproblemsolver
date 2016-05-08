@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProblemLibrary
+namespace ProblemDevelopmentKit
 {
     /// <summary>
     /// Partial implementation of IProblem interface for easier usage.

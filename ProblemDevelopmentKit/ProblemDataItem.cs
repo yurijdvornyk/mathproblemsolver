@@ -1,4 +1,4 @@
-﻿namespace ProblemLibrary
+﻿namespace ProblemDevelopmentKit
 {
     /// <summary>
     /// Stores information about problem parameter.
