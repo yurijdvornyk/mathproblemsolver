@@ -51,7 +51,7 @@
     <Compile Include="ProblemDataItem.cs" />
     <Compile Include="ProblemDataItemType.cs" />
     <Compile Include="ProblemResult.cs" />
-    <Compile Include="Progress\ISolvingProgressListener.cs" />
+    <Compile Include="Progress\ISolutionProgressListener.cs" />
     <Compile Include="Progress\ProblemProgressNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

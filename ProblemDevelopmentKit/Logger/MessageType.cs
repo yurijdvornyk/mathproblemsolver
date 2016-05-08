@@ -5,10 +5,10 @@
     /// </summary>
     public enum MessageType
     {
-        Success,
-        Warning,
-        Info,
         Error,
-        Status
+        Info,
+        Status,
+        Success,
+        Warning, 
     }
 }

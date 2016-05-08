@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace ProblemDevelopmentKit
 {
     /// <summary>
-    /// Stores the result of problem solution,.
+    /// Stores the result of problem solution.
     /// </summary>
     public class ProblemResult
     {
@@ -81,7 +81,7 @@ namespace ProblemDevelopmentKit
         }
 
         /// <summary>
-        /// Add plot data to VisualValues.
+        /// Add graph data to VisualValues.
         /// </summary>
         /// <param name="result"></param>
         public void AddVisualResult(ProblemResultVisualValue result)
@@ -142,7 +142,7 @@ namespace ProblemDevelopmentKit
     public class ProblemResultVisualValue
     {
         /// <summary>
-        /// Plot title.
+        /// Graph title.
         /// </summary>
         public string Title { get; set; }
 

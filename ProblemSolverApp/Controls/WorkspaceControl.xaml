@@ -47,6 +47,11 @@
                     <Image Source="pack://application:,,,/Drawable/repo.png"/>
                 </MenuItem.Header>
             </MenuItem>
+            <MenuItem Click="btnWorkspaceFiles_Click">
+                <MenuItem.Header>
+                    <Image Source="pack://application:,,,/Drawable/workspace_files.png"/>
+                </MenuItem.Header>
+            </MenuItem>
         </Menu>
         <DockPanel DockPanel.Dock="Top">
             <TextBlock Margin="5" Text="Workspace:" />
@@ -82,24 +87,6 @@
                 <DockPanel Background="{Binding Source={x:Static prop:Settings.Default}, 
                     Path=ControlBackground, Converter={StaticResource ColorConverter}}">
                     <WebBrowser x:Name="webBrowser"/>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="Problems">
-                <DockPanel>
-                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Add" Margin="5" Width="75" Height="20" Click="btnAddProblemFile_Click" />
-                        <Button Content="Remove" Width="75" Height="20" Margin="0,5,0,5" Click="btnRemoveProblemFile_Click"/>
-                    </StackPanel>
-                    <ListBox Name="lbProblems" DockPanel.Dock="Top" ItemsSource="{Binding Path=CurrentWorkspace.ProblemFiles, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="Libraries">
-                <DockPanel>
-                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Add" Margin="5" Width="75" Height="20" Click="btnAddLibraryFile_Click"/>
-                        <Button Content="Remove" Width="75" Height="20" Margin="0,5,0,5" Click="btnRemoveLibraryFile_Click"/>
-                    </StackPanel>
-                    <ListBox Name="lbLibraries" DockPanel.Dock="Top" ItemsSource="{Binding Path=CurrentWorkspace.LibraryFiles, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 </DockPanel>
             </TabItem>
         </TabControl>

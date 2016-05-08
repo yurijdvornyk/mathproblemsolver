@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
+using ProblemSolverApp.Classes.Utils;
+using Microsoft.Win32;
 
 namespace ProblemSolverApp.Controls
 {
@@ -132,6 +134,28 @@ namespace ProblemSolverApp.Controls
             color.B = (byte) blue;
             color.A = 255;
             return new SolidColorBrush(color);
+        }
+
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SaveFileDialog();
+            dlg.FileName = "" + DateTime.Now.ToString("yyyy-MM-d_hh-mm-ss") + " " + CurrentProblem.Name + ".xlsx";
+            dlg.DefaultExt = ".xlsx";
+            dlg.Filter = "Microsoft Excel files (.xlsx)|*.xlsx";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                try
+                {
+                    MessageBox.Show("This feature will be added later.");
+                    // TODO: Add
+                    //FileUtils.SaveProblemToXls(CurrentProblem, dlg.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

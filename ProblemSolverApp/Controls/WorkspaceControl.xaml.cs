@@ -387,6 +387,12 @@ namespace ProblemSolverApp.Controls
             window.Show();
         }
 
+        private void btnWorkspaceFiles_Click(object sender, RoutedEventArgs e)
+        {
+            WorkspaceFilesWindow window = new WorkspaceFilesWindow();
+            window.Show();
+        }
+
         void IEventListener.HandleEvent(EventType eventType, params object[] args)
         {
             switch (eventType)
@@ -407,101 +413,5 @@ namespace ProblemSolverApp.Controls
         }
 
         #endregion
-
-        private void btnAddProblemFile_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new OpenFileDialog();
-            dialog.DefaultExt = ".dll";
-            dialog.Filter = "Dynamic-link library (.dll)|*.dll|All files (*.*)|*.*";
-            dialog.Multiselect = true;
-            if (dialog.ShowDialog() == true)
-            {
-                try
-                {
-                    CurrentWorkspace.CopyToDirectory(Workspace.PROBLEMS_PATH, dialog.FileNames);
-                    List<string> filenames = new List<string>();
-                    foreach (var file in dialog.FileNames)
-                    {
-                        filenames.Add(System.IO.Path.GetFileName(file));
-                    }
-                    CurrentWorkspace.AddProblems(filenames.ToArray());
-                    string path = CurrentWorkspace.WorkspacePath;
-                    SessionManager.GetSession().CloseWorkspace();
-                    SessionManager.GetSession().OpenWorkspace(path);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
-
-        private void btnRemoveProblemFile_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                List<string> problems = new List<string>();
-                foreach (var problem in lbProblems.SelectedItems)
-                {
-                    problems.Add(problem.ToString());
-                }
-                CurrentWorkspace.RemoveProblems(problems.ToArray());
-                string path = CurrentWorkspace.WorkspacePath;
-                SessionManager.GetSession().CloseWorkspace();
-                SessionManager.GetSession().OpenWorkspace(path);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void btnAddLibraryFile_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new OpenFileDialog();
-            dialog.DefaultExt = ".dll";
-            dialog.Filter = "Dynamic-link library (.dll)|*.dll|All files (*.*)|*.*";
-            dialog.Multiselect = true;
-            if (dialog.ShowDialog() == true)
-            {
-                try
-                {
-                    CurrentWorkspace.CopyToDirectory(Workspace.LIBRARIES_PATH, dialog.FileNames);
-                    List<string> filenames = new List<string>();
-                    foreach (var file in dialog.FileNames)
-                    {
-                        filenames.Add(System.IO.Path.GetFileName(file));
-                    }
-                    CurrentWorkspace.AddLibraries(filenames.ToArray());
-                    string path = CurrentWorkspace.WorkspacePath;
-                    SessionManager.GetSession().CloseWorkspace();
-                    SessionManager.GetSession().OpenWorkspace(path);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
-
-        private void btnRemoveLibraryFile_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                List<string> libraries = new List<string>();
-                foreach (var library in lbLibraries.SelectedItems)
-                {
-                    libraries.Add(library.ToString());
-                }
-                CurrentWorkspace.RemoveLibraries(libraries.ToArray());
-                string path = CurrentWorkspace.WorkspacePath;
-                SessionManager.GetSession().CloseWorkspace();
-                SessionManager.GetSession().OpenWorkspace(path);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
     }
 }
