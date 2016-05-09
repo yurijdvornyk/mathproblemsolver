@@ -60,15 +60,20 @@ namespace ProblemSolverApp.Windows
                         filenames.Add(System.IO.Path.GetFileName(file));
                     }
                     CurrentWorkspace.AddProblems(filenames.ToArray());
-                    string path = CurrentWorkspace.WorkspacePath;
-                    SessionManager.GetSession().CloseWorkspace();
-                    SessionManager.GetSession().OpenWorkspace(path);
+                    reloadWorkspace();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        private void reloadWorkspace()
+        {
+            SessionManager.GetSession().CloseWorkspace();
+            SessionManager.GetSession().OpenWorkspace(CurrentWorkspace.WorkspacePath);
+            CurrentWorkspace = SessionManager.GetSession().CurrentWorkspace;
         }
 
         private void btnRemoveProblemFile_Click(object sender, RoutedEventArgs e)
@@ -81,9 +86,7 @@ namespace ProblemSolverApp.Windows
                     problems.Add(problem.ToString());
                 }
                 CurrentWorkspace.RemoveProblems(problems.ToArray());
-                string path = CurrentWorkspace.WorkspacePath;
-                SessionManager.GetSession().CloseWorkspace();
-                SessionManager.GetSession().OpenWorkspace(path);
+                reloadWorkspace();
             }
             catch (Exception ex)
             {
@@ -108,9 +111,7 @@ namespace ProblemSolverApp.Windows
                         filenames.Add(System.IO.Path.GetFileName(file));
                     }
                     CurrentWorkspace.AddLibraries(filenames.ToArray());
-                    string path = CurrentWorkspace.WorkspacePath;
-                    SessionManager.GetSession().CloseWorkspace();
-                    SessionManager.GetSession().OpenWorkspace(path);
+                    reloadWorkspace();
                 }
                 catch (Exception ex)
                 {
@@ -129,9 +130,7 @@ namespace ProblemSolverApp.Windows
                     libraries.Add(library.ToString());
                 }
                 CurrentWorkspace.RemoveLibraries(libraries.ToArray());
-                string path = CurrentWorkspace.WorkspacePath;
-                SessionManager.GetSession().CloseWorkspace();
-                SessionManager.GetSession().OpenWorkspace(path);
+                reloadWorkspace();
             }
             catch (Exception ex)
             {

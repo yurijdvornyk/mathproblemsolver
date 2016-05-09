@@ -15,7 +15,7 @@ namespace ProblemSolverApp
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IProblemLogListener, ISolutionProgressListener
+    public partial class MainWindow : Window, ISolutionProgressListener
     {
         public MainWindow()
         {
@@ -30,7 +30,6 @@ namespace ProblemSolverApp
         private void setUpListeners()
         {
             AppEventManager.AddListener(problemDataControl);
-            ProblemLogger.RegisterListener(this);
             ProblemProgressNotifier.RegisterListener(this);
         }
 
@@ -127,18 +126,9 @@ namespace ProblemSolverApp
             Session.CloseWorkspace();
         }
 
-        #region IProblemLogListener implementation
+        #region ISolvingProgressListener imeplementation
 
         public int Filter { get; set; }
-
-        public void HandleMessage(MessageType type, string message)
-        {
-            // TODO: Add message to terminal
-        }
-
-        #endregion
-
-        #region ISolvingProgressListener imeplementation
 
         public void SetProgressModeEnabled(bool isEnabled)
         {

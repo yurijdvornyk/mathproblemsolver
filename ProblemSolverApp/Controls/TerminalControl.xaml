@@ -11,28 +11,16 @@
     <UserControl.Resources>
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
     </UserControl.Resources>
-    <DockPanel>
+    <DockPanel Background="{Binding Source={x:Static prop:Settings.Default}, 
+        Path=ControlBackground, Converter={StaticResource ColorConverter}}">
         <StackPanel DockPanel.Dock="Top" VerticalAlignment="Top" Orientation="Horizontal"
                     Background="{Binding Source={x:Static prop:Settings.Default}, 
                     Path=ControlTitleBackground, Converter={StaticResource ColorConverter}}">
             <Image Source="pack://application:,,,/Drawable/terminal.png" Margin="4,1,2,1" Width="16"/>
             <TextBlock Text="Terminal" Margin="2,1,0,1" Foreground="White"/>
         </StackPanel>
-        <TabControl TabStripPlacement="Bottom">
-            <TabItem Header="Output">
-                <DockPanel>
-                    <Menu DockPanel.Dock="Top">
-                        <MenuItem Header="File">
-                            <MenuItem Header="Export Logs"/>
-                            <MenuItem Header="Browse Logger Folder"/>
-                        </MenuItem>
-                    </Menu>
-                    <ListBox/>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="Console">
-                <DockPanel></DockPanel>
-            </TabItem>
-        </TabControl>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <TextBox FontFamily="Consolas" IsReadOnly="True" Text="{Binding Path=LoggerContent, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>
