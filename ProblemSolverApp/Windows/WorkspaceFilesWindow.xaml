@@ -11,19 +11,19 @@
             <TabItem Header="Problems">
                 <DockPanel LastChildFill="True">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
-                        <Button Content="Add" Width="70" Height="20" Margin="5" Click="btnAddProblemFile_Click"/>
-                        <Button Content="Remove" Width="70" Height="20" Margin="0,5,0,5" Click="btnRemoveProblemFile_Click"/>
+                        <Button Name="btnAddProblemFile"  Content="Add" Width="70" Height="20" Margin="5" Click="btnAddProblemFile_Click"/>
+                        <Button Name="btnRemoveProblemFile" Content="Remove" Width="70" Height="20" Margin="0,5,0,5" Click="btnRemoveProblemFile_Click"/>
                     </StackPanel>
-                    <ListBox Name="lbProblems" DockPanel.Dock="Top" ItemsSource="{Binding Path=CurrentWorkspace.ProblemFiles, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ListBox Name="lbProblems" DockPanel.Dock="Top" ItemsSource="{Binding Path=ProblemFiles, RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </DockPanel>
             </TabItem>
             <TabItem Header="Shared Libraries">
                 <DockPanel LastChildFill="True">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
-                        <Button Content="Add" Width="70" Height="20" Margin="5" Click="btnAddLibraryFile_Click"/>
-                        <Button Content="Remove" Width="70" Height="20" Margin="0,5,0,5" Click="btnRemoveLibraryFile_Click"/>
+                        <Button Name="btnAddLibraryFile" Content="Add" Width="70" Height="20" Margin="5" Click="btnAddLibraryFile_Click"/>
+                        <Button Name="btnRemoveLibraryFile" Content="Remove" Width="70" Height="20" Margin="0,5,0,5" Click="btnRemoveLibraryFile_Click"/>
                     </StackPanel>
-                    <ListBox Name="lbLibraries" DockPanel.Dock="Top" ItemsSource="{Binding Path=CurrentWorkspace.LibraryFiles, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ListBox Name="lbLibraries" DockPanel.Dock="Top" ItemsSource="{Binding Path=LibraryFiles, RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </DockPanel>
             </TabItem>
         </TabControl>

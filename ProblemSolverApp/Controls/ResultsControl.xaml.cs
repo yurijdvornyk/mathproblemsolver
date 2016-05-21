@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Collections.ObjectModel;
 using ProblemSolverApp.Classes.Utils;
 using Microsoft.Win32;
+using ProblemSolverApp.Classes.Manager;
+using System.IO;
 
 namespace ProblemSolverApp.Controls
 {
@@ -150,6 +152,30 @@ namespace ProblemSolverApp.Controls
                     MessageBox.Show("This feature will be added later.");
                     // TODO: Add
                     //FileUtils.SaveProblemToXls(CurrentProblem, dlg.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void btnExportResult_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SaveFileDialog();
+            dlg.FileName = "" + DateTime.Now.ToString("yyyy-MM-d_hh-mm-ss") + " " + CurrentProblem.Name + ".tex";
+            dlg.DefaultExt = ".tex";
+            dlg.Filter = "LaTeX files (.tex)|*.tex";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                try
+                {
+                    string texText = ExportUtils.getTexMarkupForProblem(CurrentProblem, spotControl.ShowGraphInfo);
+                    using (StreamWriter outfile = new StreamWriter(dlg.FileName))
+                    {
+                        outfile.Write(texText);
+                    }
                 }
                 catch (Exception ex)
                 {

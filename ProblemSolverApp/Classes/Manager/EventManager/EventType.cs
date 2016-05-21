@@ -3,6 +3,6 @@
     public enum EventType
     {
         UpdateWorkspace,
-        OpenWorkspace
+        OpenWorkspace,
     }
 }

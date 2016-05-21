@@ -79,7 +79,7 @@ namespace ProblemSolverApp.Classes.Manager
             List<LibraryItem> loadedContent = new List<LibraryItem>();
             foreach (var file in libFiles)
             {
-                var asm = Assembly.Load(AssemblyName.GetAssemblyName(file));
+                var asm = Assembly.LoadFrom(file); // Assembly.Load(AssemblyName.GetAssemblyName(file));
                 loadedContent.Add(new LibraryItem(null, asm, Path.GetFileName(file)));
             }
             SharedLibraries = new ObservableCollection<LibraryItem>(loadedContent);

@@ -71,6 +71,7 @@
     <Compile Include="Classes\ProblemExporter.cs" />
     <Compile Include="Classes\ProblemItem.cs" />
     <Compile Include="Classes\Manager\SessionManager.cs" />
+    <Compile Include="Classes\Utils\ExportUtils.cs" />
     <Compile Include="Classes\Utils\FileUtils.cs" />
     <Compile Include="Classes\Workspace.cs" />
     <Compile Include="Controls\TerminalControl.xaml.cs">

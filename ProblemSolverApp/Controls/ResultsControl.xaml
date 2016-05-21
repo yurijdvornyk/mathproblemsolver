@@ -28,7 +28,7 @@
                     <Image Source="pack://application:,,,/Drawable/load.png"/>
                 </MenuItem.Header>
             </MenuItem>
-            <MenuItem>
+            <MenuItem Click="btnExportResult_Click">
                 <MenuItem.Header>
                     <Image Source="pack://application:,,,/Drawable/export_result.png"/>
                 </MenuItem.Header>

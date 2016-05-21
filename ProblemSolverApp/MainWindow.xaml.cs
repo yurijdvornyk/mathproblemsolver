@@ -134,20 +134,25 @@ namespace ProblemSolverApp
         {
             if (isEnabled)
             {
-                progressBar.IsIndeterminate = false;
+                Dispatcher.Invoke(() => progressBar.IsIndeterminate = false);
+                
             }
             else
             {
-                progressBar.IsIndeterminate = true;
+                Dispatcher.Invoke(() => progressBar.IsIndeterminate = true);
             }
         }
 
         public void SetProgress(double percent)
         {
-            if (!progressBar.IsIndeterminate)
+            Dispatcher.Invoke(() =>
             {
-                progressBar.Value = percent;
+                if (!progressBar.IsIndeterminate)
+                {
+                    progressBar.Value = percent;
+                }
             }
+            );
         }
 
         #endregion
