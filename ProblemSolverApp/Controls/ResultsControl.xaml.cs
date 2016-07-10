@@ -68,9 +68,9 @@ namespace ProblemSolverApp.Controls
         private void updateTable(ProblemResult result)
         {
             ResultTabs.Clear();
-            for (int i = 0; i < result.TableValues.Count; ++i)
+            for (int i = 0; i < result.TableResult.Values.Count; ++i)
             {
-                ResultDataTable resultDataTable = new ResultDataTable(result.TableValues[i]);
+                ResultDataTable resultDataTable = new ResultDataTable(result.TableResult.Values[i]);
                 DataGrid dataGrid = new DataGrid();
                 dataGrid.IsReadOnly = true;
                 dataGrid.CanUserSortColumns = false;
@@ -82,7 +82,9 @@ namespace ProblemSolverApp.Controls
                 dataGrid.ItemsSource = resultDataTable.AsDataView;
 
                 TabItem tabItem = new TabItem();
-                tabItem.Header = string.IsNullOrEmpty(result.TableValues[i].Title) ? (i + 1).ToString() : result.TableValues[i].Title;
+                tabItem.Header = 
+                    string.IsNullOrEmpty(result.TableResult.Values[i].Title) 
+                    ? (i + 1).ToString() : result.TableResult.Values[i].Title;
                 tabItem.Content = dataGrid;
                 ResultTabs.Add(tabItem);
             }
@@ -98,16 +100,16 @@ namespace ProblemSolverApp.Controls
         private void updatePlot(ProblemResult result)
         {
             spotControl.ClearGraphs();
-            foreach (var value in result.VisualValues)
+            foreach (var value in result.VisualResult.Graphs)
             {
                 List<Point> points = new List<Point>();
-                for (int i = 0; i < value.Keys.Length; ++i)
+                for (int i = 0; i < value.Keys.Count; ++i)
                 {
                     points.Add(new Point(value.Keys[i], value.Values[i]));
                 }
                 spotControl.AddGraph(points, getRandomColor(Colors.LightGray), 2, value.Title);
             }
-            if (result.VisualValues.Count > 1)
+            if (result.VisualResult.Graphs.Count > 1)
             {
                 spotControl.ShowGraphInfo = true;
             }

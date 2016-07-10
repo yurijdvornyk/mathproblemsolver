@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProblemDevelopmentKit;
-using System.Windows;
+using ProblemDevelopmentKit.Result;
 
 namespace ProblemSolverApp
 {
     public class ResultDataTable : DataTable
     {
-        public ProblemResultTableValue ResultValue { get; set; }
+        public TableResultItem ResultValue { get; set; }
         public const string DATA_TABLE_DEFAULT_NAME = "Results";
         public DataTable Table = new DataTable(DATA_TABLE_DEFAULT_NAME);
         private DataColumn tableColumn = new DataColumn();
@@ -19,7 +14,7 @@ namespace ProblemSolverApp
 
         public ResultDataTable() { }
 
-        public ResultDataTable(ProblemResultTableValue result)
+        public ResultDataTable(TableResultItem result)
         {
             Table = new DataTable(DATA_TABLE_DEFAULT_NAME);
             ResultValue = result;
@@ -32,19 +27,22 @@ namespace ProblemSolverApp
             {
                 throw new ArgumentNullException("Result is null now");
             }
-            for (int i = 0; i < ResultValue.Titles.Length; ++i)
+            for (int i = 0; i < ResultValue.ColumnTitles.Count; ++i)
             {
                 tableColumn = new DataColumn();
-                tableColumn.ColumnName = String.IsNullOrEmpty(ResultValue.Titles[i]) ? (i + 1).ToString() : ResultValue.Titles[i];
+                tableColumn.ColumnName = 
+                    string.IsNullOrEmpty(ResultValue.ColumnTitles[i]) ? 
+                    (i + 1).ToString() : ResultValue.ColumnTitles[i];
                 Table.Columns.Add(tableColumn);
             }
 
-            for (int i = 0; i < ResultValue.Values.GetLength(0); ++i)
+            object[,] value = ResultValue.GetValueAsMatrix();
+            for (int i = 0; i < value.GetLength(0); ++i)
             {
                 tableRow = Table.NewRow();
-                for (int j = 0; j < ResultValue.Values.GetLength(1); ++j)
+                for (int j = 0; j < ResultValue.GetValueAsMatrix().GetLength(1); ++j)
                 {
-                    tableRow[j] = ResultValue.Values[i, j];
+                    tableRow[j] = value[i, j];
                 }
                 Table.Rows.Add(tableRow);
             }

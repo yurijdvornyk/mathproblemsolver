@@ -64,11 +64,11 @@ namespace ProblemSolverApp.Classes
             fileContent.Append(@"\begin{tikzpicture}\begin{axis}[width=\textwidth,xlabel=" + title[0].ToString() +
                 ",ylabel=" + title[1].ToString() + "]");
 
-            foreach (var plot in problem.Problem.Result.VisualValues)
+            foreach (var plot in problem.Problem.Result.VisualResult.Graphs)
             {
                 fileContent.Append(@"\addplot[black] coordinates {");
                 // TODO: Check if Keys and Values have the same length
-                for (int i = 0; i < plot.Keys.Length; ++i)
+                for (int i = 0; i < plot.Keys.Count; ++i)
                 {
                     fileContent.Append("(" + plot.Keys[i].ToString().Replace(",", ".") + "," + plot.Values[i].ToString().Replace(",", ".") + ")");
                 }

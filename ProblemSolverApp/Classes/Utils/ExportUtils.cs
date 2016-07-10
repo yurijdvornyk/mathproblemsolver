@@ -81,40 +81,40 @@ namespace ProblemSolverApp.Classes.Utils
             text.Append(@"\begin{axis}[axis x line=bottom, axis y line=left,");
             if (!string.IsNullOrEmpty(problem.Result.VisualTitleKey) && !string.IsNullOrEmpty(problem.Result.VisualTitleValue))
             {
-                text.Append("xlabel=$" + problem.Result.VisualTitleKey + "$, ylabel=$" + problem.Result.VisualValues + "$,");
+                text.Append("xlabel=$" + problem.Result.VisualTitleKey + "$, ylabel=$" + problem.Result.VisualResult + "$,");
             }
             text.Append(" legend pos= north east]\n");
 
             int titlesCount = 0;
 
-            foreach (var plot in problem.Result.VisualValues)
-            {
-                text.AppendLine(@"\addplot[mark=none,black,thick] coordinates {");
-                for (int i = 0; i < plot.Keys.Length; ++i)
-                {
-                    text.Append("(" + plot.Keys[i].ToString().Replace(",", ".") + ", " + plot.Values[i].ToString().Replace(",", ".") + ")");
+            //foreach (var plot in problem.Result.VisualResult)
+            //{
+            //    text.AppendLine(@"\addplot[mark=none,black,thick] coordinates {");
+            //    for (int i = 0; i < plot.Keys.Length; ++i)
+            //    {
+            //        text.Append("(" + plot.Keys[i].ToString().Replace(",", ".") + ", " + plot.Values[i].ToString().Replace(",", ".") + ")");
 
-                }
-                text.Append("};\n");
+            //    }
+            //    text.Append("};\n");
 
-                if (!string.IsNullOrEmpty(plot.Title))
-                {
-                    ++titlesCount;
-                }
-            }
-            if (titlesCount == problem.Result.VisualValues.Count && showLegend)
-            {
-                text.Append(@"\legend{");
-                for (int i = 0; i < problem.Result.VisualValues.Count; ++i)
-                {
-                    text.Append("$" + problem.Result.VisualValues[i].Title.Replace(" ", "") + "$");
-                    if (i < problem.Result.VisualValues.Count - 1)
-                    {
-                        text.Append(",");
-                    }
-                }
-                text.Append("};\n");
-            }
+            //    if (!string.IsNullOrEmpty(plot.Title))
+            //    {
+            //        ++titlesCount;
+            //    }
+            //}
+            //if (titlesCount == problem.Result.VisualResult.Count && showLegend)
+            //{
+            //    text.Append(@"\legend{");
+            //    for (int i = 0; i < problem.Result.VisualResult.Count; ++i)
+            //    {
+            //        text.Append("$" + problem.Result.VisualResult[i].Title.Replace(" ", "") + "$");
+            //        if (i < problem.Result.VisualResult.Count - 1)
+            //        {
+            //            text.Append(",");
+            //        }
+            //    }
+            //    text.Append("};\n");
+            //}
             text.AppendLine(@"\end{axis}");
             text.AppendLine(@"\end{tikzpicture}");
         }

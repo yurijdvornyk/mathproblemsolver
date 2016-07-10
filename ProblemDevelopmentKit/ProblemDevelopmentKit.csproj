@@ -42,6 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IProblem.cs" />
+    <Compile Include="Result\Builder\IResultBuilder.cs" />
+    <Compile Include="Result\Builder\TableResultBuilder.cs" />
+    <Compile Include="Result\Builder\VisualResultBuilder.cs" />
+    <Compile Include="Result\IResult.cs" />
     <Compile Include="Listener\IListener.cs" />
     <Compile Include="Listener\Notifier.cs" />
     <Compile Include="Logger\IProblemLogListener.cs" />
@@ -54,6 +58,11 @@
     <Compile Include="Progress\ISolutionProgressListener.cs" />
     <Compile Include="Progress\ProblemProgressNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result\IResultItem.cs" />
+    <Compile Include="Result\TableResult.cs" />
+    <Compile Include="Result\TableResultItem.cs" />
+    <Compile Include="Result\VisualResult.cs" />
+    <Compile Include="Result\VisualResultItem.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
